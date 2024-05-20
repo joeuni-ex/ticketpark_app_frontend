@@ -15,9 +15,9 @@ function BasicMenu() {
 
   //사이드바 애니메이션 상태
   const boxVariants = {
-    initial: { opacity: 0, x: -100 }, // 초기 상태
-    animate: { opacity: 1, x: 0 }, // 애니메이션 진행 중 상태
-    exit: { opacity: 0, x: -100 }, // 애니메이션 종료 상태
+    initial: { opacity: 0, y: -50 }, // 초기 상태
+    animate: { opacity: 1, y: 0 }, // 애니메이션 진행 중 상태
+    exit: { opacity: 0, y: -100 }, // 애니메이션 종료 상태
   };
   // 애니메이션 지속 시간 및 이징 함수 정의
   const transition = { duration: 0.5, ease: "easeInOut" };
