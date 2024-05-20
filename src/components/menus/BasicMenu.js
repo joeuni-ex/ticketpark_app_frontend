@@ -5,6 +5,7 @@ import { IoTicketSharp } from "react-icons/io5";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { motion } from "framer-motion";
+import { RiSearchLine } from "react-icons/ri";
 
 function BasicMenu() {
   const [menuToggle, setMenuToggle] = useState(false);
@@ -26,13 +27,13 @@ function BasicMenu() {
     <div>
       <nav
         id="navbar"
-        className="flex justify-between md:justify-normal items-center px-5 md:px-10 h-20"
+        className="flex justify-between lg:justify-normal items-center px-5 lg:px-10 h-20"
       >
-        <div className="flex items-center space-x-1 md:w-1/5 font-extrabold text-2xl ">
+        <div className="flex items-center space-x-1 lg:w-1/5 font-extrabold text-2xl ">
           <p>Ticket Park</p>
           <IoTicketSharp />
         </div>
-        <div className="w-3/5 hidden md:block">
+        <div className="w-3/5 hidden lg:block">
           <ul className="flex justify-center space-x-6 text-lg">
             <li>
               <Link to={"/genre/genrelist"}>콘서트</Link>
@@ -48,8 +49,18 @@ function BasicMenu() {
             </li>
           </ul>
         </div>
+        {/* searchbar */}
+        <div className="flex space-x-1">
+          <input
+            type="text"
+            name=""
+            id=""
+            className="border-b-2 border-black w-60 outline-none"
+          />
+          <RiSearchLine className="text-xl" />
+        </div>
         {/* web */}
-        <div className="justify-end w-1/5 space-x-2  hidden md:flex">
+        <div className="justify-end w-1/12 space-x-2  hidden lg:flex">
           <Link>
             <FaUserAlt className="text-lg" />
           </Link>
@@ -58,8 +69,8 @@ function BasicMenu() {
           </Link>
           <Link>로그아웃</Link>
         </div>
-        {/* mobile */}
-        <div className="md:hidden">
+        {/* mobile menu toggle*/}
+        <div className="lg:hidden">
           <GiHamburgerMenu
             onClick={handleClickMenuToggle}
             className="text-lg"
@@ -75,7 +86,7 @@ function BasicMenu() {
           animate="animate" // 애니메이션 진행 중 상태 설정
           exit="exit" // 애니메이션 종료 상태 설정
           transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
-          className="md:hidden w-full bg-white z-50"
+          className="lg:hidden w-full bg-white z-50"
         >
           <aside className="flex justify-center p-4">
             <ul className="text-lg space-y-4">
