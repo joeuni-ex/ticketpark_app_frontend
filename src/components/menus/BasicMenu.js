@@ -30,22 +30,42 @@ function BasicMenu() {
         className="flex justify-between lg:justify-normal items-center px-5 lg:px-10 h-20"
       >
         <div className="flex items-center space-x-1 lg:w-1/5 font-extrabold text-2xl ">
-          <p>Ticket Park</p>
-          <IoTicketSharp />
+          <Link to={"/"}>Ticket Park</Link>
+          <IoTicketSharp className="text-yellow-400" />
         </div>
         <div className="w-3/5 hidden lg:block">
           <ul className="flex justify-center space-x-6 text-lg">
             <li>
-              <Link to={"/genre/genrelist"}>콘서트</Link>
+              <Link
+                to={"/genre/genrelist"}
+                className="hover:border-b-4 border-yellow-300 hover:font-semibold"
+              >
+                콘서트
+              </Link>
             </li>
             <li>
-              <Link to={"/genre/genrelist"}>뮤지컬</Link>
+              <Link
+                to={"/genre/genrelist"}
+                className="hover:border-b-4 border-yellow-300 hover:font-semibold"
+              >
+                뮤지컬
+              </Link>
             </li>
             <li>
-              <Link to={"/genre/genrelist"}>연극</Link>
+              <Link
+                to={"/genre/genrelist"}
+                className="hover:border-b-4 border-yellow-300 hover:font-semibold"
+              >
+                연극
+              </Link>
             </li>
             <li>
-              <Link to={"/genre/genrelist"}>클래식</Link>
+              <Link
+                to={"/genre/genrelist"}
+                className="hover:border-b-4 border-yellow-300 hover:font-semibold"
+              >
+                클래식
+              </Link>
             </li>
           </ul>
         </div>
