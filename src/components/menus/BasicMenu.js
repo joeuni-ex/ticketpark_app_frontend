@@ -31,8 +31,11 @@ function BasicMenu() {
       >
         <div className="flex w-full justify-between items-center h-20">
           <div className="flex items-center space-x-1 lg:w-1/4 font-extrabold text-2xl ">
-            <Link to={"/"}>TicketPark</Link>
-            <IoTicketSharp className="text-yellow-400" />
+            <Link to={"/"} className="flex">
+              <div className="flex items-center">TicketPark</div>
+              <img src="/logo.png" alt="" className="w-16" />
+            </Link>
+            {/* <IoTicketSharp className="text-yellow-400" /> */}
           </div>
           <div className="flex space-x-7">
             {/* searchbar */}
