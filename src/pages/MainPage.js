@@ -5,7 +5,8 @@ import SliderImages from "../sliderImages";
 import styled from "styled-components";
 
 function MainPage() {
-  const settings = {
+  // Web Slider Settings
+  const webSettings = {
     className: "center",
     centerMode: true,
     dots: true,
@@ -19,12 +20,24 @@ function MainPage() {
     centerPadding: "60px",
     // cssEase: "linear",
   };
+
+  // Mobile Slider Settings
+  const mobileSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 4000,
+  };
   return (
     <BasicLayout>
-      {/* 슬라이더 */}
-      <div className="slider-container my-6">
+      {/* Web Slider  */}
+      <div className="slider-container my-6 hidden md:block">
         <SlideContainer>
-          <Slider {...settings}>
+          <Slider {...webSettings}>
             {SliderImages.map((item) => (
               <div key={item.id}>
                 <SlidePage>
@@ -36,6 +49,21 @@ function MainPage() {
             ))}
           </Slider>
         </SlideContainer>
+      </div>
+
+      {/* Mobile Slider */}
+      <div className="slider-container  md:hidden">
+        <Slider {...mobileSettings}>
+          {SliderImages.map((item) => (
+            <div key={item.id}>
+              <SlidePage>
+                <MultiItem>
+                  <img src={item.src} alt={item.alt} />
+                </MultiItem>
+              </SlidePage>
+            </div>
+          ))}
+        </Slider>
       </div>
     </BasicLayout>
   );
