@@ -17,13 +17,13 @@ function MainPage() {
     speed: 2000,
     autoplaySpeed: 4000,
     centerPadding: "60px",
-    cssEase: "linear",
+    // cssEase: "linear",
   };
   return (
     <BasicLayout>
       {/* 슬라이더 */}
       <div className="slider-container my-6">
-        <SlideContainer {...settings}>
+        <SlideContainer>
           <Slider {...settings}>
             {SliderImages.map((item) => (
               <div key={item.id}>
