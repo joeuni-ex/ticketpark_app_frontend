@@ -65,6 +65,29 @@ function MainPage() {
           ))}
         </Slider>
       </div>
+
+      {/* section 2*/}
+      <div className="flex  w-full flex-col items-center justify-center py-20 space-y-8">
+        <div className="  text-3xl  font-bold text-stone-900">FOCUS ON</div>
+
+        <div className="flex">
+          <img
+            src="./main/focus_1.jpg"
+            alt="focus_1"
+            className="hover:scale-105  duration-300 ease-in-out border"
+          />
+          <img
+            src="./main/focus_2.jpg"
+            alt="focus_2"
+            className="hover:scale-105  duration-300 ease-in-out border"
+          />
+          <img
+            src="./main/focus_3.jpg"
+            alt="focus_3"
+            className="hover:scale-105  duration-300 ease-in-out border"
+          />
+        </div>
+      </div>
     </BasicLayout>
   );
 }
