@@ -27,11 +27,11 @@ function BasicMenu() {
     <div>
       <nav
         id="navbar"
-        className="flex lg:justify-normal flex-col items-center px-5 lg:px-10 "
+        className="flex lg:justify-normal flex-col items-center px-5 lg:px-10 pb-8 border-b-2 border-stone-200 "
       >
         <div className="flex w-full justify-between items-center h-20">
           <div className="flex items-center space-x-1 lg:w-1/4 font-extrabold text-2xl ">
-            <Link to={"/"}>Ticket Park</Link>
+            <Link to={"/"}>TicketPark</Link>
             <IoTicketSharp className="text-yellow-400" />
           </div>
           <div className="flex space-x-7">
