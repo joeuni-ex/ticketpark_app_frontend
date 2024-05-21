@@ -27,14 +27,46 @@ function BasicMenu() {
     <div>
       <nav
         id="navbar"
-        className="flex justify-between lg:justify-normal items-center px-5 lg:px-10 h-20"
+        className="flex lg:justify-normal flex-col items-center px-5 lg:px-10 "
       >
-        <div className="flex items-center space-x-1 lg:w-1/5 font-extrabold text-2xl ">
-          <Link to={"/"}>Ticket Park</Link>
-          <IoTicketSharp className="text-yellow-400" />
+        <div className="flex w-full justify-between items-center h-20">
+          <div className="flex items-center space-x-1 lg:w-1/4 font-extrabold text-2xl ">
+            <Link to={"/"}>Ticket Park</Link>
+            <IoTicketSharp className="text-yellow-400" />
+          </div>
+          <div className="flex space-x-7">
+            {/* searchbar */}
+            <div className="flex space-x-1">
+              <input
+                type="text"
+                name=""
+                id=""
+                className="border-b-2 border-black w-60 outline-none"
+              />
+              <RiSearchLine className="text-xl" />
+            </div>
+            {/* web */}
+            <div className="justify-end w-2/4 space-x-2  hidden lg:flex">
+              <Link>
+                <FaUserAlt className="text-lg" />
+              </Link>
+              <Link>
+                <FaUserAlt className="text-lg" />
+              </Link>
+              <Link>로그아웃</Link>
+            </div>
+            {/* mobile menu toggle*/}
+            <div className="lg:hidden">
+              <GiHamburgerMenu
+                onClick={handleClickMenuToggle}
+                className="text-lg"
+              />
+            </div>
+          </div>
         </div>
-        <div className="w-3/5 hidden lg:block">
-          <ul className="flex justify-center space-x-6 text-lg">
+        {/* header menu */}
+        <div className="w-full hidden lg:block">
+          <ul className="flex justify-center space-x-10 text-lg">
             <li>
               <Link
                 to={"/genre/genrelist"}
@@ -69,34 +101,8 @@ function BasicMenu() {
             </li>
           </ul>
         </div>
-        {/* searchbar */}
-        <div className="flex space-x-1">
-          <input
-            type="text"
-            name=""
-            id=""
-            className="border-b-2 border-black w-60 outline-none"
-          />
-          <RiSearchLine className="text-xl" />
-        </div>
-        {/* web */}
-        <div className="justify-end w-1/12 space-x-2  hidden lg:flex">
-          <Link>
-            <FaUserAlt className="text-lg" />
-          </Link>
-          <Link>
-            <FaUserAlt className="text-lg" />
-          </Link>
-          <Link>로그아웃</Link>
-        </div>
-        {/* mobile menu toggle*/}
-        <div className="lg:hidden">
-          <GiHamburgerMenu
-            onClick={handleClickMenuToggle}
-            className="text-lg"
-          />
-        </div>
       </nav>
+
       {/* 사이드 바 - 모바일  */}
 
       {menuToggle && (
