@@ -1,8 +1,10 @@
 import React from "react";
 import BasicLayout from "../layout/BasicLayout";
 import Slider from "react-slick";
-import SliderImages from "../sliderImages";
+
 import styled from "styled-components";
+import { sliderImages, focusImages, newImages } from "../images";
+import { Link } from "react-router-dom";
 
 function MainPage() {
   // Web Slider Settings
@@ -38,7 +40,7 @@ function MainPage() {
       <div className="slider-container my-6 hidden md:block">
         <SlideContainer>
           <Slider {...webSettings}>
-            {SliderImages.map((item) => (
+            {sliderImages.map((item) => (
               <div key={item.id}>
                 <SlidePage>
                   <MultiItem>
@@ -54,7 +56,7 @@ function MainPage() {
       {/* Mobile Slider */}
       <div className="slider-container  md:hidden">
         <Slider {...mobileSettings}>
-          {SliderImages.map((item) => (
+          {sliderImages.map((item) => (
             <div key={item.id}>
               <SlidePage>
                 <MultiItem>
@@ -67,30 +69,57 @@ function MainPage() {
       </div>
 
       {/* section 2*/}
-      <div className="flex  w-full flex-col items-center justify-center py-20 space-y-8">
-        <div className="  text-3xl  font-bold text-stone-900">FOCUS ON</div>
+      <div className="flex  w-full flex-col items-center justify-center py-20 space-y-10">
+        <div className="  text-4xl  font-bold text-stone-900">FOCUS ON</div>
 
         <div className="flex">
-          <img
-            src="./main/focus_1.jpg"
-            alt="focus_1"
-            className="hover:scale-105  duration-300 ease-in-out border"
-          />
-          <img
-            src="./main/focus_2.jpg"
-            alt="focus_2"
-            className="hover:scale-105  duration-300 ease-in-out border"
-          />
-          <img
-            src="./main/focus_3.jpg"
-            alt="focus_3"
-            className="hover:scale-105  duration-300 ease-in-out border"
-          />
+          {focusImages.map((image) => (
+            <div
+              key={image.id}
+              className="overflow-hidden border hover:border-yellow-300 "
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="hover:scale-105   duration-300 ease-in-out border"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* section 3*/}
+      <div className="flex flex-col w-full items-center py-10 space-y-10">
+        <div className="  text-4xl font-bold text-stone-900">WHAT'S NEW</div>
+        {/* 최신순 정렬 */}
+        <div className="flex space-x-5">
+          {newImages.map((item) => (
+            <div className="relative overflow-hidden w-64" key={item.id}>
+              <Link>
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="transition-opacity duration-500 ease-in-out hover:opacity-60"
+                />
+                <div className="absolute space-y-3 flex-col top-0 left-0 w-full h-full flex justify-center items-center bg-black opacity-0 hover:opacity-70 transition-opacity duration-500 ease-in-out ">
+                  <di v className="text-white text-xl font-semibold ">
+                    영화 제목
+                  </di>
+                  <div className="text-white text-lg font-semibold">설명</div>
+                  <div className="text-orange-600 text-lg font-semibold">
+                    상세보기
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </BasicLayout>
   );
 }
+
+// 슬라이더 React-Slick 라이브러리 관련  CSS
 export const MultiItem = styled.div`
   opacity: 1;
   transform: scale(1.04);
