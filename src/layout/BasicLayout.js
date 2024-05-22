@@ -1,5 +1,6 @@
 import React from "react";
 import BasicMenu from "../components/menus/BasicMenu";
+import BasicFooter from "../components/footer/BasicFooter";
 
 function BasicLayout({ children }) {
   return (
@@ -9,6 +10,8 @@ function BasicLayout({ children }) {
       <div>
         <main>{children}</main>
       </div>
+
+      <BasicFooter />
     </>
   );
 }
