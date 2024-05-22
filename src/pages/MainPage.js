@@ -7,6 +7,7 @@ import { sliderImages, focusImages, newImages } from "../images";
 import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
+import CardComponent from "../components/Card/CardComponent";
 
 function MainPage() {
   // Web Slider Settings
@@ -92,30 +93,22 @@ function MainPage() {
       </div>
 
       {/* section 3*/}
-      <div className="flex flex-col w-full items-center py-20 space-y-10">
-        <div className="  text-4xl font-bold text-stone-900">WHAT'S NEW</div>
+      <div className="flex flex-col w-full items-center justify-center py-20 space-y-10">
+        <div className=" w- text-4xl font-bold text-stone-900">WHAT'S NEW</div>
         {/* 최신순 정렬 */}
-        <div className="flex space-x-5">
-          {newImages.map((item) => (
-            <div className="relative overflow-hidden w-64" key={item.id}>
-              <Link>
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  className="transition-opacity duration-500 ease-in-out hover:opacity-60"
-                />
-                <div className="absolute space-y-3 flex-col top-0 left-0 w-full h-full flex justify-center items-center bg-black opacity-0 hover:opacity-70 transition-opacity duration-500 ease-in-out ">
-                  <div className="text-white text-xl font-semibold ">
-                    영화 제목
-                  </div>
-                  <div className="text-white text-lg font-semibold">설명</div>
-                  <div className="text-orange-600 text-lg font-semibold">
-                    상세보기
-                  </div>
-                </div>
-              </Link>
-            </div>
-          ))}
+        <div className="flex  w-8/12 ">
+          {/* 큰 사이즈  */}
+
+          <div className="w-1/3">
+            <CardComponent src="./main/new_1.jpg" />
+          </div>
+          {/* 작은 사이즈  */}
+          <div className="flex justify-center w-2/3 flex-wrap gap-6">
+            {newImages.map((item) => (
+              <CardComponent item={item} width="w-3/12" key={item.id} />
+            ))}
+            <CardComponent src="./main/new_7.jpg" width="w-3/12" />
+          </div>
         </div>
       </div>
 
@@ -142,6 +135,19 @@ function MainPage() {
             src="./main/youtube_3.gif"
             dsc="가슴이 두근두근! 2024 하이라이트 콘서트 'LIGHTS GO ON, AGAIN' 스팟 영상"
           />
+        </div>
+      </div>
+
+      {/* section 5 */}
+      <div className="flex  w-full flex-col items-center justify-center py-20 space-y-10">
+        <div className="  text-4xl  font-bold text-stone-900">
+          CONCERT & CLASSIC
+        </div>
+
+        <div className="flex space-x-5">
+          {newImages.map((item) => (
+            <CardComponent item={item} width="w-64" />
+          ))}
         </div>
       </div>
     </BasicLayout>
