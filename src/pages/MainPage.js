@@ -125,7 +125,7 @@ function MainPage() {
           TICKET PARK PLAY
         </div>
         {/* 유튜브 영상 */}
-        <div className="flex flex-col md:flex-row space-y-5 md:space-x-5">
+        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5">
           <YoutubeComponent
             videoId={"t9tBts5crG8"}
             src="./main/youtube_1.gif"
