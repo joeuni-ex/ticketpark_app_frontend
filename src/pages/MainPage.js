@@ -5,6 +5,8 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import { sliderImages, focusImages, newImages } from "../images";
 import { Link } from "react-router-dom";
+import YouTube from "react-youtube";
+import YoutubeComponent from "../components/youtube/YoutubeComponent";
 
 function MainPage() {
   // Web Slider Settings
@@ -34,6 +36,7 @@ function MainPage() {
     speed: 2000,
     autoplaySpeed: 4000,
   };
+
   return (
     <BasicLayout>
       {/* Web Slider  */}
@@ -89,7 +92,7 @@ function MainPage() {
       </div>
 
       {/* section 3*/}
-      <div className="flex flex-col w-full items-center py-10 space-y-10">
+      <div className="flex flex-col w-full items-center py-20 space-y-10">
         <div className="  text-4xl font-bold text-stone-900">WHAT'S NEW</div>
         {/* 최신순 정렬 */}
         <div className="flex space-x-5">
@@ -102,9 +105,9 @@ function MainPage() {
                   className="transition-opacity duration-500 ease-in-out hover:opacity-60"
                 />
                 <div className="absolute space-y-3 flex-col top-0 left-0 w-full h-full flex justify-center items-center bg-black opacity-0 hover:opacity-70 transition-opacity duration-500 ease-in-out ">
-                  <di v className="text-white text-xl font-semibold ">
+                  <div className="text-white text-xl font-semibold ">
                     영화 제목
-                  </di>
+                  </div>
                   <div className="text-white text-lg font-semibold">설명</div>
                   <div className="text-orange-600 text-lg font-semibold">
                     상세보기
@@ -113,6 +116,32 @@ function MainPage() {
               </Link>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* section 4 */}
+      <div className="flex flex-col w-full items-center py-20 space-y-10">
+        <div className="  text-4xl font-bold text-stone-900">
+          TICKET PARK PLAY
+        </div>
+        {/* 유튜브 영상 */}
+        <div className="flex flex-col md:flex-row space-y-5 md:space-x-5">
+          <YoutubeComponent
+            videoId={"t9tBts5crG8"}
+            src="./main/youtube_1.gif"
+            dsc="10주년 맞은 최강 뮤직 페스티벌!
+                  울트라뮤직 페스티벌 코리아 2024"
+          />
+          <YoutubeComponent
+            videoId={"oQoo3ziXu08"}
+            src="./main/youtube_2.gif"
+            dsc="대망의 무대! World DJ Festival 2024 스팟 영상"
+          />
+          <YoutubeComponent
+            videoId={"qCRlGCWWsOk"}
+            src="./main/youtube_3.gif"
+            dsc="가슴이 두근두근! 2024 하이라이트 콘서트 'LIGHTS GO ON, AGAIN' 스팟 영상"
+          />
         </div>
       </div>
     </BasicLayout>
