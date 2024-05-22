@@ -33,7 +33,7 @@ function BasicMenu() {
           <div className="flex items-center space-x-1 lg:w-1/4 font-extrabold text-2xl ">
             <Link to={"/"} className="flex">
               <div className="flex items-center">TicketPark</div>
-              <img src="/logo.png" alt="" className="w-8" />
+              <img src="/logo.png" alt="" className="w-8  h-8" />
             </Link>
           </div>
           <div className="flex space-x-7">
