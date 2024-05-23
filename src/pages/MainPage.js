@@ -93,17 +93,20 @@ function MainPage() {
       </div>
 
       {/* section 3*/}
-      <div className="flex flex-col w-full items-center justify-center py-20 space-y-10">
+      <div className="flex flex-col w-full items-center  py-20 space-y-10">
         <div className=" w- text-4xl font-bold text-stone-900">WHAT'S NEW</div>
         {/* 최신순 정렬 */}
-        <div className="flex  w-8/12 ">
+        <div className="flex justify-center  items-center space-x-5 ">
           {/* 큰 사이즈  */}
 
-          <div className="w-1/3">
-            <CardComponent src="./main/new_1.jpg" />
+          <div className="w-3/12 flex flex-col items-end">
+            <CardComponent src="./main/new_1.jpg" width="w-10/12" />
+            <div className="flex w-10/12 justify-center border-b font-bold ">
+              바스커빌 셜록홈즈 미스테리
+            </div>
           </div>
           {/* 작은 사이즈  */}
-          <div className="flex justify-center w-2/3 flex-wrap gap-6">
+          <div className="flex w-5/12 flex-wrap gap-5">
             {newImages.map((item) => (
               <CardComponent item={item} width="w-3/12" key={item.id} />
             ))}
