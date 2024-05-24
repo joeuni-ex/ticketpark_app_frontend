@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 function IndexPage() {
   return (
     <BasicLayout>
-      <div>
+      <div className="w-full ">
         <Outlet />
       </div>
     </BasicLayout>
