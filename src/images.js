@@ -132,6 +132,24 @@ const classicSliderImages = [
     alt: "Image 6",
   },
 ];
+// mainPage slider images
+const mainSliderImages = [
+  {
+    id: 1,
+    src: "/slider/main_slider_image_1.jpg",
+    alt: "Image 1",
+  },
+  {
+    id: 2,
+    src: "/slider/main_slider_image_2.jpg",
+    alt: "Image 2 ",
+  },
+  {
+    id: 3,
+    src: "/slider/main_slider_image_3.jpg",
+    alt: "Image 3",
+  },
+];
 
 // focus image
 const focusImages = [
@@ -186,6 +204,7 @@ export {
   concertSliderImages,
   musicalSliderImages,
   playSliderImages,
+  mainSliderImages,
   focusImages,
   newImages,
 };
