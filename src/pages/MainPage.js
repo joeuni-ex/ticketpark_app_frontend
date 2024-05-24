@@ -3,7 +3,7 @@ import BasicLayout from "../layout/BasicLayout";
 import Slider from "react-slick";
 
 import styled from "styled-components";
-import { sliderImages, focusImages, newImages } from "../images";
+import { focusImages, newImages } from "../images";
 import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
@@ -41,7 +41,7 @@ function MainPage() {
   return (
     <BasicLayout>
       {/* Web Slider  */}
-      <div className="slider-container my-6 hidden md:block">
+      {/* <div className="slider-container my-6 hidden md:block">
         <SlideContainer>
           <Slider {...webSettings}>
             {sliderImages.map((item) => (
@@ -55,10 +55,10 @@ function MainPage() {
             ))}
           </Slider>
         </SlideContainer>
-      </div>
+      </div> */}
 
       {/* Mobile Slider */}
-      <div className="slider-container  md:hidden">
+      {/* <div className="slider-container  md:hidden">
         <Slider {...mobileSettings}>
           {sliderImages.map((item) => (
             <div key={item.id}>
@@ -70,7 +70,7 @@ function MainPage() {
             </div>
           ))}
         </Slider>
-      </div>
+      </div> */}
 
       {/* section 2*/}
       <div className="flex  w-full flex-col items-center justify-center py-20 space-y-10">
