@@ -71,7 +71,7 @@ function BasicMenu() {
           <ul className="flex justify-center space-x-10 text-lg">
             <li>
               <Link
-                to={"/genre/genrelist"}
+                to={"/contents/genre/concert"}
                 className="hover:border-b-4 border-yellow-300 hover:font-semibold"
               >
                 콘서트
@@ -79,7 +79,7 @@ function BasicMenu() {
             </li>
             <li>
               <Link
-                to={"/genre/genrelist"}
+                to={"/contents/genre/musical"}
                 className="hover:border-b-4 border-yellow-300 hover:font-semibold"
               >
                 뮤지컬
@@ -87,7 +87,7 @@ function BasicMenu() {
             </li>
             <li>
               <Link
-                to={"/genre/genrelist"}
+                to={"/contents/genre/play"}
                 className="hover:border-b-4 border-yellow-300 hover:font-semibold"
               >
                 연극
@@ -95,7 +95,7 @@ function BasicMenu() {
             </li>
             <li>
               <Link
-                to={"/genre/genrelist"}
+                to={"/contents/genre/classic"}
                 className="hover:border-b-4 border-yellow-300 hover:font-semibold"
               >
                 클래식
