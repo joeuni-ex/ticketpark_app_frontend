@@ -104,7 +104,7 @@ function ListPage() {
         <div className="flex flex-wrap w-9/12 gap-7 justify-center">
           {/* 1 */}
 
-          <Link className="w-56 overflow-hidden space-y-2 ">
+          <Link to={"/goods/1"} className="w-56 overflow-hidden space-y-2 ">
             <img src="/main/new_1.jpg" className="w-full " alt="" />
             <div className="space-y-2">
               <p className="font-bold text-lg">제목</p>
