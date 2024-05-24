@@ -149,7 +149,7 @@ function MainPage() {
 
         <div className="flex space-x-5">
           {newImages.map((item) => (
-            <CardComponent item={item} width="w-64" />
+            <CardComponent key={item.id} item={item} width="w-64" />
           ))}
         </div>
       </div>
