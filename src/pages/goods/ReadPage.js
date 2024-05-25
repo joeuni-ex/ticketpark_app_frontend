@@ -3,6 +3,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
 import Review from "../../components/Card/Review";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 //티켓 가격
 const seatPrice = [
@@ -49,6 +51,8 @@ const reviewSample = {
 };
 
 function ReadPage() {
+  const gid = useParams();
+
   const [date, setDate] = useState(new Date());
   const [selectedSession, setSelectedSession] = useState("1회차"); //예매
   const [selectedMenu, setSelectedMenu] = useState("공연정보");
@@ -67,6 +71,8 @@ function ReadPage() {
   const handleMenuChange = (menu) => {
     setSelectedMenu(menu);
   };
+
+  useEffect(() => {}, [gid]);
 
   return (
     <div className="flex  justify-center ">
