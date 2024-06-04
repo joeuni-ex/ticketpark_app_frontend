@@ -5,13 +5,25 @@ const Loading = <div>Loading...</div>;
 
 const AddGoodsPage = lazy(() => import("../pages/member/admin/AddGoodsPage"));
 
+const ModifyGoodsPage = lazy(() =>
+  import("../pages/member/admin/ModifyGoodsPage")
+);
+
 const memberRouter = () => {
   return [
     {
-      path: "admin",
+      path: "admin/goods/register",
       element: (
         <Suspense fallback={Loading}>
           <AddGoodsPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "admin/goods/modify",
+      element: (
+        <Suspense fallback={Loading}>
+          <ModifyGoodsPage />
         </Suspense>
       ),
     },
