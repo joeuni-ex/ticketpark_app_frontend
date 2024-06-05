@@ -24,9 +24,19 @@ export const getOne = async (gno) => {
 //리스트 조회
 export const getList = async (pageParams) => {
   const { page, size } = pageParams;
+  console.log("실행");
 
   //쿼리 스트링은 option => params로 가져옴
   const res = await axios.get(`${prefix}/list`, { params: { page, size } });
+
+  return res.data;
+};
+
+//수정
+export const modifyOne = async (gno, goods) => {
+  const header = { headers: { "Content-Type": "multipart/form-data" } };
+
+  const res = await axios.put(`${prefix}/${gno}`, goods, header);
 
   return res.data;
 };
