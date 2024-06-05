@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FetchingModal from "../../../../components/common/FetchingModal";
 import ConfirmModal from "../../../../components/common/ConfirmModal";
 import ResultModal from "../../../../components/common/ResultModal";
+import PageComponent from "../../../../components/common/PageComponent";
 
 const host = API_SERVER_HOST;
 
@@ -28,16 +29,14 @@ const deleteState = {
 
 function ListPage() {
   const [serverData, setServerData] = useState(initState);
+  const { page, size, refresh, moveToList, moveToRead } = useCustomMove();
 
   const [fetching, setFetching] = useState(false); //로딩 모달
-
   const [deleteModal, setDeleteModal] = useState(false); //삭제 모달
   const [deleteGno, setDeleteGno] = useState("");
   const [result, setResult] = useState(false); //결과 모달
 
   const navigate = useNavigate();
-
-  const { page, size } = useCustomMove();
 
   //삭제 모달
   const handleClickDelete = async (gno) => {
@@ -74,11 +73,13 @@ function ListPage() {
   };
 
   useEffect(() => {
+    setFetching(true);
+
     getList({ page, size }).then((data) => {
-      console.log(data);
+      setFetching(false);
       setServerData(data);
     });
-  }, [page, size, result]);
+  }, [page, size, refresh, result]);
 
   return (
     <div className=" mt-10 mr-2 ml-2">
@@ -135,6 +136,7 @@ function ListPage() {
           </div>
         ))}
       </div>
+      <PageComponent serverData={serverData} movePage={moveToList} />
     </div>
   );
 }
