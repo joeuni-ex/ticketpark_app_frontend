@@ -8,9 +8,9 @@ function ConfirmModal({ message, onConfirm, onCancel }) {
       <div className="absolute bg-white shadow opacity-100 w-1/4 rounded mt-10 mb-10 px-6 min-w-[600px]">
         <div className="text-2xl  pt-4 pb-4 text-stone-700 ">{message}</div>
         {/* button */}
-        <div className="justify-end flex">
+        <div className="justify-end flex space-x-2">
           <button
-            className="rounded bg-blue-500 mt-4 mb-4 px-6 pt-4 pb-4 text-lg hover:bg-blue-400 text-white"
+            className="rounded bg-gray-500 mt-4 mb-4 px-6 pt-4 pb-4 text-lg hover:bg-gray-400 text-white"
             onClick={() => {
               if (onCancel) {
                 onCancel();
@@ -19,7 +19,12 @@ function ConfirmModal({ message, onConfirm, onCancel }) {
           >
             취소
           </button>
-          <button onClick={onConfirm}>확인</button>
+          <button
+            className="rounded bg-blue-500 mt-4 mb-4 px-6 pt-4 pb-4 text-lg hover:bg-blue-400 text-white"
+            onClick={onConfirm}
+          >
+            확인
+          </button>
         </div>
       </div>
     </div>
