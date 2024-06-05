@@ -3,14 +3,26 @@ import { Navigate } from "react-router-dom";
 
 const Loading = <div>Loading...</div>;
 
-const AddGoodsPage = lazy(() => import("../pages/member/admin/AddGoodsPage"));
+const AddGoodsPage = lazy(() => import("../pages/member/admin/goods/AddPage"));
 
 const ModifyGoodsPage = lazy(() =>
-  import("../pages/member/admin/ModifyGoodsPage")
+  import("../pages/member/admin/goods/ModifyPage")
+);
+
+const ListGoodsPage = lazy(() =>
+  import("../pages/member/admin/goods/ListPage")
 );
 
 const memberRouter = () => {
   return [
+    {
+      path: "admin/goods",
+      element: (
+        <Suspense fallback={Loading}>
+          <ListGoodsPage />
+        </Suspense>
+      ),
+    },
     {
       path: "admin/goods/register",
       element: (
@@ -30,7 +42,7 @@ const memberRouter = () => {
 
     {
       path: "admin",
-      element: <Navigate replace={true} to={"/admin/goods/register"} />,
+      element: <Navigate replace={true} to={"/admin/goods"} />,
     },
   ];
 };

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { TiDeleteOutline } from "react-icons/ti";
-import FetchingModal from "../../../components/common/FetchingModal";
+import FetchingModal from "../../../../components/common/FetchingModal";
 
 function AddGoodsPage() {
   const [fetching, setFetching] = useState(false); //로딩 모달
