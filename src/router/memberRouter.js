@@ -16,7 +16,7 @@ const ListGoodsPage = lazy(() =>
 const memberRouter = () => {
   return [
     {
-      path: "admin/goods",
+      path: "admin/goods/list",
       element: (
         <Suspense fallback={Loading}>
           <ListGoodsPage />
