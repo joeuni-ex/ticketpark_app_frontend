@@ -104,34 +104,50 @@ function ListPage() {
         {serverData.dtoList.map((goods) => (
           <div
             key={goods.gno}
-            className="w-full min-w-[400px] p-2 m-2 rounded shadow-md"
+            className="flex justify-between w-full min-w-[400px] p-2 m-2 rounded shadow-md text-stone-700"
           >
-            <div className="flex">
-              <div className="font-extrabold text-2xl p-2 w-1/12">
-                {goods.gno}
+            <div className="flex w-full">
+              <div className="flex ">
+                <div className="font-extrabold text-2xl p-2 w-1/12">
+                  {goods.gno}
+                </div>
+                <div className="text-1xl m-1 p-2 w-2/10 font-medium">
+                  <img
+                    src={`${host}/api/goods/view/s_${goods.uploadFileNames[0]}`}
+                    alt="image"
+                  />
+                </div>
+                <div className="flex w-96 flex-col">
+                  <div className="text-1xl m-1 p-2  font-extrabold">
+                    {goods.title}
+                  </div>
+                  <div className="text-1xl m-1 p-2  font-medium">
+                    <span className="font-semibold">공연장소</span>{" "}
+                    {goods.place}
+                  </div>
+                  <div className="text-1xl m-1 p-2  font-medium">
+                    <span className="font-semibold">공연기간</span>{" "}
+                    {goods.startDate} ~ {goods.endDate}
+                  </div>
+                  <div className="text-1xl m-1 p-2  font-medium">
+                    <span className="font-semibold">연령제한</span>{" "}
+                    {goods.age === 0 ? "전체이용가" : goods.age}세 이상
+                  </div>
+                  <div className="text-1xl m-1 p-2  font-medium">
+                    <span className="font-semibold">공연시간</span> {goods.time}
+                    분
+                  </div>
+                </div>
               </div>
-              <div className="text-1xl m-1 p-2 w-2/10 font-medium">
-                <img
-                  src={`${host}/api/goods/view/s_${goods.uploadFileNames[0]}`}
-                  alt="image"
-                />
-              </div>
-              <div className="text-1xl m-1 p-2 w-8/12 font-extrabold">
-                {goods.title}
-              </div>
-              <div className="text-1xl m-1 p-2 w-2/10 font-medium">
-                {goods.place}
-              </div>
-              <div className="text-1xl m-1 p-2 w-2/10 font-medium">
-                <Link to={`member/admin/goods/modify/${goods.gno}`}>수정</Link>{" "}
-                /{" "}
-                <span
-                  className="cursor-pointer"
-                  onClick={() => handleClickDelete(goods.gno)}
-                >
-                  삭제
-                </span>
-              </div>
+            </div>
+            <div className="text-1xl m-1 p-2 w-48 font-medium">
+              <Link to={`member/admin/goods/modify/${goods.gno}`}>수정</Link> /{" "}
+              <span
+                className="cursor-pointer"
+                onClick={() => handleClickDelete(goods.gno)}
+              >
+                삭제
+              </span>
             </div>
           </div>
         ))}
