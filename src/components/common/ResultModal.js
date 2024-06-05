@@ -20,7 +20,7 @@ function ResultModal({ title, content, callbackFn }) {
               }
             }}
           >
-            Close Modal
+            확인
           </button>
         </div>
       </div>
