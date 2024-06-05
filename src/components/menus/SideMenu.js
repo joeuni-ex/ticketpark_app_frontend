@@ -43,9 +43,6 @@ function SideMenu() {
           <Link to={"/member/admin/goods/register"} className="p-2 pl-5">
             상품 등록
           </Link>
-          <Link to={"/member/admin/goods/modify"} className="p-2  pl-5">
-            상품 수정
-          </Link>
         </motion.div>
       ) : (
         <></>
