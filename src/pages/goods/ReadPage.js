@@ -5,6 +5,22 @@ import styled from "styled-components";
 import Review from "../../components/card/Review";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { API_SERVER_HOST, getOne } from "../../api/goodsApi";
+import FetchingModal from "../../components/common/FetchingModal";
+
+//초기값
+const initState = {
+  gno: 0,
+  title: "",
+  place: "",
+  gdesc: "",
+  time: 0,
+  age: 0,
+  genre: "",
+  uploadFileNames: [],
+};
+
+const host = API_SERVER_HOST;
 
 //티켓 가격
 const seatPrice = [
@@ -51,7 +67,11 @@ const reviewSample = {
 };
 
 function ReadPage() {
-  const gid = useParams();
+  const { gno } = useParams();
+
+  const [goods, setGoods] = useState(initState);
+
+  const [fetching, setFetching] = useState(false);
 
   const [date, setDate] = useState(new Date());
   const [selectedSession, setSelectedSession] = useState("1회차"); //예매
@@ -72,26 +92,37 @@ function ReadPage() {
     setSelectedMenu(menu);
   };
 
-  useEffect(() => {}, [gid]);
+  useEffect(() => {
+    setFetching(true);
+    getOne(gno).then((data) => {
+      setGoods(data);
+
+      setFetching(false);
+    });
+  }, [gno]);
 
   return (
     <div className="flex  justify-center ">
+      {fetching ? <FetchingModal /> : <></>}
       {/* left */}
       <div className="flex flex-col w-6/12  mt-5 p-3 ">
         <div className="flex flex-col my-5 space-y-2">
-          <div className="text-2xl font-bold">뮤지컬</div>
+          <div className="text-2xl font-bold">{goods.title}</div>
           <div className="text-sm">⭐⭐⭐⭐⭐(9/10)</div>
         </div>
 
         <div className="flex space-x-11">
           <div className="w-80 h-96 bg-orange-400">
-            <img src="" alt="" />
+            <img
+              src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
+              alt="image"
+            />
           </div>
 
           <div className="flex flex-col w-1/2 space-y-5">
             <div className="flex ">
               <div className="w-1/4">장소</div>
-              <div>샤롯데씨어터</div>
+              <div>{goods.place}</div>
             </div>
             <div className="flex ">
               <div className="w-1/4">공연기간</div>
@@ -99,11 +130,11 @@ function ReadPage() {
             </div>
             <div className="flex ">
               <div className="w-1/4">공연시간</div>
-              <div>135분</div>
+              <div>{goods.time}</div>
             </div>
             <div className="flex ">
               <div className="w-1/4">관람연령</div>
-              <div>17세 이상</div>
+              <div>{goods.age == 0 ? "전체이용가" : `${goods.age}세 이상`}</div>
             </div>
             <div className="flex ">
               <div className="w-1/4">가격</div>
@@ -139,6 +170,7 @@ function ReadPage() {
 
         <div className="flex flex-col pt-10">
           {/* 공연정보 */}
+          <div>{goods.gdesc}</div>
           {/* 공연후기 */}
           {selectedMenu == "공연후기" ? (
             <div className="flex flex-col text-stone-700 space-y-10 ">
