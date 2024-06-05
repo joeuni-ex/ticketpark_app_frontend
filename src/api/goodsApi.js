@@ -5,6 +5,15 @@ export const API_SERVER_HOST = "http://localhost:8080";
 
 const prefix = `${API_SERVER_HOST}/api/goods`;
 
+//추가
+export const postAdd = async (goods) => {
+  const header = { headers: { "Content-Type": "multipart/form-data" } };
+
+  const res = await axios.post(`${prefix}/`, goods, header);
+
+  return res.data;
+};
+
 //조회
 export const getOne = async (gno) => {
   const res = await axios.get(`${prefix}/${gno}`);
