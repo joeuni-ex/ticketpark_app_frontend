@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
-import CardComponent from "../components/Card/CardComponent";
+import CardComponent from "../components/card/CardComponent";
 
 function MainPage() {
   // Web Slider Settings
