@@ -1,7 +1,10 @@
 import React, { useRef, useState } from "react";
 import { TiDeleteOutline } from "react-icons/ti";
+import FetchingModal from "../../../components/common/FetchingModal";
 
 function AddGoodsPage() {
+  const [fetching, setFetching] = useState(false); //로딩 모달
+
   const [images, setImages] = useState([]);
   const uploadRef = useRef();
 
@@ -20,13 +23,18 @@ function AddGoodsPage() {
   const handleAddImageClick = () => {
     uploadRef.current.click();
   };
-
+  //이미지 삭제
   const handleRemoveImage = (index) => {
     setImages(images.filter((_, i) => i !== index));
   };
 
+  const handleClickRegister = () => {
+    setFetching(true); //로딩 모달 출력
+  };
+
   return (
     <div className="flex flex-col p-5">
+      {fetching ? <FetchingModal /> : <></>}
       <div className="font-bold text-stone-800 text-xl py-10 px-5 border-b">
         상품 등록
       </div>
@@ -114,7 +122,10 @@ function AddGoodsPage() {
               <textarea className="border h-60 w-full outline-none resize-none" />
             </div>
             <div className="flex w-full justify-end">
-              <div className="flex justify-center items-center cursor-pointer border border-orange-400 text-orange-400 w-40 h-16 rounded-md hover:bg-orange-100 text-lg text-sto">
+              <div
+                onClick={handleClickRegister}
+                className="flex justify-center items-center cursor-pointer border border-orange-400 text-orange-400 w-40 h-16 rounded-md hover:bg-orange-100 text-lg text-sto"
+              >
                 상품등록
               </div>
             </div>
