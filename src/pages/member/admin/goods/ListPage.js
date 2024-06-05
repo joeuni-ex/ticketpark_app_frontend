@@ -141,7 +141,7 @@ function ListPage() {
               </div>
             </div>
             <div className="text-1xl m-1 p-2 w-48 font-medium">
-              <Link to={`member/admin/goods/modify/${goods.gno}`}>수정</Link> /{" "}
+              <Link to={`/member/admin/goods/modify/${goods.gno}`}>수정</Link> /{" "}
               <span
                 className="cursor-pointer"
                 onClick={() => handleClickDelete(goods.gno)}

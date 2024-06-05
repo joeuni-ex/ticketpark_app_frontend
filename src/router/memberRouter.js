@@ -16,6 +16,14 @@ const ListGoodsPage = lazy(() =>
 const memberRouter = () => {
   return [
     {
+      path: "admin/goods/",
+      element: (
+        <Suspense fallback={Loading}>
+          <ListGoodsPage />
+        </Suspense>
+      ),
+    },
+    {
       path: "admin/goods/list",
       element: (
         <Suspense fallback={Loading}>
@@ -32,7 +40,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "admin/goods/modify",
+      path: "admin/goods/modify/:gno",
       element: (
         <Suspense fallback={Loading}>
           <ModifyGoodsPage />
