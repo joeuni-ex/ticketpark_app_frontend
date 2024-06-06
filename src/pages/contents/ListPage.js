@@ -10,31 +10,59 @@ import {
   musicalSliderImages,
   playSliderImages,
 } from "../../images";
+import useCustomMove from "../../hooks/useCustomMove";
+import { API_SERVER_HOST, getList } from "../../api/goodsApi";
+
+const host = API_SERVER_HOST;
+
+//초기값 설정-> 서버에서 출력되는 값
+const initState = {
+  dtoList: [],
+  pageNumList: [],
+  pageRequestDTO: null,
+  prev: false,
+  next: false,
+  totalCount: 0,
+  prevPage: 0,
+  nextPage: 0,
+  totalPage: 0,
+  current: 0,
+};
 
 function ListPage() {
+  const [serverData, setServerData] = useState(initState);
+  const { page, size, refresh } = useCustomMove();
+  const [genre, setGenre] = useState("all");
+  const [genreTitle, setGenreTitle] = useState(null);
+
+  const [fetching, setFetching] = useState(false); //로딩 모달
   const genreParam = useParams();
-
-  const [genre, setGenre] = useState("콘서트"); //컨텐츠 종류
-
   const [sliderImages, setSliderImages] = useState(null);
 
   useEffect(() => {
+    setFetching(true);
+
+    setGenre(genreParam.genre);
+
     if (genreParam.genre == "musical") {
-      setGenre("뮤지컬");
+      setGenreTitle("뮤지컬");
       setSliderImages(musicalSliderImages);
     } else if (genreParam.genre == "concert") {
-      setGenre("콘서트");
+      setGenreTitle("콘서트");
       setSliderImages(concertSliderImages);
     } else if (genreParam.genre == "play") {
-      setGenre("연극");
+      setGenreTitle("연극");
       setSliderImages(playSliderImages);
     } else if (genreParam.genre == "classic") {
-      setGenre("클래식");
+      setGenreTitle("클래식");
       setSliderImages(classicSliderImages);
     }
-  }, [genreParam]);
 
-  console.log(sliderImages);
+    getList({ page, size, genre }).then((data) => {
+      setFetching(false);
+      setServerData(data);
+    });
+  }, [page, size, refresh, genre, genreParam]);
 
   // Web Slider Settings
   const webSettings = {
@@ -100,122 +128,31 @@ function ListPage() {
 
       {/* contents List */}
       <div className="flex flex-col justify-center items-center space-y-10 py-20">
-        <div className="text-3xl font-bold">{`${genre}`} 둘러보기</div>
+        <div className="text-3xl font-bold">{`${genreTitle}`} 둘러보기</div>
         <div className="flex flex-wrap w-9/12 gap-7 justify-center">
           {/* 1 */}
-
-          <Link to={"/goods/1"} className="w-56 overflow-hidden space-y-2 ">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-            <div className="border rounded border-purple-500 w-20 text-sm p-1 flex items-center justify-center font-semibold text-purple-700">
-              단독판매
-            </div>
-          </Link>
-          {/* 2 */}
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-            <div className="border rounded border-purple-500 w-20 text-sm p-1 flex items-center justify-center font-semibold text-purple-700">
-              단독판매
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
-          <div className="w-56 overflow-hidden space-y-2">
-            <img src="/main/new_1.jpg" className="w-full " alt="" />
-            <div className="space-y-2">
-              <p className="font-bold text-lg">제목</p>
-              <p>설명</p>
-            </div>
-          </div>
+          {serverData.dtoList.map((goods) => (
+            <Link
+              to={`/goods/${goods.gno}`}
+              className="w-56 overflow-hidden space-y-2 "
+              key={goods.gno}
+            >
+              <img
+                src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
+                className="w-full "
+                alt=""
+              />
+              <div className="space-y-2">
+                <p className="font-bold text-lg">{goods.title}</p>
+                <p>{goods.gdesc}</p>
+              </div>
+              {goods.exclusive && (
+                <div className="border rounded border-purple-500 w-20 text-sm p-1 flex items-center justify-center font-semibold text-purple-700">
+                  단독판매
+                </div>
+              )}
+            </Link>
+          ))}
         </div>
       </div>
     </div>
