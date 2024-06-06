@@ -13,10 +13,13 @@ const initState = {
   gno: 0,
   title: "",
   place: "",
+  startDate: "",
+  endDate: "",
   gdesc: "",
   time: 0,
   age: 0,
   genre: "",
+  exclusive: 0,
   uploadFileNames: [],
 };
 
@@ -77,10 +80,18 @@ function ReadPage() {
   const [selectedSession, setSelectedSession] = useState("1회차"); //예매
   const [selectedMenu, setSelectedMenu] = useState("공연정보");
 
+  //캘린더에서 날짜 선택 시
   const handleDateChange = (newDate) => {
     setDate(newDate);
-    // 예약을 위한 추가 로직을 여기에 작성할 수 있습니다.
+
+    // 날짜를 "YYYY-MM-DD" 형식으로 변환
+    const formattedDate = newDate.toISOString().split("T")[0];
+
+    console.log(formattedDate);
   };
+
+  //예약하기
+  const handleClickReservation = () => {};
 
   //회차 변경
   const handleSessionChange = (session) => {
@@ -101,20 +112,25 @@ function ReadPage() {
     });
   }, [gno]);
 
+  //날짜 변환
+  const startDate = new Date(goods.startDate);
+  const endDate = new Date(goods.endDate);
+
   return (
-    <div className="flex  justify-center ">
+    <div className="flex flex-col md:flex-row   justify-center ">
       {fetching ? <FetchingModal /> : <></>}
       {/* left */}
-      <div className="flex flex-col w-6/12  mt-5 p-3 ">
+      <div className="flex flex-col w-full md:w-6/12  mt-5 p-3 ">
         <div className="flex flex-col my-5 space-y-2">
           <div className="text-2xl font-bold">{goods.title}</div>
           <div className="text-sm">⭐⭐⭐⭐⭐(9/10)</div>
         </div>
 
         <div className="flex space-x-11">
-          <div className="w-80 h-96 bg-orange-400">
+          <div className="w-80 h-96">
             <img
               src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
+              className="w-full h-full object-cover"
               alt="image"
             />
           </div>
@@ -204,7 +220,7 @@ function ReadPage() {
       </div>
 
       {/* right */}
-      <div className="flex w-3/12  flex-col pt-10 ">
+      <div className="flex  w-full md:w-3/12   flex-col pt-10 ">
         <div className="flex   flex-col items-center rounded justify-center sticky top-0 text-stone-600">
           {/* cal */}
           <div className="flex mt-5 flex-col border rounded-xl p-3 ">
@@ -215,6 +231,8 @@ function ReadPage() {
                   locale="en"
                   onChange={handleDateChange}
                   value={date}
+                  minDate={startDate}
+                  maxDate={endDate}
                 />
               </CalendarBox>
             </div>
@@ -336,6 +354,10 @@ export const StyleCalendar = styled(Calendar)`
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
     background-color: #6a6a6a;
+  }
+
+  .react-calendar__tile--now {
+    background-color: #ffd9b3;
   }
 `;
 
