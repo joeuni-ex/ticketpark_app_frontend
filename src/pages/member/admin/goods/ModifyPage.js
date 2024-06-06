@@ -16,6 +16,7 @@ const initState = {
   time: 0,
   age: 0,
   genre: "",
+  exclusive: 0,
   files: [],
 };
 
@@ -92,6 +93,7 @@ function ModifyGoodsPage() {
     formData.append("time", goods.time);
     formData.append("age", goods.age);
     formData.append("genre", goods.genre);
+    formData.append("exclusive", goods.exclusive);
 
     for (let i = 0; i < goods.uploadFileNames.length; i++) {
       formData.append("uploadFileNames", goods.uploadFileNames[i]);
@@ -113,6 +115,8 @@ function ModifyGoodsPage() {
       setFetching(false);
     });
   }, [gno]);
+
+  console.log(goods);
 
   return (
     <div className="flex flex-col p-5">
@@ -269,6 +273,20 @@ function ModifyGoodsPage() {
                   type="number"
                   className="border w-full outline-none h-10"
                 />
+              </div>
+            </div>
+            <div className="w-full space-y-2 py-2">
+              <div className="text-stone-600 w-full space-y-2 py-2">
+                <div className="font-semibold">단독 공연 여부</div>
+                <select
+                  name="exclusive"
+                  value={goods.exclusive}
+                  onChange={handleChangeGoods}
+                  className="border w-full outline-none h-10"
+                >
+                  <option value="false">x</option>
+                  <option value="true">o</option>
+                </select>
               </div>
             </div>
             <div className="text-stone-600 w-full space-y-2 py-2">

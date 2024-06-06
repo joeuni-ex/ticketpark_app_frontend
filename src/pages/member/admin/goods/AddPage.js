@@ -17,6 +17,7 @@ const initState = {
   time: 0,
   age: 0,
   genre: "",
+  exclusive: 0,
   files: [],
 };
 
@@ -244,6 +245,20 @@ function AddGoodsPage() {
                   type="number"
                   className="border w-full outline-none h-10"
                 />
+              </div>
+            </div>
+            <div className="w-full space-y-2 py-2">
+              <div className="text-stone-600 w-full space-y-2 py-2">
+                <div className="font-semibold">단독 공연 여부</div>
+                <select
+                  name="exclusive"
+                  value={goods.exclusive}
+                  onChange={handleChangeGoods}
+                  className="border w-full outline-none h-10"
+                >
+                  <option value="0">x</option>
+                  <option value="1">o</option>
+                </select>
               </div>
             </div>
             <div className="text-stone-600 w-full space-y-2 py-2">
