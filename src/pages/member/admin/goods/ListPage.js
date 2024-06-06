@@ -30,6 +30,7 @@ const deleteState = {
 function ListPage() {
   const [serverData, setServerData] = useState(initState);
   const { page, size, refresh, moveToList, moveToRead } = useCustomMove();
+  const [genre, setGenre] = useState("all");
 
   const [fetching, setFetching] = useState(false); //로딩 모달
   const [deleteModal, setDeleteModal] = useState(false); //삭제 모달
@@ -75,14 +76,14 @@ function ListPage() {
   useEffect(() => {
     setFetching(true);
 
-    getList({ page, size }).then((data) => {
+    getList({ page, size, genre }).then((data) => {
       setFetching(false);
       setServerData(data);
     });
-  }, [page, size, refresh, result]);
+  }, [page, size, refresh, result, genre]);
 
   return (
-    <div className=" mt-10 mr-2 ml-2">
+    <div className="flex flex-col p-5">
       {fetching ? <FetchingModal /> : <></>}
       {deleteModal && (
         <ConfirmModal
@@ -99,6 +100,24 @@ function ListPage() {
           content={`${result}번 상품 삭제 완료`}
         />
       )}
+      <div className="font-bold text-stone-800 text-xl py-10 px-5 border-b">
+        상품 목록
+      </div>
+
+      <div className="flex w-full justify-end px-10 py-5">
+        <select
+          name="genre"
+          value={genre}
+          className="w-32"
+          onChange={(e) => setGenre(e.target.value)}
+        >
+          <option value="all">전체</option>
+          <option value="concert">콘서트</option>
+          <option value="musical">뮤지컬</option>
+          <option value="play">연극</option>
+          <option value="classic">클래식</option>
+        </select>
+      </div>
 
       <div className="flex flex-wrap mx-auto justify-center p-6">
         {serverData.dtoList.map((goods) => (
@@ -111,16 +130,22 @@ function ListPage() {
                 <div className="font-extrabold text-2xl p-2 w-1/12">
                   {goods.gno}
                 </div>
-                <div className="text-1xl m-1 p-2 w-2/10 font-medium">
+                <Link
+                  to={`/goods/${goods.gno}`}
+                  className="text-1xl m-1 p-2 w-2/10 font-medium"
+                >
                   <img
                     src={`${host}/api/goods/view/s_${goods.uploadFileNames[0]}`}
                     alt="image"
                   />
-                </div>
+                </Link>
                 <div className="flex w-96 flex-col">
-                  <div className="text-1xl m-1 p-2  font-extrabold">
+                  <Link
+                    to={`/goods/${goods.gno}`}
+                    className="text-1xl m-1 p-2  font-extrabold"
+                  >
                     {goods.title}
-                  </div>
+                  </Link>
                   <div className="text-1xl m-1 p-2  font-medium">
                     <span className="font-semibold">공연장소</span>{" "}
                     {goods.place}
