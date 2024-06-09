@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 const Loading = <div>Loading...</div>;
 
 const LoginPage = lazy(() => import("../pages/member/LoginPage"));
+const RegisterPage = lazy(() => import("../pages/member/RegisterPage"));
 
 // admin
 const AddGoodsPage = lazy(() => import("../pages/member/admin/goods/AddPage"));
@@ -23,6 +24,14 @@ const memberRouter = () => {
       element: (
         <Suspense fallback={Loading}>
           <LoginPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "register",
+      element: (
+        <Suspense fallback={Loading}>
+          <RegisterPage />
         </Suspense>
       ),
     },
