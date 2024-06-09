@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { login } from "../../slice/loginSlice";
+import { login, loginPostAsync } from "../../slice/loginSlice";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const initState = {
   email: "",
@@ -10,7 +11,7 @@ const initState = {
 
 function LoginPage() {
   const dispatch = useDispatch();
-
+  const { doLogin, moveToPath } = useCustomLogin(); //로그인 커스텀 훅
   const [loginParam, setLoginParam] = useState({ ...initState });
 
   const handleChange = (e) => {
@@ -20,8 +21,13 @@ function LoginPage() {
   };
 
   const handleClickLogin = () => {
-    console.log("실행");
-    dispatch(login(loginParam));
+    doLogin(loginParam).then((data) => {
+      if (data.error) {
+        alert("이메일과 패스워드를 확인해 주세요");
+      } else {
+        moveToPath("/");
+      }
+    });
   };
 
   return (

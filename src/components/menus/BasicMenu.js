@@ -6,11 +6,12 @@ import { motion } from "framer-motion";
 import { RiSearchLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../slice/loginSlice";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 function BasicMenu() {
   //로그인 상태 데이터
   const loginState = useSelector((state) => state.loginSlice);
-  const dispatch = useDispatch();
+  const { doLogout, moveToPath } = useCustomLogin(); //로그인 커스텀 훅
 
   const [menuToggle, setMenuToggle] = useState(false);
 
@@ -18,11 +19,12 @@ function BasicMenu() {
     setMenuToggle(!menuToggle);
   };
 
-  //로그아웃처리
+  //로그아웃
   const handleClickLogout = (e) => {
-    dispatch(logout());
+    doLogout();
+    alert("로그아웃되었습니다.");
+    moveToPath("/");
   };
-
   //사이드바 애니메이션 상태
   const boxVariants = {
     initial: { opacity: 0, y: -50 }, // 초기 상태
