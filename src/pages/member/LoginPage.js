@@ -1,24 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { login } from "../../slice/loginSlice";
+
+const initState = {
+  email: "",
+  pw: "",
+};
 
 function LoginPage() {
+  const dispatch = useDispatch();
+
+  const [loginParam, setLoginParam] = useState({ ...initState });
+
+  const handleChange = (e) => {
+    loginParam[e.target.name] = e.target.value;
+
+    setLoginParam({ ...loginParam });
+  };
+
+  const handleClickLogin = (e) => {
+    dispatch(login(loginParam));
+  };
+
   return (
     <div className="flex justify-center items-center flex-col  text-stone-700 py-10">
       <div className="flex text-3xl font-bold py-10">
         TicketPark <img src="/logo.png" alt="" className="w-8  h-8" />
       </div>
-      <div className="space-y-8 w-1/5 pt-2 pb-8">
+      <div className="w-full px-10 space-y-8 md:w-2/5  lg:w-1/5 md:px-0 pt-2 pb-8">
         <div>
           <input
             type="text"
             className="w-full border border-stone-400 px-2 py-3"
             placeholder="이메일"
+            name="email"
+            onChange={handleChange}
           />
         </div>
         <div>
           <input
             type="password"
+            name="pw"
             className="w-full border border-stone-400 px-2 py-3"
+            onChange={handleChange}
             placeholder="비밀번호"
           />
         </div>
@@ -37,7 +62,9 @@ function LoginPage() {
           <div className="w-1/5 text-center">또는</div>
           <div className="border-b border-stone-400 w-2/5"></div>
         </div>
-        <button className="w-full py-5 bg-amber-300">카카오로그인</button>
+        <button className="w-full py-5 bg-amber-300" onClick={handleClickLogin}>
+          카카오로그인
+        </button>
       </div>
     </div>
   );

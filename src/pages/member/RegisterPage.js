@@ -6,7 +6,7 @@ function RegisterPage() {
       <div className="flex text-3xl font-bold py-10">
         TicketPark <img src="/logo.png" alt="" className="w-8  h-8" />
       </div>
-      <div className="space-y-8 w-1/5 pt-2 pb-8">
+      <div className="w-full px-10 space-y-8 md:w-2/5  lg:w-1/5 md:px-0 pt-2 pb-8">
         <div className="flex">
           <input
             type="email"
