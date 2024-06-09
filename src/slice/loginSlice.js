@@ -1,9 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loginPost } from "../api/memberApi";
+import { getCookie, removeCookie, setCookie } from "../util/cookieUtil";
 
 const initState = {
   email: "",
   role: "",
+};
+
+//로그인 중인 유저 토큰 가져오기(쿠키)
+const loadMemberCookie = () => {
+  const memberInfo = getCookie("member");
+
+  return memberInfo;
 };
 
 export const loginPostAsync = createAsyncThunk("loginPostAsync", (param) =>
@@ -28,6 +36,7 @@ const loginSlice = createSlice({
       };
     },
     logout: () => {
+      removeCookie("member");
       return {
         ...initState,
       };
@@ -41,6 +50,11 @@ const loginSlice = createSlice({
       .addCase(loginPostAsync.fulfilled, (state, action) => {
         console.log("fulfilled");
         const payload = action.payload;
+
+        //쿠키 저장
+        if (!payload.error) {
+          setCookie("member", JSON.stringify(payload), 1);
+        }
 
         return payload;
       })
