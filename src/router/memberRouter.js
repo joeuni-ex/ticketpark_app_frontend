@@ -3,6 +3,9 @@ import { Navigate } from "react-router-dom";
 
 const Loading = <div>Loading...</div>;
 
+const LoginPage = lazy(() => import("../pages/member/LoginPage"));
+
+// admin
 const AddGoodsPage = lazy(() => import("../pages/member/admin/goods/AddPage"));
 
 const ModifyGoodsPage = lazy(() =>
@@ -16,7 +19,17 @@ const ListGoodsPage = lazy(() =>
 const memberRouter = () => {
   return [
     {
-      path: "admin/goods/",
+      path: "login",
+      element: (
+        <Suspense fallback={Loading}>
+          <LoginPage />
+        </Suspense>
+      ),
+    },
+
+    //admin 권한
+    {
+      path: "goods/",
       element: (
         <Suspense fallback={Loading}>
           <ListGoodsPage />
@@ -24,7 +37,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "admin/goods/list",
+      path: "goods/list",
       element: (
         <Suspense fallback={Loading}>
           <ListGoodsPage />
@@ -32,15 +45,15 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "admin/goods/register",
+      path: "goods/register",
       element: (
         <Suspense fallback={Loading}>
-          <AddGoodsPage />
+          <AddGoodsPage /> w
         </Suspense>
       ),
     },
     {
-      path: "admin/goods/modify/:gno",
+      path: "goods/modify/:gno",
       element: (
         <Suspense fallback={Loading}>
           <ModifyGoodsPage />

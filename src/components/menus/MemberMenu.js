@@ -4,8 +4,12 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RiSearchLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 
 function MemberMenu() {
+  //로그인 상태 데이터
+  const loginState = useSelector((state) => state.loginSlice);
+
   const [menuToggle, setMenuToggle] = useState(false);
 
   const handleClickMenuToggle = () => {
@@ -47,13 +51,21 @@ function MemberMenu() {
             </div>
             {/* web */}
             <div className="justify-end w-2/4 space-x-2  hidden lg:flex">
-              <Link>
-                <FaUserAlt className="text-lg" />
-              </Link>
-              <Link>
-                <FaUserAlt className="text-lg" />
-              </Link>
-              <Link>로그아웃</Link>
+              {!loginState.email && (
+                <>
+                  <Link to={"/member/login"}>로그인</Link>
+                </>
+              )}
+              {loginState.email && (
+                <>
+                  {loginState.role === "user" ? (
+                    <Link>마이페이지</Link>
+                  ) : (
+                    <Link to={"member/admin/goods/"}>관리자페이지</Link>
+                  )}
+                  <Link>로그아웃</Link>
+                </>
+              )}
             </div>
             {/* mobile menu toggle*/}
             <div className="lg:hidden">

@@ -51,13 +51,21 @@ function BasicMenu() {
             </div>
             {/* web */}
             <div className="justify-end w-2/4 space-x-2  hidden lg:flex">
-              <Link>
-                <FaUserAlt className="text-lg" />
-              </Link>
-              <Link>
-                <FaUserAlt className="text-lg" />
-              </Link>
-              <Link>로그아웃</Link>
+              {!loginState.email && (
+                <>
+                  <Link to={"/member/login"}>로그인</Link>
+                </>
+              )}
+              {loginState.email && (
+                <>
+                  {loginState.role === "user" ? (
+                    <Link>마이페이지</Link>
+                  ) : (
+                    <Link to={"member/admin/goods/"}>관리자페이지</Link>
+                  )}
+                  <Link>로그아웃</Link>
+                </>
+              )}
             </div>
             {/* mobile menu toggle*/}
             <div className="lg:hidden">
