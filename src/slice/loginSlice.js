@@ -1,9 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { loginPost } from "../api/memberApi";
 
 const initState = {
   email: "",
   role: "",
 };
+
+export const loginPostAsync = createAsyncThunk("loginPostAsync", (param) =>
+  loginPost(param)
+);
 
 const loginSlice = createSlice({
   name: "loginSlice",
@@ -19,6 +24,7 @@ const loginSlice = createSlice({
       //앞으로 유지될 새로운 상태
       return {
         email: action.payload.email,
+        role: action.payload.role,
       };
     },
     logout: () => {
@@ -26,6 +32,26 @@ const loginSlice = createSlice({
         ...initState,
       };
     },
+  },
+
+  //createAsyncThunk 시 동작하는 extraReducers
+  extraReducers: (builder) => {
+    builder
+      //완료 시
+      .addCase(loginPostAsync.fulfilled, (state, action) => {
+        console.log("fulfilled");
+        const payload = action.payload;
+
+        return payload;
+      })
+      //처리 중
+      .addCase(loginPostAsync.pending, (state, action) => {
+        console.log("pending");
+      })
+      //문제 발생시
+      .addCase(loginPostAsync.rejected, (state, action) => {
+        console.log("rejected");
+      });
   },
 });
 
