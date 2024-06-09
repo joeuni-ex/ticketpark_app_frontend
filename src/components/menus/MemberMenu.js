@@ -4,16 +4,23 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RiSearchLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../slice/loginSlice";
 
 function MemberMenu() {
   //로그인 상태 데이터
   const loginState = useSelector((state) => state.loginSlice);
 
+  const dispatch = useDispatch();
+
   const [menuToggle, setMenuToggle] = useState(false);
 
   const handleClickMenuToggle = () => {
     setMenuToggle(!menuToggle);
+  };
+  //로그아웃처리ㅊ
+  const handleClickLogout = (e) => {
+    dispatch(logout());
   };
 
   //사이드바 애니메이션 상태
@@ -63,7 +70,9 @@ function MemberMenu() {
                   ) : (
                     <Link to={"member/admin/goods/"}>관리자페이지</Link>
                   )}
-                  <Link>로그아웃</Link>
+                  <div className="cursor-pointer" onClick={handleClickLogout}>
+                    로그아웃
+                  </div>
                 </>
               )}
             </div>

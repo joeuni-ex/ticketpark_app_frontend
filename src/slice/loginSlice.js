@@ -22,7 +22,9 @@ const loginSlice = createSlice({
       };
     },
     logout: () => {
-      console.log("logout...");
+      return {
+        ...initState,
+      };
     },
   },
 });
