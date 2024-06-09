@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
-import { IoTicketSharp } from "react-icons/io5";
-import { RiLogoutBoxRFill } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { motion } from "framer-motion";
 import { RiSearchLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 function BasicMenu() {
+  //로그인 상태 데이터
+  const loginState = useSelector((state) => state.loginSlice);
+
   const [menuToggle, setMenuToggle] = useState(false);
 
   const handleClickMenuToggle = () => {
