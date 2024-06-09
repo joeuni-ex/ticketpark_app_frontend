@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtAxios from "../util/jwtUtil";
 
 //서버 주소
 export const API_SERVER_HOST = "http://localhost:8080";
@@ -9,7 +10,7 @@ const prefix = `${API_SERVER_HOST}/api/goods`;
 export const postAdd = async (goods) => {
   const header = { headers: { "Content-Type": "multipart/form-data" } };
 
-  const res = await axios.post(`${prefix}/`, goods, header);
+  const res = await jwtAxios.post(`${prefix}/`, goods, header);
 
   return res.data;
 };
@@ -37,7 +38,7 @@ export const getList = async (pageParams) => {
 export const modifyOne = async (gno, goods) => {
   const header = { headers: { "Content-Type": "multipart/form-data" } };
 
-  const res = await axios.put(`${prefix}/${gno}`, goods, header);
+  const res = await jwtAxios.put(`${prefix}/${gno}`, goods, header);
 
   return res.data;
 };
