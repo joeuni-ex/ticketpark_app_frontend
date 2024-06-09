@@ -19,7 +19,8 @@ function LoginPage() {
     setLoginParam({ ...loginParam });
   };
 
-  const handleClickLogin = (e) => {
+  const handleClickLogin = () => {
+    console.log("실행");
     dispatch(login(loginParam));
   };
 
@@ -47,7 +48,9 @@ function LoginPage() {
             placeholder="비밀번호"
           />
         </div>
-        <button className="w-full py-5 bg-amber-300">로그인</button>
+        <button className="w-full py-5 bg-amber-300" onClick={handleClickLogin}>
+          로그인
+        </button>
         <div className="text-center space-x-3">
           계정이 없으신가요?{" "}
           <Link
@@ -62,9 +65,7 @@ function LoginPage() {
           <div className="w-1/5 text-center">또는</div>
           <div className="border-b border-stone-400 w-2/5"></div>
         </div>
-        <button className="w-full py-5 bg-amber-300" onClick={handleClickLogin}>
-          카카오로그인
-        </button>
+        <button className="w-full py-5 bg-amber-300">카카오로그인</button>
       </div>
     </div>
   );
