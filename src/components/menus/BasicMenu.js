@@ -10,8 +10,8 @@ import useCustomLogin from "../../hooks/useCustomLogin";
 
 function BasicMenu() {
   //로그인 상태 데이터
-  const loginState = useSelector((state) => state.loginSlice);
-  const { doLogout, moveToPath } = useCustomLogin(); //로그인 커스텀 훅
+
+  const { doLogout, moveToPath, loginState } = useCustomLogin(); //로그인 커스텀 훅
 
   const [menuToggle, setMenuToggle] = useState(false);
 
@@ -68,7 +68,7 @@ function BasicMenu() {
               {loginState.email && (
                 <>
                   {loginState.roleNames[0] === "USER" ? (
-                    <Link>마이페이지</Link>
+                    <Link to={"/member/user/reservation/"}>마이페이지</Link>
                   ) : (
                     <Link to={"/member/admin/goods/"}>관리자페이지</Link>
                   )}
