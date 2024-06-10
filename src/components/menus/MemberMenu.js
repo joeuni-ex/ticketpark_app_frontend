@@ -67,7 +67,7 @@ function MemberMenu() {
               )}
               {loginState.email && (
                 <>
-                  {loginState.role === "user" ? (
+                  {loginState.roleNames[0] === "USER" ? (
                     <Link>마이페이지</Link>
                   ) : (
                     <Link to={"/member/admin/goods/"}>관리자페이지</Link>
