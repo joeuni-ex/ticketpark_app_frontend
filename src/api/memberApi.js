@@ -14,3 +14,12 @@ export const loginPost = async (loginParam) => {
 
   return res.data;
 };
+
+//이메일 중복 확인
+export const registerPost = async (email) => {
+  const res = await axios.get(`${host}/check-email`, {
+    params: { email },
+  });
+
+  return res.data;
+};
