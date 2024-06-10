@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { registerPost } from "../../api/memberApi";
+import { checkEmail, registerPost } from "../../api/memberApi";
+import FetchingModal from "../../components/common/FetchingModal";
+import useCustomLogin from "../../hooks/useCustomLogin";
+import ResultModal from "../../components/common/ResultModal";
 
 const initState = {
   email: "",
@@ -11,9 +14,10 @@ const initState = {
 };
 
 function RegisterPage() {
-  const dispatch = useDispatch();
+  const { moveToLogin } = useCustomLogin(); //로그인 커스텀 훅
   const [fetching, setFetching] = useState(false); //로딩 모달
   const [result, setResult] = useState(false); // 결과가 나오면 모달창으로 결과 데이터가 보이게끔
+  const [checkEmailResult, setCheckEmailResult] = useState(false);
   const [registerParam, setRegisterParam] = useState({ ...initState });
 
   const handleClickEmailCheck = () => {
@@ -29,12 +33,13 @@ function RegisterPage() {
 
     setFetching(true);
 
-    registerPost(registerParam.email).then((result) => {
+    checkEmail(registerParam.email).then((result) => {
       if (result.RESULT === "DUPLICATE") {
         alert("이미 존재하는 이메일입니다.");
       }
       if (result.RESULT === "AVAILABLE") {
         alert("사용 가능한 이메일입니다.");
+        setCheckEmailResult(true); //이메일 체크 완료
       }
     });
 
@@ -47,8 +52,52 @@ function RegisterPage() {
     setRegisterParam({ ...registerParam });
   };
 
+  //가입하기
+  const handleClickRegister = () => {
+    if (checkEmailResult === false) {
+      alert("이메일 중복확인이 필요합니다.");
+    } else if (checkEmailResult === true) {
+      if (registerParam.nickname.length === 0) {
+        alert("닉네임을 확인해 주세요");
+        return;
+      }
+      if (registerParam.pw.length === 0) {
+        alert("비밀번호를 확인해 주세요");
+        return;
+      }
+
+      setFetching(true);
+      try {
+        registerPost(registerParam).then((result) => {
+          if (result.RESULT === "SUCCESS") {
+            setResult(result.RESULT);
+            setFetching(false);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  //결과 모달창 닫기
+  const closeModal = () => {
+    setResult(null);
+
+    moveToLogin();
+  };
   return (
     <div className="flex justify-center items-center flex-col  text-stone-700 py-10">
+      {fetching ? <FetchingModal /> : <></>}
+      {result ? (
+        <ResultModal
+          callbackFn={closeModal}
+          title={"정상적으로 회원가입 되었습니다."}
+          content={`로그인 페이지로 이동합니다`}
+        />
+      ) : (
+        <></>
+      )}
       <div className="flex text-3xl font-bold py-10">
         TicketPark <img src="/logo.png" alt="" className="w-8  h-8" />
       </div>
@@ -73,6 +122,8 @@ function RegisterPage() {
         <div>
           <input
             type="text"
+            name="nickname"
+            onChange={handleChange}
             className="w-full border border-stone-400 px-2 py-3"
             placeholder="닉네임"
           />
@@ -80,12 +131,19 @@ function RegisterPage() {
         <div>
           <input
             type="password"
+            name="pw"
+            onChange={handleChange}
             className="w-full border border-stone-400 px-2 py-3"
             placeholder="비밀번호"
           />
         </div>
 
-        <button className="w-full py-5 bg-amber-300">회원가입</button>
+        <button
+          className="w-full py-5 bg-amber-300"
+          onClick={handleClickRegister}
+        >
+          회원가입
+        </button>
 
         <div className="flex w-full">
           <div className="border-b border-stone-400 w-2/5"></div>

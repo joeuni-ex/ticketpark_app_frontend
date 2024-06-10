@@ -10,7 +10,6 @@ const initState = {
 };
 
 function LoginPage() {
-  const dispatch = useDispatch();
   const { doLogin, moveToPath } = useCustomLogin(); //로그인 커스텀 훅
   const [loginParam, setLoginParam] = useState({ ...initState });
 
@@ -35,7 +34,7 @@ function LoginPage() {
       <div className="flex text-3xl font-bold py-10">
         TicketPark <img src="/logo.png" alt="" className="w-8  h-8" />
       </div>
-      <div className="w-full px-10 space-y-8 md:w-2/5  lg:w-1/5 md:px-0 pt-2 pb-8">
+      <div className="w-full px-10 space-y-8 md:w-2/5  lg:w-96 md:px-0 pt-2 pb-8">
         <div>
           <input
             type="text"

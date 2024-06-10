@@ -13,7 +13,7 @@ function ResultModal({ title, content, callbackFn }) {
         {/* button */}
         <div className="justify-end flex">
           <button
-            className="rounded bg-blue-500 mt-4 mb-4 px-6 pt-4 pb-4 text-lg hover:bg-blue-400 text-white"
+            className="rounded bg-amber-400-500 mt-4 mb-4 px-6 pt-4 pb-4 text-lg hover:bg-amber-300 text-white"
             onClick={() => {
               if (callbackFn) {
                 callbackFn();
