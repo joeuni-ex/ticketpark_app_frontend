@@ -70,7 +70,7 @@ function BasicMenu() {
                   {loginState.role === "user" ? (
                     <Link>마이페이지</Link>
                   ) : (
-                    <Link to={"member/admin/goods/"}>관리자페이지</Link>
+                    <Link to={"/member/admin/goods/"}>관리자페이지</Link>
                   )}
                   <div className="cursor-pointer" onClick={handleClickLogout}>
                     로그아웃
