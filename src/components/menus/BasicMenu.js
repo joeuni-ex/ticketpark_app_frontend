@@ -10,7 +10,6 @@ import useCustomLogin from "../../hooks/useCustomLogin";
 
 function BasicMenu() {
   //로그인 상태 데이터
-
   const { doLogout, moveToPath, loginState } = useCustomLogin(); //로그인 커스텀 훅
 
   const [menuToggle, setMenuToggle] = useState(false);

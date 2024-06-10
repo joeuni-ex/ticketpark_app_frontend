@@ -20,11 +20,17 @@ function SideMenu() {
   // 애니메이션 지속 시간 및 이징 함수 정의
   const transition = { duration: 0.5, ease: "easeInOut" };
 
+  console.log(loginState.roleNames);
   return (
     <div className="bg-blue-40 p-4">
       <div className="p-2">홈</div>
       <div className="flex justify-between">
-        <div className="p-2">상품 관리</div>
+        {loginState.roleNames[0] === "USER" ? (
+          <div className="p-2">예약 관리</div>
+        ) : (
+          <div className="p-2">상품 관리</div>
+        )}
+
         <div
           className="cursor-pointer"
           onClick={() => setContentsToggle(!contentsToggle)}
@@ -41,12 +47,22 @@ function SideMenu() {
           transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
           className=" w-full flex flex-col bg-white z-50"
         >
-          <Link to={"/member/admin/goods/list"} className="p-2 pl-5">
-            상품 목록
-          </Link>
-          <Link to={"/member/admin/goods/register"} className="p-2 pl-5">
-            상품 등록
-          </Link>
+          {loginState.roleNames[0] === "USER" ? (
+            <>
+              <Link to={"/member/user/reservation/list"} className="p-2 pl-5">
+                예약 목록
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to={"/member/admin/goods/list"} className="p-2 pl-5">
+                상품 목록
+              </Link>
+              <Link to={"/member/admin/goods/register"} className="p-2 pl-5">
+                상품 등록
+              </Link>
+            </>
+          )}
         </motion.div>
       ) : (
         <></>
