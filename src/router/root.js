@@ -13,6 +13,7 @@ const GoodsIndex = lazy(() => import("../pages/goods/IndexPage"));
 const GenreIndexPage = lazy(() => import("../pages/contents/IndexPage"));
 const MemberIndexPage = lazy(() => import("../pages/member/IndexPage"));
 const AdminIndexPage = lazy(() => import("../pages/member/admin/IndexPage"));
+const UserIndexPage = lazy(() => import("../pages/member/user/IndexPage"));
 
 const root = createBrowserRouter([
   {
@@ -56,6 +57,15 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <AdminIndexPage />
+      </Suspense>
+    ),
+    children: memberRouter(),
+  },
+  {
+    path: "member/user",
+    element: (
+      <Suspense fallback={Loading}>
+        <UserIndexPage />
       </Suspense>
     ),
     children: memberRouter(),

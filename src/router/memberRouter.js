@@ -17,6 +17,11 @@ const ListGoodsPage = lazy(() =>
   import("../pages/member/admin/goods/ListPage")
 );
 
+// user
+const ReservationListPage = lazy(() =>
+  import("../pages/member/user/reservation/ListPage")
+);
+
 const memberRouter = () => {
   return [
     {
@@ -57,7 +62,7 @@ const memberRouter = () => {
       path: "goods/register",
       element: (
         <Suspense fallback={Loading}>
-          <AddGoodsPage /> w
+          <AddGoodsPage />
         </Suspense>
       ),
     },
@@ -73,6 +78,29 @@ const memberRouter = () => {
     {
       path: "admin",
       element: <Navigate replace={true} to={"/admin/goods"} />,
+    },
+
+    // user권한
+    {
+      path: "reservation/",
+      element: (
+        <Suspense fallback={Loading}>
+          <ReservationListPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "reservation/list",
+      element: (
+        <Suspense fallback={Loading}>
+          <ReservationListPage />
+        </Suspense>
+      ),
+    },
+
+    {
+      path: "user",
+      element: <Navigate replace={true} to={"/user/reservation"} />,
     },
   ];
 };
