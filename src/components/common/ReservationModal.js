@@ -35,7 +35,7 @@ function ReservationModal({ selectedDate, goods, onConfirm, onCancel }) {
     setSelectedSeat({
       id: seat.id,
       seatClass,
-      seatNumber: index,
+      seatNumber: index + 1,
       price: price,
     });
   };
@@ -141,15 +141,20 @@ function ReservationModal({ selectedDate, goods, onConfirm, onCancel }) {
                 />
               </div>
 
-              <div className="space-y-3">
-                <div className="mt-4">공연일자 {selectedDate} 2024-12-12</div>
+              <div className="space-y-3 mt-4">
+                <div className=" ">{goods.place} </div>
+                <div className="">공연일자 {selectedDate} 2024-12-12</div>
                 <div className=" ">공연시작시간 08:45 (1회차) </div>
                 <div className=" ">총 {goods.time}분</div>
                 <div>
-                  {`선택한 좌석 : <${selectedSeat.seatClass}> ${
-                    selectedSeat ? selectedSeat.seatNumber : ""
-                  }`}
-                  번 좌석
+                  선택한 좌석 :
+                  <span className="font-semibold text-blue-500">
+                    {" "}
+                    {`<${selectedSeat.seatClass}> ${
+                      selectedSeat ? selectedSeat.seatNumber : ""
+                    }`}
+                    번
+                  </span>
                 </div>
               </div>
             </div>
@@ -176,8 +181,8 @@ function ReservationModal({ selectedDate, goods, onConfirm, onCancel }) {
                   취소
                 </button>
                 <button
-                  className="w-1/2 rounded bg-blue-500  px-6 pt-4 pb-4 text-lg hover:bg-blue-400 text-white"
-                  onClick={onConfirm}
+                  className="w-1/2 rounded bg-amber-500  px-6 pt-4 pb-4 text-lg hover:bg-amber-400 text-white"
+                  onClick={() => onConfirm(selectedSeat)}
                 >
                   예매하기
                 </button>

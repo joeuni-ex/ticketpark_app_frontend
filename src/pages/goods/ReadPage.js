@@ -141,8 +141,10 @@ function ReadPage() {
   };
 
   //모달에서 좌석 선택 후 예약 클릭 시
-  const handleClickReservationInModal = () => {
-    console.log("좌석선택완료");
+  const handleClickReservationInModal = (seatData) => {
+    console.log(seatData); //좌석 데이터
+
+    //API 서버 통신
   };
 
   //날짜 변환
