@@ -31,12 +31,15 @@ const useCustomMove = () => {
       //moveToList 함수에 파라미터 값이 있을 경우
       const pageNum = getNum(pageParam.page, 1);
       const sizeNum = getNum(pageParam.size, 10);
-      queryStr = createSearchParams({ page: pageNum, size: sizeNum }).toString;
+      queryStr = createSearchParams({
+        page: pageNum,
+        size: sizeNum,
+      }).toString();
     } else {
       //moveToList 함수에 파라미터 값이 있을 경우
       queryStr = queryDefault;
     }
-    navigate({ pathname: "../list", search: queryStr });
+    navigate({ pathname: "member/admin/goods/list", search: queryStr });
   };
 
   return { moveToList };

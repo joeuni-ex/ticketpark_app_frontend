@@ -8,7 +8,7 @@ const initState = {
 };
 
 //로그인 중인 유저 토큰 가져오기(쿠키)
-const loadMemberCookie = () => {
+export const loadMemberCookie = () => {
   const memberInfo = getCookie("member");
 
   return memberInfo;
@@ -20,14 +20,16 @@ export const loginPostAsync = createAsyncThunk("loginPostAsync", (param) =>
 
 const loginSlice = createSlice({
   name: "loginSlice",
-  initialState: initState,
+  initialState: loadMemberCookie() || initState,
   reducers: {
     login: (state, action) => {
       //state: 기존의 상태
       //action: 새로 바뀔 상태
-      console.log(action);
-      console.log("____________");
-      console.log(action.payload);
+      //console.log(action);
+      //console.log("____________");
+      //console.log(action.payload);
+
+      setCookie("member", JSON.stringify(action.payload), 1);
 
       //앞으로 유지될 새로운 상태
       return {
