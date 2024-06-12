@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { API_SERVER_HOST, getOne } from "../../api/goodsApi";
 import FetchingModal from "../../components/common/FetchingModal";
+import useCustomLogin from "../../hooks/useCustomLogin";
+import ReservationModal from "../../components/common/ReservationModal";
 
 //초기값
 const initState = {
@@ -21,6 +23,17 @@ const initState = {
   genre: "",
   exclusive: 0,
   uploadFileNames: [],
+};
+
+//예약 초기값
+const reservationInitState = {
+  email: 0,
+  gno: "",
+  reservationDate: "",
+  seatClass: "",
+  seatNumber: "",
+  price: 0,
+  cancelFlag: false,
 };
 
 const host = API_SERVER_HOST;
@@ -75,23 +88,33 @@ function ReadPage() {
   const [goods, setGoods] = useState(initState);
 
   const [fetching, setFetching] = useState(false);
+  const { loginState, moveToLogin } = useCustomLogin(); //로그인 커스텀 훅
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(initState.startDate);
+
+  const [reservation, setReservation] = useState(reservationInitState); //예약 초기값
+  const [reservationModal, setReservationModal] = useState(false); //예약모달
+
   const [selectedSession, setSelectedSession] = useState("1회차"); //예매
   const [selectedMenu, setSelectedMenu] = useState("공연정보");
 
   //캘린더에서 날짜 선택 시
   const handleDateChange = (newDate) => {
-    setDate(newDate);
-
     // 날짜를 "YYYY-MM-DD" 형식으로 변환
     const formattedDate = newDate.toISOString().split("T")[0];
 
-    console.log(formattedDate);
+    setDate(formattedDate);
   };
 
   //예약하기
-  const handleClickReservation = () => {};
+  const handleClickReservation = () => {
+    if (loginState.email === "") {
+      alert("로그인이 필요한 서비스 입니다.");
+      moveToLogin();
+    } else {
+      setReservationModal(true); //좌석 선택 모달
+    }
+  };
 
   //회차 변경
   const handleSessionChange = (session) => {
@@ -107,10 +130,20 @@ function ReadPage() {
     setFetching(true);
     getOne(gno).then((data) => {
       setGoods(data);
-
+      setReservation((prev) => ({ ...prev, gno }));
       setFetching(false);
     });
   }, [gno]);
+
+  //결과 모달창 닫기
+  const closeModal = () => {
+    setReservationModal(false);
+  };
+
+  //모달에서 좌석 선택 후 예약 클릭 시
+  const handleClickReservationInModal = () => {
+    console.log("좌석선택완료");
+  };
 
   //날짜 변환
   const startDate = new Date(goods.startDate);
@@ -118,6 +151,16 @@ function ReadPage() {
 
   return (
     <div className="flex flex-col md:flex-row   justify-center ">
+      {reservationModal ? (
+        <ReservationModal
+          selectedDate={date}
+          goods={goods}
+          onCancel={closeModal}
+          onConfirm={handleClickReservationInModal}
+        />
+      ) : (
+        <></>
+      )}
       {fetching ? <FetchingModal /> : <></>}
       {/* left */}
       <div className="flex flex-col w-full md:w-6/12  mt-5 p-3 ">
@@ -142,11 +185,11 @@ function ReadPage() {
             </div>
             <div className="flex ">
               <div className="w-1/4">공연기간</div>
-              <div>샤롯데씨어터</div>
+              <div>{`${goods.startDate} ~ ${goods.endDate}`}</div>
             </div>
             <div className="flex ">
               <div className="w-1/4">공연시간</div>
-              <div>{goods.time}</div>
+              <div>{goods.time}분</div>
             </div>
             <div className="flex ">
               <div className="w-1/4">관람연령</div>
@@ -279,7 +322,10 @@ function ReadPage() {
               </div>
             </div>
           </div>
-          <div className="flex justify-center items-center  w-96 m-4 h-14 rounded text-xl text-white font-bold bg-orange-400">
+          <div
+            onClick={handleClickReservation}
+            className="flex justify-center cursor-pointer items-center  w-96 m-4 h-14 rounded text-xl text-white font-bold bg-orange-400"
+          >
             예매하기
           </div>
         </div>
