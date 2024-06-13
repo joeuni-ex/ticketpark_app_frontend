@@ -58,10 +58,14 @@ function ListPage() {
       setSliderImages(classicSliderImages);
     }
 
-    getList({ page, size, genre }).then((data) => {
-      setFetching(false);
-      setServerData(data);
-    });
+    try {
+      getList({ page, size, genre }).then((data) => {
+        setFetching(false);
+        setServerData(data);
+      });
+    } catch (e) {
+      console.log("error : ", e);
+    }
   }, [page, size, refresh, genre, genreParam]);
 
   // Web Slider Settings
@@ -140,7 +144,7 @@ function ListPage() {
               <img
                 src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
                 className="w-full "
-                alt=""
+                alt="list image"
               />
               <div className="space-y-2">
                 <p className="font-bold text-lg">{goods.title}</p>

@@ -13,11 +13,12 @@ const initState = {
   startDate: "",
   endDate: "",
   gdesc: "",
-  time: 0,
+  runningTime: 0,
   age: 0,
   genre: "",
   exclusive: 0,
   files: [],
+  times: [],
 };
 
 const host = API_SERVER_HOST;
@@ -29,6 +30,7 @@ function ModifyGoodsPage() {
 
   const [goods, setGoods] = useState(initState); //굿즈 데이터
   const [images, setImages] = useState([]); //이미지
+  const [times, setTimes] = useState([]); //공연시간표
 
   const navigate = useNavigate();
 
@@ -62,10 +64,29 @@ function ModifyGoodsPage() {
       setImages(images.filter((_, i) => i !== index));
     }
   };
+
+  // 공연 시간 추가
+  const handleAddTime = () => {
+    if (times.length >= 2) {
+      alert("최대 두 개의 시간만 추가할 수 있습니다.");
+      return;
+    }
+    setTimes([...times, ""]);
+  };
+
+  // 공연 시간 변경
+  const handleChangeTime = (index, value) => {
+    const newTimes = times.map((time, i) => (i === index ? value : time));
+    setTimes(newTimes);
+  };
+
   //입력값 변경 시
   const handleChangeGoods = (e) => {
-    goods[e.target.name] = e.target.value;
-    setGoods({ ...goods });
+    const { name, value } = e.target;
+    setGoods((prevGoods) => ({
+      ...prevGoods,
+      [name]: value,
+    }));
   };
 
   //결과 모달창 닫기
@@ -82,7 +103,11 @@ function ModifyGoodsPage() {
     const formData = new FormData();
 
     for (let i = 0; i < files.length; i++) {
-      formData.append("files", files[i]);
+      formData.append("files", files[i]); //서버에서 받을 때 이름,순차적으로 추가
+    }
+
+    for (let i = 0; i < times.length; i++) {
+      formData.append("times", times[i]);
     }
 
     formData.append("title", goods.title);
@@ -90,7 +115,7 @@ function ModifyGoodsPage() {
     formData.append("startDate", goods.startDate);
     formData.append("endDate", goods.endDate);
     formData.append("gdesc", goods.gdesc);
-    formData.append("time", goods.time);
+    formData.append("runningTime", goods.runningTime);
     formData.append("age", goods.age);
     formData.append("genre", goods.genre);
     formData.append("exclusive", goods.exclusive);
@@ -107,16 +132,30 @@ function ModifyGoodsPage() {
     });
   };
 
-  useEffect(() => {
-    setFetching(true);
-    getOne(gno).then((data) => {
-      setGoods(data);
-
-      setFetching(false);
-    });
-  }, [gno]);
-
   console.log(goods);
+
+  useEffect(() => {
+    setFetching(true); // 데이터 로딩 중임을 표시
+
+    // gno를 사용하여 상품 데이터를 가져옴
+    getOne(gno)
+      .then((data) => {
+        // 가져온 데이터에서 공연시간표(times)를 추출하여 설정
+        setTimes(data.times || []);
+
+        // 나머지 상품 데이터 설정
+        setGoods({
+          ...data,
+          // 필요한 다른 상품 데이터 필드들 설정
+        });
+
+        setFetching(false); // 데이터 로딩 완료
+      })
+      .catch((error) => {
+        console.error("상품 데이터를 가져오는 중 에러 발생:", error);
+        setFetching(false); // 에러 발생 시 데이터 로딩 상태 종료
+      });
+  }, [gno]);
 
   return (
     <div className="flex flex-col p-5">
@@ -228,6 +267,27 @@ function ModifyGoodsPage() {
                 />
               </div>
             </div>
+            <div className="text-stone-600 w-full space-y-2 py-2">
+              <div className="font-semibold">공연시간표</div>
+              {times.map((time, index) => (
+                <div className="flex space-x-2" key={index}>
+                  <input
+                    type="time"
+                    value={time}
+                    onChange={(e) => handleChangeTime(index, e.target.value)}
+                    className="border w-full outline-none h-10"
+                  />
+                </div>
+              ))}
+              {times.length < 2 && (
+                <button
+                  onClick={handleAddTime}
+                  className="mt-2 text-blue-400 font-semibold"
+                >
+                  시간 추가
+                </button>
+              )}
+            </div>
 
             <div className="text-stone-600 w-full space-y-2 py-2">
               <div className="font-semibold">카테고리</div>
@@ -267,8 +327,8 @@ function ModifyGoodsPage() {
                   </span>
                 </div>
                 <input
-                  name="time"
-                  value={goods.time}
+                  name="runningTime"
+                  value={goods.runningTime}
                   onChange={handleChangeGoods}
                   type="number"
                   className="border w-full outline-none h-10"

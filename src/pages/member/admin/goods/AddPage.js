@@ -14,11 +14,12 @@ const initState = {
   startDate: "",
   endDate: "",
   gdesc: "",
-  time: 0,
+  runningTime: 0,
   age: 0,
   genre: "",
   exclusive: 0,
   files: [],
+  times: [],
 };
 
 function AddGoodsPage() {
@@ -27,6 +28,7 @@ function AddGoodsPage() {
 
   const [goods, setGoods] = useState(initState); //굿즈 데이터
   const [images, setImages] = useState([]); //이미지
+  const [times, setTimes] = useState([]); //공연시간표
 
   const navigate = useNavigate();
 
@@ -52,10 +54,28 @@ function AddGoodsPage() {
     setImages(images.filter((_, i) => i !== index));
   };
 
+  // 공연 시간 추가
+  const handleAddTime = () => {
+    if (times.length >= 2) {
+      alert("최대 두 개의 시간만 추가할 수 있습니다.");
+      return;
+    }
+    setTimes([...times, ""]);
+  };
+
+  // 공연 시간 변경
+  const handleChangeTime = (index, value) => {
+    const newTimes = times.map((time, i) => (i === index ? value : time));
+    setTimes(newTimes);
+  };
+
   //입력값 변경 시
   const handleChangeGoods = (e) => {
-    goods[e.target.name] = e.target.value;
-    setGoods({ ...goods });
+    const { name, value } = e.target;
+    setGoods((prevGoods) => ({
+      ...prevGoods,
+      [name]: value,
+    }));
   };
 
   //상품 추가 버튼 클릭 시
@@ -67,7 +87,7 @@ function AddGoodsPage() {
       goods.endDate.length === 0 ||
       goods.genre.length === 0 ||
       goods.age.length === 0 ||
-      goods.time === 0 ||
+      goods.runningTime === 0 ||
       goods.gdesc.length === 0
     ) {
       alert("입력되지 않은 정보가 있습니다.");
@@ -84,14 +104,19 @@ function AddGoodsPage() {
       formData.append("files", files[i]); //서버에서 받을 때 이름,순차적으로 추가
     }
 
+    for (let i = 0; i < times.length; i++) {
+      formData.append("times", times[i]);
+    }
+
     formData.append("title", goods.title);
     formData.append("place", goods.place);
     formData.append("startDate", goods.startDate);
     formData.append("endDate", goods.endDate);
     formData.append("gdesc", goods.gdesc);
-    formData.append("time", goods.time);
+    formData.append("runningTime", goods.runningTime);
     formData.append("age", goods.age);
     formData.append("genre", goods.genre);
+    formData.append("exclusive", goods.exclusive);
 
     postAdd(formData).then((data) => {
       setFetching(false); //모달 닫기
@@ -200,7 +225,27 @@ function AddGoodsPage() {
                 />
               </div>
             </div>
-
+            <div className="text-stone-600 w-full space-y-2 py-2">
+              <div className="font-semibold">공연시간표</div>
+              {times?.map((time, index) => (
+                <div className="flex space-x-2" key={index}>
+                  <input
+                    type="time"
+                    value={time}
+                    onChange={(e) => handleChangeTime(index, e.target.value)}
+                    className="border w-full outline-none h-10"
+                  />
+                </div>
+              ))}
+              {times?.length < 2 && (
+                <button
+                  onClick={handleAddTime}
+                  className="mt-2 text-blue-400 font-semibold"
+                >
+                  시간 추가
+                </button>
+              )}
+            </div>
             <div className="text-stone-600 w-full space-y-2 py-2">
               <div className="font-semibold">카테고리</div>
               <select
@@ -239,8 +284,8 @@ function AddGoodsPage() {
                   </span>
                 </div>
                 <input
-                  name="time"
-                  value={goods.time}
+                  name="runningTime"
+                  value={goods.runningTime}
                   onChange={handleChangeGoods}
                   type="number"
                   className="border w-full outline-none h-10"

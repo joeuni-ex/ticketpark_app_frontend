@@ -38,7 +38,7 @@ export const getList = async (pageParams) => {
 export const modifyOne = async (gno, goods) => {
   const header = { headers: { "Content-Type": "multipart/form-data" } };
 
-  const res = await jwtAxios.put(`${prefix}/${gno}`, goods, header);
+  const res = await axios.put(`${prefix}/${gno}`, goods, header);
 
   return res.data;
 };

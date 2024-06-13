@@ -120,7 +120,7 @@ function ListPage() {
       </div>
 
       <div className="flex flex-wrap mx-auto justify-center p-6">
-        {serverData.dtoList.map((goods) => (
+        {serverData.dtoList?.map((goods) => (
           <div
             key={goods.gno}
             className="flex justify-between w-full min-w-[400px] p-2 m-2 rounded shadow-md text-stone-700"
@@ -159,8 +159,8 @@ function ListPage() {
                     {goods.age === 0 ? "전체이용가" : goods.age}세 이상
                   </div>
                   <div className="text-1xl m-1 p-2  font-medium">
-                    <span className="font-semibold">공연시간</span> {goods.time}
-                    분
+                    <span className="font-semibold">공연시간</span>{" "}
+                    {goods.runningTime}분
                   </div>
                 </div>
               </div>
