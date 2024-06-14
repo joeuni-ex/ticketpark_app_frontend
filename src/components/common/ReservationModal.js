@@ -27,6 +27,7 @@ function ReservationModal({
       col: col + 1,
     }))
   );
+
   const handleSeatClick = (seat, index, seatClass) => {
     let price = 0;
 
@@ -51,14 +52,14 @@ function ReservationModal({
     <div
       className={`fixed top-0 left-0 z-[1055] flex h-full w-full justify-center items-center bg-black bg-opacity-20`}
     >
-      <div className=" absolute bg-white   shadow opacity-100 w-1/4 rounded mt-10 pb-6  mb-10 px-6 min-w-[1000px] min-h-[700px]">
+      <div className="absolute bg-white shadow opacity-100 w-1/4 rounded mt-10 pb-6 mb-10 px-6 min-w-[1000px] min-h-[700px]">
         <div className="flex justify-between text-xl font-semibold text-stone-700 my-5">
           <div>예매 - 좌석선택</div>
         </div>
         <div className="flex">
-          <div className="bg-zinc-700  w-2/3  p-10 space-y-6">
+          <div className="bg-zinc-700 w-2/3 p-10 space-y-6">
             {/*Screen*/}
-            <div className="flex justify-center text-2xl  pt-4 pb-4 text-stone-700 text-center">
+            <div className="flex justify-center text-2xl pt-4 pb-4 text-stone-700 text-center">
               <div className="flex justify-center items-center mb-4 min-w-[560px] h-24 bg-white shadow-md shadow-white"></div>
             </div>
             {/* Seat */}
@@ -105,13 +106,13 @@ function ReservationModal({
               A석 80,000원
             </div>
           </div>
-          <div className="flex flex-col  w-1/3 pl-8 justify-between ">
+          <div className="flex flex-col w-1/3 pl-8 justify-between ">
             <div>
               <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
                 <div>{goods.title}</div>
 
                 {goods.age === 0 ? (
-                  <div className="flex justify-center items-center min-w-7 min-h-7  rounded-full bg-green-600 text-xs text-white">
+                  <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-green-600 text-xs text-white">
                     전체
                   </div>
                 ) : (
@@ -132,7 +133,7 @@ function ReservationModal({
                   ""
                 )}
                 {goods.age === 18 ? (
-                  <div className="flex justify-center items-center  min-w-7 min-h-7  rounded-full bg-red-500 text-xs text-white">
+                  <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-red-500 text-xs text-white">
                     18
                   </div>
                 ) : (
@@ -194,7 +195,7 @@ function ReservationModal({
                   취소
                 </button>
                 <button
-                  className="w-1/2 rounded bg-amber-500  px-6 pt-4 pb-4 text-lg hover:bg-amber-400 text-white"
+                  className="w-1/2 rounded bg-amber-500 px-6 pt-4 pb-4 text-lg hover:bg-amber-400 text-white"
                   onClick={() => onConfirm(selectedSeat)}
                 >
                   예매하기

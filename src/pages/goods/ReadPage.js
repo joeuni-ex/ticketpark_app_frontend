@@ -9,6 +9,9 @@ import { API_SERVER_HOST, getOne } from "../../api/goodsApi";
 import FetchingModal from "../../components/common/FetchingModal";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import ReservationModal from "../../components/common/ReservationModal";
+import moment from "moment";
+import { postAdd } from "../../api/ReservationApi";
+import ResultModal from "../../components/common/ResultModal";
 
 //초기값
 const initState = {
@@ -21,6 +24,7 @@ const initState = {
   runningTime: 0,
   age: 0,
   genre: "",
+  time: "",
   exclusive: 0,
   uploadFileNames: [],
   times: [],
@@ -33,6 +37,7 @@ const reservationInitState = {
   reservationDate: "",
   seatClass: "",
   seatNumber: "",
+  time: "",
   price: 0,
   cancelFlag: false,
 };
@@ -88,10 +93,12 @@ function ReadPage() {
 
   const [goods, setGoods] = useState(initState);
 
-  const [fetching, setFetching] = useState(false);
+  const [fetching, setFetching] = useState(false); //로딩
+  const [result, setResult] = useState(false); // 결과가 나오면 모달창으로 결과 데이터가 보이게끔
+
   const { loginState, moveToLogin } = useCustomLogin(); //로그인 커스텀 훅
 
-  const [date, setDate] = useState(initState.startDate);
+  const [date, setDate] = useState(initState.startDate); //캘린더 날짜
 
   const [reservation, setReservation] = useState(reservationInitState); //예약 초기값
   const [reservationModal, setReservationModal] = useState(false); //예약모달
@@ -102,9 +109,7 @@ function ReadPage() {
   //캘린더에서 날짜 선택 시
   const handleDateChange = (newDate) => {
     // 날짜를 "YYYY-MM-DD" 형식으로 변환
-    const formattedDate = newDate.toISOString().split("T")[0];
-
-    setDate(formattedDate);
+    setDate(moment(newDate).format("YYYY-MM-DD"));
   };
 
   //예약하기
@@ -127,30 +132,59 @@ function ReadPage() {
     setSelectedMenu(menu);
   };
 
-  useEffect(() => {
-    setFetching(true);
-    getOne(gno).then((data) => {
-      setGoods(data);
-      setReservation((prev) => ({ ...prev, gno }));
-      setFetching(false);
-    });
-  }, [gno]);
-
   //결과 모달창 닫기
   const closeModal = () => {
     setReservationModal(false);
+    setResult(null);
   };
 
-  //모달에서 좌석 선택 후 예약 클릭 시
+  //모달에서 좌석 선택 후 예매하기 클릭 시
   const handleClickReservationInModal = (seatData) => {
-    console.log(seatData); //좌석 데이터
+    if (seatData.seatNumber === "") {
+      alert("좌석을 선택해 주세요.");
+      return;
+    }
 
-    //API 서버 통신
+    setFetching(true); //로딩 시작
+
+    const formData = new FormData();
+
+    formData.append("email", loginState.email);
+    formData.append("gno", goods.gno);
+    formData.append("seatClass", seatData.seatClass);
+    formData.append("seatNumber", seatData.seatNumber);
+    formData.append("time", goods.times[selectedTime - 1]);
+    formData.append("price", seatData.price);
+    formData.append("cancelFlag", false);
+    formData.append("reservationDate", goods.date);
+
+    // API 서버 통신
+    postAdd(formData).then((data) => {
+      setFetching(false); //모달 닫기
+      setResult(data.RESULT);
+    });
+
+    // 로딩 끝
+    setFetching(false);
   };
 
   //날짜 변환
   const startDate = new Date(goods.startDate);
   const endDate = new Date(goods.endDate);
+
+  useEffect(() => {
+    setFetching(true);
+    getOne(gno).then((data) => {
+      setGoods(data);
+      setReservation((prev) => ({
+        ...prev,
+        gno,
+        reservationDate: data.startDate, // 초기값을 goods.startDate로 설정
+      }));
+      setDate(new Date()); // 캘린더 날짜도 초기값
+      setFetching(false);
+    });
+  }, [gno]);
 
   return (
     <div className="flex flex-col md:flex-row   justify-center ">
@@ -167,6 +201,15 @@ function ReadPage() {
         <></>
       )}
       {fetching ? <FetchingModal /> : <></>}
+      {result ? (
+        <ResultModal
+          callbackFn={closeModal}
+          title={"Reservation Add Result"}
+          content={`정상적으로 예매가 완료되었습니다.`}
+        />
+      ) : (
+        <></>
+      )}
       {/* left */}
       <div className="flex flex-col w-full md:w-6/12  mt-5 p-3 ">
         <div className="flex flex-col my-5 space-y-2">
@@ -279,7 +322,7 @@ function ReadPage() {
                   locale="en"
                   onChange={handleDateChange}
                   value={date}
-                  minDate={startDate}
+                  minDate={new Date()} // 오늘 날짜로 설정
                   maxDate={endDate}
                 />
               </CalendarBox>
@@ -389,13 +432,13 @@ export const StyleCalendar = styled(Calendar)`
 
   .react-calendar__tile--active {
     color: #ffffff;
-    background-color: #6a6a6a;
+    background-color: orange;
     border-radius: 7px;
   }
 
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
-    background-color: #6a6a6a;
+    background-color: orange;
   }
 
   .react-calendar__tile--now {
