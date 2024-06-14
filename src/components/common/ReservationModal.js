@@ -10,7 +10,14 @@ const initState = {
   price: 0,
 };
 
-function ReservationModal({ selectedDate, goods, onConfirm, onCancel }) {
+function ReservationModal({
+  selectedTime,
+  selectedDate,
+  startDate,
+  goods,
+  onConfirm,
+  onCancel,
+}) {
   const [selectedSeat, setSelectedSeat] = useState(initState);
 
   const seats = Array.from({ length: 6 }, (_, row) =>
@@ -143,17 +150,23 @@ function ReservationModal({ selectedDate, goods, onConfirm, onCancel }) {
 
               <div className="space-y-3 mt-4">
                 <div className=" ">{goods.place} </div>
-                <div className="">공연일자 {selectedDate} 2024-12-12</div>
-                <div className=" ">공연시작시간 08:45 (1회차) </div>
-                <div className=" ">총 {goods.time}분</div>
+                <div className="">
+                  공연일자{" "}
+                  {selectedDate
+                    ? selectedDate
+                    : startDate.toISOString().split("T")[0]}
+                </div>
+                <div className=" ">
+                  공연시작시간 {goods.times[selectedTime - 1]} ({selectedTime}
+                  회차){" "}
+                </div>
+                <div className=" ">총 {goods.runningTime}분</div>
                 <div>
                   선택한 좌석 :
                   <span className="font-semibold text-blue-500">
-                    {" "}
-                    {`<${selectedSeat.seatClass}> ${
-                      selectedSeat ? selectedSeat.seatNumber : ""
-                    }`}
-                    번
+                    {selectedSeat.seatClass
+                      ? `<${selectedSeat.seatClass}> ${selectedSeat.seatNumber}번`
+                      : " 선택되지 않음"}
                   </span>
                 </div>
               </div>

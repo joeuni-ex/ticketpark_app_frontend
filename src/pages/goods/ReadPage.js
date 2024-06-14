@@ -18,11 +18,12 @@ const initState = {
   startDate: "",
   endDate: "",
   gdesc: "",
-  time: 0,
+  runningTime: 0,
   age: 0,
   genre: "",
   exclusive: 0,
   uploadFileNames: [],
+  times: [],
 };
 
 //예약 초기값
@@ -95,7 +96,7 @@ function ReadPage() {
   const [reservation, setReservation] = useState(reservationInitState); //예약 초기값
   const [reservationModal, setReservationModal] = useState(false); //예약모달
 
-  const [selectedSession, setSelectedSession] = useState("1회차"); //예매
+  const [selectedTime, setSelectedTime] = useState(1); //예매
   const [selectedMenu, setSelectedMenu] = useState("공연정보");
 
   //캘린더에서 날짜 선택 시
@@ -117,8 +118,8 @@ function ReadPage() {
   };
 
   //회차 변경
-  const handleSessionChange = (session) => {
-    setSelectedSession(session);
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
   };
 
   //메뉴 변경
@@ -155,6 +156,8 @@ function ReadPage() {
     <div className="flex flex-col md:flex-row   justify-center ">
       {reservationModal ? (
         <ReservationModal
+          selectedTime={selectedTime}
+          startDate={startDate}
           selectedDate={date}
           goods={goods}
           onCancel={closeModal}
@@ -191,7 +194,7 @@ function ReadPage() {
             </div>
             <div className="flex ">
               <div className="w-1/4">공연시간</div>
-              <div>{goods.time}분</div>
+              <div>{goods.runningTime}분</div>
             </div>
             <div className="flex ">
               <div className="w-1/4">관람연령</div>
@@ -284,29 +287,20 @@ function ReadPage() {
             <div className="flex flex-col m-4 space-y-2 ">
               <div className=" font-semibold ">회차</div>
               <div className="flex ">
-                <div
-                  className={`flex space-x-2 mt-2 w-1/2 p-4 border rounded-l-md cursor-pointer text-sm ${
-                    selectedSession === "1회차"
-                      ? "border-orange-400 text-orange-500 font-semibold "
-                      : "border-gray-300"
-                  }`}
-                  onClick={() => handleSessionChange("1회차")}
-                >
-                  <div>1회차</div>
-                  <div>14:00</div>
-                </div>
-
-                <div
-                  className={`flex space-x-2 mt-2  w-1/2  p-4 border rounded-r-md cursor-pointer text-sm ${
-                    selectedSession === "2회차"
-                      ? "border-orange-400 text-orange-500 font-semibold "
-                      : "border-gray-300"
-                  }`}
-                  onClick={() => handleSessionChange("2회차")}
-                >
-                  <div>2회차</div>
-                  <div>18:30</div>
-                </div>
+                {goods.times?.map((time, index) => (
+                  <div
+                    key={index}
+                    className={`flex space-x-2 mt-2 w-1/2 p-4 border rounded-l-md cursor-pointer text-sm ${
+                      selectedTime === index + 1
+                        ? "border-orange-400 text-orange-500 font-semibold "
+                        : "border-gray-300"
+                    }`}
+                    onClick={() => handleTimeChange(index + 1)}
+                  >
+                    <div>{index + 1}회차</div>
+                    <div>{time}</div>
+                  </div>
+                ))}
               </div>
               <div className="text-sm ml-2">
                 <p>
