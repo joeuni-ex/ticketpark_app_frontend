@@ -23,3 +23,12 @@ export const getList = async (pageParams) => {
 
   return res.data;
 };
+
+//수정
+export const modifyOne = async (rno, reservation) => {
+  const header = { headers: { "Content-Type": "multipart/form-data" } };
+
+  const res = await jwtAxios.put(`${host}/${rno}`, reservation, header);
+
+  return res.data;
+};
