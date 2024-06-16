@@ -11,3 +11,15 @@ export const postAdd = async (reservation) => {
 
   return res.data;
 };
+
+//리스트 조회
+export const getList = async (pageParams) => {
+  const { page, size, genre } = pageParams;
+
+  //쿼리 스트링은 option => params로 가져옴
+  const res = await jwtAxios.get(`${host}/list`, {
+    params: { page, size, genre },
+  });
+
+  return res.data;
+};
