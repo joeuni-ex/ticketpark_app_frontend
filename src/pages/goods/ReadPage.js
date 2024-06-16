@@ -156,7 +156,7 @@ function ReadPage() {
     formData.append("time", goods.times[selectedTime - 1]);
     formData.append("price", seatData.price);
     formData.append("cancelFlag", false);
-    formData.append("reservationDate", goods.date);
+    formData.append("reservationDate", date);
 
     // API 서버 통신
     postAdd(formData).then((data) => {
@@ -179,9 +179,9 @@ function ReadPage() {
       setReservation((prev) => ({
         ...prev,
         gno,
-        reservationDate: data.startDate, // 초기값을 goods.startDate로 설정
+        reservationDate: moment(new Date()).format("YYYY-MM-DD"), // 초기값을 goods.startDate로 설정
       }));
-      setDate(new Date()); // 캘린더 날짜도 초기값
+      setDate(moment(new Date()).format("YYYY-MM-DD")); // 캘린더 날짜도 초기값
       setFetching(false);
     });
   }, [gno]);
