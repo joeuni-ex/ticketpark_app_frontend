@@ -132,8 +132,6 @@ function ModifyGoodsPage() {
     });
   };
 
-  console.log(goods);
-
   useEffect(() => {
     setFetching(true); // 데이터 로딩 중임을 표시
 

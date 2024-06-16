@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import useCustomMove from "../../../../hooks/useCustomMove";
-import { getList } from "../../../../api/ReservationApi";
+import { getList, modifyOne } from "../../../../api/ReservationApi";
 import { useNavigate } from "react-router-dom";
 import FetchingModal from "../../../../components/common/FetchingModal";
 import PageComponent from "../../../../components/common/PageComponent";
 import { API_SERVER_HOST } from "../../../../api/goodsApi";
 import { motion } from "framer-motion";
+import ResultModal from "../../../../components/common/ResultModal";
+import useCustomLogin from "../../../../hooks/useCustomLogin";
+import ReservationModifyModal from "../../../../components/common/ReservationModifyModal";
+import ConfirmModal from "../../../../components/common/ConfirmModal";
 
 const initState = {
   dtoList: [],
@@ -24,9 +28,55 @@ const host = API_SERVER_HOST;
 function ListPage() {
   const [serverData, setServerData] = useState(initState);
   const { page, size, refresh, moveToList } = useCustomMove();
+
   const [fetching, setFetching] = useState(false); // 로딩 모달
-  const [viewDetailsToggle, setViewDetailsToggle] = useState(null); // Change to track the specific reservation
-  const navigate = useNavigate();
+  const [result, setResult] = useState(false); // 결과가 나오면 모달창으로 결과 데이터가 보이게끔
+
+  const [viewDetailsToggle, setViewDetailsToggle] = useState(null); //상세보기 토글
+
+  const [reservationModifyModal, setReservationModifyModal] = useState(false); //예약 변경 모달
+  const [reservationCancelModal, setReservationCancelModal] = useState(false); //예약 취소 모달
+  const [cancelRno, setCancelRno] = useState("");
+
+  const { loginState } = useCustomLogin();
+
+  //삭제 모달
+  const handleClickCancel = async (rno) => {
+    setCancelRno(rno);
+    setReservationCancelModal(true);
+  };
+
+  //취소 모달 -> 확인 클릭 시
+  const handleConfirmCancel = async () => {
+    setReservationCancelModal(false);
+    setFetching(true);
+    try {
+      const formData = new FormData();
+
+      formData.append("email", loginState.email);
+      formData.append("cancelFlag", true);
+
+      modifyOne(cancelRno, formData).then((result) => {
+        setResult("Cancel");
+        setFetching(false);
+      });
+    } catch (error) {
+      console.error("Error cancel item:", error);
+      setResult("Error cancel item");
+    } finally {
+      setFetching(false);
+    }
+  };
+
+  //결과 모달창 닫기
+  const closeModal = () => {
+    setResult(null);
+    setReservationCancelModal(false);
+    setCancelRno(null);
+  };
+
+  //취소 또는 예약 변경 클릭 시
+  const handleClickModify = (rno, mode) => {};
 
   //사이드바 애니메이션 상태
   const boxVariants = {
@@ -43,16 +93,34 @@ function ListPage() {
       setFetching(false);
       setServerData(data);
     });
-  }, [page, size, refresh]);
+  }, [page, size, refresh, result]);
 
+  console.log(serverData);
   return (
     <div className="flex flex-col p-5">
       {fetching && <FetchingModal />}
+      {result ? (
+        <ResultModal
+          callbackFn={closeModal}
+          title={"Reservation Cancel"}
+          content={`정상적으로 예약취소 처리 되었습니다.`}
+        />
+      ) : (
+        <></>
+      )}
+      {reservationCancelModal && (
+        <ConfirmModal
+          message="해당 예약을 취소하시겠습니까?"
+          onConfirm={handleConfirmCancel}
+          onCancel={closeModal}
+        />
+      )}
+
       <div className="font-bold text-stone-800 text-xl py-10 px-5 border-b">
         예약 목록
       </div>
       <div className="flex w-full flex-wrap mx-auto justify-center p-6">
-        <div className="w-full flex px-8 font-bold">
+        <div className="w-full flex px-8 font-bold text-lg">
           <div className="w-1/4">공연명</div>
           <div className="w-1/4">공연장소</div>
           <div className="w-1/4">공연일자</div>
@@ -67,7 +135,7 @@ function ListPage() {
               <div className="w-full flex items-center">
                 <div className="flex flex-col w-72 space-y-3">
                   <div className="w-28 ">
-                    {!reservation.imageFile ? (
+                    {reservation.imageFile ? (
                       <img
                         src={`${host}/api/goods/view/s_${reservation.imageFile}`}
                         alt="image"
@@ -81,7 +149,9 @@ function ListPage() {
                       />
                     )}
                   </div>
-                  <div className="w-1/4">{reservation.gtitle}</div>
+                  <div className="w-96 font-extrabold">
+                    {reservation.gtitle}
+                  </div>
                 </div>
                 <div className="w-72 px-2">{reservation.place}</div>
                 <div className="w-80 px-6">{reservation.reservationDate}</div>
@@ -89,7 +159,7 @@ function ListPage() {
               </div>
               <div className="flex justify-center items-center text-1xl w-48 font-medium">
                 <span
-                  className="cursor-pointer text-blue-500 hover:underline"
+                  className="cursor-pointer text-blue-500 hover:underline font-semibold"
                   onClick={() =>
                     setViewDetailsToggle(
                       viewDetailsToggle === reservation.rno
@@ -102,6 +172,7 @@ function ListPage() {
                 </span>
               </div>
             </div>
+            {/* 상세보기 토글 */}
             {viewDetailsToggle === reservation.rno && (
               <motion.div
                 variants={boxVariants}
@@ -129,10 +200,16 @@ function ListPage() {
                   </div>
                 </div>
                 <div className="flex justify-end mt-4">
-                  <button className="mr-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                  <button
+                    className="mr-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    onClick={() => handleClickModify(reservation.rno, "modify")}
+                  >
                     예약변경
                   </button>
-                  <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                  <button
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                    onClick={() => handleClickCancel(reservation.rno)}
+                  >
                     예약취소
                   </button>
                 </div>
