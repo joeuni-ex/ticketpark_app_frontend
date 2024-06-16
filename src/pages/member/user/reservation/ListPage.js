@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import useCustomMove from "../../../../hooks/useCustomMove";
 import { getList, modifyOne } from "../../../../api/ReservationApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FetchingModal from "../../../../components/common/FetchingModal";
 import PageComponent from "../../../../components/common/PageComponent";
 import { API_SERVER_HOST } from "../../../../api/goodsApi";
 import { motion } from "framer-motion";
 import ResultModal from "../../../../components/common/ResultModal";
 import useCustomLogin from "../../../../hooks/useCustomLogin";
-import ReservationModifyModal from "../../../../components/common/ReservationModifyModal";
+
 import ConfirmModal from "../../../../components/common/ConfirmModal";
 
 const initState = {
@@ -34,13 +34,12 @@ function ListPage() {
 
   const [viewDetailsToggle, setViewDetailsToggle] = useState(null); //상세보기 토글
 
-  const [reservationModifyModal, setReservationModifyModal] = useState(false); //예약 변경 모달
   const [reservationCancelModal, setReservationCancelModal] = useState(false); //예약 취소 모달
-  const [cancelRno, setCancelRno] = useState("");
+  const [cancelRno, setCancelRno] = useState(""); //예약 취소할 번호
 
   const { loginState } = useCustomLogin();
 
-  //삭제 모달
+  //취소 모달
   const handleClickCancel = async (rno) => {
     setCancelRno(rno);
     setReservationCancelModal(true);
@@ -74,9 +73,6 @@ function ListPage() {
     setReservationCancelModal(false);
     setCancelRno(null);
   };
-
-  //취소 또는 예약 변경 클릭 시
-  const handleClickModify = (rno, mode) => {};
 
   //사이드바 애니메이션 상태
   const boxVariants = {
@@ -200,12 +196,12 @@ function ListPage() {
                   </div>
                 </div>
                 <div className="flex justify-end mt-4">
-                  <button
+                  <Link
+                    to={`/member/user/reservation/modify/${reservation.rno}`}
                     className="mr-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                    onClick={() => handleClickModify(reservation.rno, "modify")}
                   >
                     예약변경
-                  </button>
+                  </Link>
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                     onClick={() => handleClickCancel(reservation.rno)}

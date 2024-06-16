@@ -21,6 +21,9 @@ const ListGoodsPage = lazy(() =>
 const ReservationListPage = lazy(() =>
   import("../pages/member/user/reservation/ListPage")
 );
+const ReservationModifyPage = lazy(() =>
+  import("../pages/member/user/reservation/ModifyPage")
+);
 
 const memberRouter = () => {
   return [
@@ -86,6 +89,14 @@ const memberRouter = () => {
       element: (
         <Suspense fallback={Loading}>
           <ReservationListPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "reservation/modify/:rno",
+      element: (
+        <Suspense fallback={Loading}>
+          <ReservationModifyPage />
         </Suspense>
       ),
     },

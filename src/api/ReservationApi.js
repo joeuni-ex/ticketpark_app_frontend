@@ -12,6 +12,13 @@ export const postAdd = async (reservation) => {
   return res.data;
 };
 
+//조회
+export const getOneReservation = async (rno) => {
+  const res = await jwtAxios.get(`${host}/${rno}`);
+
+  return res.data;
+};
+
 //리스트 조회
 export const getList = async (pageParams) => {
   const { page, size, genre } = pageParams;
