@@ -23,7 +23,7 @@ function ReservationModal({
 
   const seats = Array.from({ length: 6 }, (_, row) =>
     Array.from({ length: 8 }, (_, col) => ({
-      id: `R${row + 1}C${col + 1}`,
+      id: row * 8 + col + 1,
       row: row + 1,
       col: col + 1,
     }))
@@ -42,9 +42,9 @@ function ReservationModal({
       price = 80000;
     }
     setSelectedSeat({
-      id: seat.id,
-      seatClass,
-      seatNumber: index + 1,
+      id: index,
+      seatClass: seatClass,
+      seatNumber: index,
       price: price,
     });
   };
@@ -63,6 +63,7 @@ function ReservationModal({
             <div className="flex justify-center text-2xl pt-4 pb-4 text-stone-700 text-center">
               <div className="flex justify-center items-center mb-4 min-w-[560px] h-24 bg-white shadow-md shadow-white"></div>
             </div>
+            {/* Seat */}
             {/* Seat */}
             <div className="grid grid-cols-10 gap-2 mx-auto mb-4">
               {seats.flat().map((seat, index) => {
@@ -84,15 +85,16 @@ function ReservationModal({
                   seatClass = "A";
                 }
 
+                const isReserved = selectedSeat && selectedSeat.id === seat.id;
+
+                const buttonClass = `w-12 h-12 rounded-t-2xl ${colSpan} ${
+                  isReserved ? "bg-orange-400 text-white" : "bg-zinc-400"
+                }`;
                 return (
                   <button
                     key={seat.id}
-                    className={`w-12 h-12 rounded-t-2xl ${colSpan} ${
-                      selectedSeat && selectedSeat.id === seat.id
-                        ? "bg-orange-400 text-white"
-                        : "bg-zinc-400"
-                    }`}
-                    onClick={() => handleSeatClick(seat, index, seatClass)}
+                    className={buttonClass}
+                    onClick={() => handleSeatClick(seat, index + 1, seatClass)}
                   >
                     <div className="flex flex-col justify-center items-center">
                       <div>{index + 1}</div>

@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API_SERVER_HOST, getOne } from "../../../../api/goodsApi";
 import moment from "moment";
 import styled from "styled-components";
 import { useEffect } from "react";
 import FetchingModal from "../../../../components/common/FetchingModal";
-import { getOneReservation } from "../../../../api/ReservationApi";
+import { getOneReservation, modifyOne } from "../../../../api/ReservationApi";
 import ResultModal from "../../../../components/common/ResultModal";
 import AgeComponent from "../../../../components/common/AgeComponent";
+import ConfirmModal from "../../../../components/common/ConfirmModal";
+import useCustomLogin from "../../../../hooks/useCustomLogin";
 
 const initState = {
   id: "",
@@ -77,19 +79,25 @@ const host = API_SERVER_HOST;
 
 function ModifyPage() {
   const { rno } = useParams();
+
+  const { loginState } = useCustomLogin();
+
   const [date, setDate] = useState(); //캘린더 날짜
 
   const [gno, setGno] = useState(0);
 
   const [fetching, setFetching] = useState(false); //로딩 모달
   const [result, setResult] = useState(false); // 결과가 나오면 모달창으로 결과 데이터가 보이게끔
+  const [reservationConfirmModal, setReservationConfirmModal] = useState(false); //예약 변경 확인 모달
 
   const [goods, setGoods] = useState(goodsInitState); //굿즈 데이터
 
   const [reservation, setReservation] = useState(reservationInitState); //예약 데이터
 
-  const [selectSeatBtn, setSelectSeatBtn] = useState(false);
+  const [selectSeatBtn, setSelectSeatBtn] = useState(false); //좌석선택 버튼 클릭여부
   const [selectedTime, setSelectedTime] = useState(1); //예매
+
+  const navigate = useNavigate();
 
   //캘린더에서 날짜 선택 시
   const handleDateChange = (newDate) => {
@@ -104,8 +112,10 @@ function ModifyPage() {
 
   //결과 모달창 닫기
   const closeModal = () => {
-    //setReservationModal(false);
+    setReservationConfirmModal(false);
     setResult(null);
+
+    navigate("/member/user/reservation/list");
   };
 
   // =====좌석 변경=======
@@ -113,7 +123,7 @@ function ModifyPage() {
 
   const seats = Array.from({ length: 6 }, (_, row) =>
     Array.from({ length: 8 }, (_, col) => ({
-      id: `R${row + 1}C${col + 1}`,
+      id: row * 8 + col + 1,
       row: row + 1,
       col: col + 1,
     }))
@@ -132,11 +142,48 @@ function ModifyPage() {
       price = 80000;
     }
     setSelectedSeat({
-      id: seat.id,
-      seatClass,
-      seatNumber: index + 1,
+      id: index,
+      seatClass: seatClass,
+      seatNumber: index,
       price: price,
     });
+  };
+
+  //===== 예매 변경 =======
+  //예약 변경 확인 모달
+  const handleClickModify = async (rno) => {
+    setReservationConfirmModal(true);
+  };
+
+  //예약 변경 확인 모달 -> 확인 클릭 시
+  const handleConfirmModify = async () => {
+    if (selectedSeat.seatNumber === "") {
+      alert("좌석을 선택해 주세요.");
+      return;
+    }
+    setReservationConfirmModal(false);
+
+    setFetching(true); //로딩 시작
+
+    const formData = new FormData();
+    formData.append("rno", reservation.rno);
+    formData.append("email", loginState.email);
+    formData.append("sno", reservation.sno);
+    formData.append("reservationDate", date);
+    formData.append("time", goods.times[selectedTime - 1]);
+    formData.append("seatClass", selectedSeat.seatClass);
+    formData.append("seatNumber", selectedSeat.seatNumber);
+    formData.append("price", selectedSeat.price);
+    formData.append("cancelFlag", reservation.cancelFlag);
+
+    // API 서버 통신
+    modifyOne(rno, formData).then((data) => {
+      setFetching(false); //모달 닫기
+      setResult(data.RESULT);
+    });
+
+    // 로딩 끝
+    setFetching(false);
   };
 
   useEffect(() => {
@@ -148,6 +195,11 @@ function ModifyPage() {
       setGno(reData.gno);
 
       setDate(moment(reData.reservationDate).format("YYYY-MM-DD")); // 캘린더 날짜도 초기 값
+      setSelectedSeat({
+        id: reData.seatNumber,
+        seatClass: reData.seatClass,
+        seatNumber: reData.seatNumber,
+      });
       //공연데이터
       getOne(reData.gno).then((data) => {
         setGoods(data);
@@ -156,12 +208,11 @@ function ModifyPage() {
     });
   }, [rno]);
 
-  console.log(goods);
-  console.log(reservation);
-
   //날짜 변환
   const startDate = moment(goods.startDate).format("YYYY-MM-DD");
   const endDate = moment(goods.endDate).format("YYYY-MM-DD");
+
+  console.log(reservation);
 
   return (
     <div className="flex flex-col   justify-center ">
@@ -171,19 +222,28 @@ function ModifyPage() {
         <ResultModal
           callbackFn={closeModal}
           title={"Reservation Add Result"}
-          content={`정상적으로 예매가 완료되었습니다.`}
+          content={`정상적으로 예약 변경이 완료되었습니다.`}
         />
       ) : (
         <></>
       )}
+
+      {reservationConfirmModal && (
+        <ConfirmModal
+          message="해당 예약을 변경하시겠습니까?"
+          onConfirm={handleConfirmModify}
+          onCancel={closeModal}
+        />
+      )}
+
       <div className="font-bold text-stone-800 text-xl py-10 px-5 border-b">
         예약 변경
       </div>
       {/* 좌석 선택 버튼 클릭 여부에 따라 다르게 표시  */}
       {!selectSeatBtn ? (
         // 날짜 선택
-        <div className="flex text-stone-800">
-          <div className="flex flex-col w-full md:w-7/12  mt-5 p-3 ">
+        <div className="flex text-stone-800 ">
+          <div className="flex flex-col w-full md:w-7/12  mt-5 mb-5 p-3 ">
             <div className="flex flex-col my-5 space-y-2">
               <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
                 <div className="text-2xl font-bold">{goods.title}</div>
@@ -237,15 +297,33 @@ function ModifyPage() {
             </div>
             <div className="border my-5 b "></div>
             <div className="flex text-stone-800 flex-col">
-              <div className="font-semibold text-lg">나의 예약 내역</div>
-              <div className="border my-5 b "></div>
-              <div className="flex flex-col space-y-3 mt-5">
+              <div className="font-semibold text-lg">
+                나의 예약 내역{" "}
+                <span className="text-xs font-thin">
+                  *예약 변경 시 좌석 등급에 대한 차액은 결제가 필요합니다.
+                </span>
+              </div>
+              <div className="border my-5 border-gray-100"></div>
+              <div className="flex flex-col space-y-3  ">
                 <div>장소 : {goods.place}</div>
-                <div>예약일자 : {reservation.reservationDate}</div>
-                <div>예약시간 : {reservation.time}</div>
                 <div>
-                  예약좌석 : {`<${reservation.seatClass}>`}
-                  {reservation.seatNumber}석
+                  예약일자 :{" "}
+                  <span className="text-blue-400 font-semibold">
+                    {reservation.reservationDate}
+                  </span>
+                </div>
+                <div>
+                  예약시간 :{" "}
+                  <span className="text-blue-400 font-semibold">
+                    {reservation.time}
+                  </span>
+                </div>
+                <div>
+                  예약좌석 :{" "}
+                  <span className="text-blue-400 font-semibold">
+                    {`<${reservation.seatClass}>`}
+                    {reservation.seatNumber}석{" "}
+                  </span>
                 </div>
               </div>
             </div>
@@ -303,7 +381,7 @@ function ModifyPage() {
               </div>
               <div
                 onClick={() => setSelectSeatBtn(true)}
-                className="flex justify-center cursor-pointer items-center  w-96 m-4  h-14 rounded text-xl text-white font-bold bg-orange-400"
+                className="flex justify-center cursor-pointer items-center  w-96 m-4  h-14 rounded text-xl text-white font-bold bg-orange-400 hover:bg-orange-300"
               >
                 좌석선택
               </div>
@@ -313,16 +391,16 @@ function ModifyPage() {
       ) : (
         <>
           {/* 좌석선택 */}
-          <div className="flex">
-            <div className=" bg-white shadow opacity-100 w-1/4 rounded mt-10 pb-6 mb-10 px-6 min-w-[1000px] min-h-[700px]">
-              <div className="flex justify-between text-xl font-semibold text-stone-700 my-5">
-                <div>예매 - 좌석선택</div>
+          <div className="flex w-full">
+            <div className=" bg-white shadow opacity-100  w-full rounded mt-5  p-5 mb-10 mr-5 min-w-[1000px] min-h-[700px]">
+              <div className="flex justify-between text-xl font-semibold text-stone-700 mb-5">
+                <div>좌석선택</div>
               </div>
-              <div className="flex">
-                <div className="bg-zinc-700 w-2/3 p-10 space-y-6">
+              <div className="flex space-x-14">
+                <div className="bg-zinc-700 w-3/5 max-w-[760px] p-10 space-y-6">
                   {/*Screen*/}
                   <div className="flex justify-center text-2xl pt-4 pb-4 text-stone-700 text-center">
-                    <div className="flex justify-center items-center mb-4 min-w-[560px] h-24 bg-white shadow-md shadow-white"></div>
+                    <div className="flex justify-center items-center mb-4  min-w-[700px]  h-24 bg-white shadow-md shadow-white"></div>
                   </div>
                   {/* Seat */}
                   <div className="grid grid-cols-10 gap-2 mx-auto mb-4">
@@ -345,16 +423,18 @@ function ModifyPage() {
                         seatClass = "A";
                       }
 
+                      const isReserved =
+                        selectedSeat && selectedSeat.id === seat.id;
+
+                      const buttonClass = `w-12 h-12 rounded-t-2xl ${colSpan} ${
+                        isReserved ? "bg-orange-400 text-white" : "bg-zinc-400"
+                      }`;
                       return (
                         <button
                           key={seat.id}
-                          className={`w-12 h-12 rounded-t-2xl ${colSpan} ${
-                            selectedSeat && selectedSeat.id === seat.id
-                              ? "bg-orange-400 text-white"
-                              : "bg-zinc-400"
-                          }`}
+                          className={buttonClass}
                           onClick={() =>
-                            handleSeatClick(seat, index, seatClass)
+                            handleSeatClick(seat, index + 1, seatClass)
                           }
                         >
                           <div className="flex flex-col justify-center items-center">
@@ -372,7 +452,7 @@ function ModifyPage() {
                     100,000원 / A석 80,000원
                   </div>
                 </div>
-                <div className="flex flex-col w-1/3 pl-8 justify-between ">
+                <div className="flex flex-col w-1/3  justify-between ">
                   <div>
                     <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
                       <div>{goods.title}</div>
@@ -389,7 +469,9 @@ function ModifyPage() {
 
                     <div className="space-y-3 mt-4">
                       <div className=" ">{goods.place} </div>
-                      <div className="">공연일자 {date ? date : startDate}</div>
+                      <div className="">
+                        공연일자 {date ? date : reservation.reservationDate}
+                      </div>
                       <div className=" ">
                         공연시작시간 {goods.times[selectedTime - 1]} (
                         {selectedTime}
@@ -411,12 +493,31 @@ function ModifyPage() {
                       <div>최종결제금액</div>
                       <div>
                         <span className="text-orange-400 text-xl">
-                          {new Intl.NumberFormat("ko-KR").format(
-                            selectedSeat.price
-                          )}
+                          {!selectedSeat.price
+                            ? "0"
+                            : new Intl.NumberFormat("ko-KR").format(
+                                selectedSeat.price - reservation.price
+                              )}
                         </span>
                         원
                       </div>
+                    </div>
+                  </div>
+                  <div className="text-sm text-red-600 font-semibold ">
+                    *차액 발생 시 추가 결제 또는 환불이 발생합니다
+                  </div>
+                  <div className="flex space-x-2">
+                    <div
+                      onClick={() => setSelectSeatBtn(false)}
+                      className="flex justify-center cursor-pointer items-center  w-1/2   h-14 rounded text-xl text-white font-bold bg-gray-400 hover:bg-gray-300"
+                    >
+                      뒤로
+                    </div>{" "}
+                    <div
+                      onClick={handleClickModify}
+                      className="flex justify-center cursor-pointer items-center  w-1/2   h-14 rounded text-xl text-white font-bold bg-orange-400 hover:bg-orange-300"
+                    >
+                      예약변경
                     </div>
                   </div>
                 </div>

@@ -39,13 +39,13 @@ function ListPage() {
 
   const { loginState } = useCustomLogin();
 
-  //취소 모달
+  //예약 취소 모달
   const handleClickCancel = async (rno) => {
     setCancelRno(rno);
     setReservationCancelModal(true);
   };
 
-  //취소 모달 -> 확인 클릭 시
+  //예약 취소 모달 -> 확인 클릭 시
   const handleConfirmCancel = async () => {
     setReservationCancelModal(false);
     setFetching(true);
