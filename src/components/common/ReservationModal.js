@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { API_SERVER_HOST } from "../../api/goodsApi";
+import AgeComponent from "./AgeComponent";
 
 const host = API_SERVER_HOST;
 
@@ -110,35 +111,7 @@ function ReservationModal({
             <div>
               <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
                 <div>{goods.title}</div>
-
-                {goods.age === 0 ? (
-                  <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-green-600 text-xs text-white">
-                    전체
-                  </div>
-                ) : (
-                  ""
-                )}
-                {goods.age === 12 ? (
-                  <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-blue-500 text-xs text-white">
-                    12
-                  </div>
-                ) : (
-                  ""
-                )}
-                {goods.age === 15 ? (
-                  <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-yellow-500 text-xs text-white">
-                    15
-                  </div>
-                ) : (
-                  ""
-                )}
-                {goods.age === 18 ? (
-                  <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-red-500 text-xs text-white">
-                    18
-                  </div>
-                ) : (
-                  ""
-                )}
+                <AgeComponent age={goods.age} />
               </div>
 
               <div className="w-44 h-64 overflow-hidden mt-3">

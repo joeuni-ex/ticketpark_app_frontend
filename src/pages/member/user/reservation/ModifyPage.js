@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import FetchingModal from "../../../../components/common/FetchingModal";
 import { getOneReservation } from "../../../../api/ReservationApi";
 import ResultModal from "../../../../components/common/ResultModal";
+import AgeComponent from "../../../../components/common/AgeComponent";
 
 const initState = {
   id: "",
@@ -49,6 +50,29 @@ const reservationInitState = {
   cancelFlag: false,
 };
 
+//티켓 가격
+const seatPrice = [
+  {
+    id: 1,
+    seat: "VIP",
+    price: 150000,
+  },
+  {
+    id: 2,
+    seat: "R",
+    price: 130000,
+  },
+  {
+    id: 3,
+    seat: "S",
+    price: 100000,
+  },
+  {
+    id: 4,
+    seat: "A",
+    price: 80000,
+  },
+];
 const host = API_SERVER_HOST;
 
 function ModifyPage() {
@@ -142,6 +166,7 @@ function ModifyPage() {
   return (
     <div className="flex flex-col   justify-center ">
       {fetching ? <FetchingModal /> : <></>}
+
       {result ? (
         <ResultModal
           callbackFn={closeModal}
@@ -154,11 +179,16 @@ function ModifyPage() {
       <div className="font-bold text-stone-800 text-xl py-10 px-5 border-b">
         예약 변경
       </div>
-      {selectSeatBtn ? (
-        <div className="flex">
-          <div className="flex flex-col w-full md:w-6/12  mt-5 p-3 ">
+      {/* 좌석 선택 버튼 클릭 여부에 따라 다르게 표시  */}
+      {!selectSeatBtn ? (
+        // 날짜 선택
+        <div className="flex text-stone-800">
+          <div className="flex flex-col w-full md:w-7/12  mt-5 p-3 ">
             <div className="flex flex-col my-5 space-y-2">
-              <div className="text-2xl font-bold">{goods.title}</div>
+              <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
+                <div className="text-2xl font-bold">{goods.title}</div>
+                <AgeComponent age={goods.age} />
+              </div>
             </div>
 
             <div className="flex space-x-11">
@@ -192,22 +222,36 @@ function ModifyPage() {
                 <div className="flex ">
                   <div className="w-1/4">가격</div>
                   <div className="space-y-2">
-                    {/* {seatPrice.map((item) => (
-                  <p key={item.id} className="text-stone-500 text-sm">
-                    {item.seat}석
-                    <span className="font-bold ml-3 text-black">
-                      {" "}
-                      {item.price.toLocaleString("ko-KR")}원
-                    </span>
-                  </p>
-                ))} */}
+                    {seatPrice.map((item) => (
+                      <p key={item.id} className="text-stone-500 text-sm">
+                        {item.seat}석
+                        <span className="font-bold ml-3 text-black">
+                          {" "}
+                          {item.price.toLocaleString("ko-KR")}원
+                        </span>
+                      </p>
+                    ))}
                   </div>
+                </div>
+              </div>
+            </div>
+            <div className="border my-5 b "></div>
+            <div className="flex text-stone-800 flex-col">
+              <div className="font-semibold text-lg">나의 예약 내역</div>
+              <div className="border my-5 b "></div>
+              <div className="flex flex-col space-y-3 mt-5">
+                <div>장소 : {goods.place}</div>
+                <div>예약일자 : {reservation.reservationDate}</div>
+                <div>예약시간 : {reservation.time}</div>
+                <div>
+                  예약좌석 : {`<${reservation.seatClass}>`}
+                  {reservation.seatNumber}석
                 </div>
               </div>
             </div>
           </div>
           {/* cal */}
-          <div className="flex  w-full md:w-3/12   flex-col pt-10 ">
+          <div className="flex  w-full md:w-4/12   flex-col pt-10 ">
             <div className="flex   flex-col items-center rounded justify-center sticky top-0 text-stone-600">
               {/* cal */}
               <div className="flex mt-5 flex-col border rounded-xl p-3 ">
@@ -257,153 +301,130 @@ function ModifyPage() {
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              onClick={() => setSelectSeatBtn(true)}
-              className="flex justify-center cursor-pointer items-center  w-96 m-4 h-14 rounded text-xl text-white font-bold bg-orange-400"
-            >
-              좌석선택
+              <div
+                onClick={() => setSelectSeatBtn(true)}
+                className="flex justify-center cursor-pointer items-center  w-96 m-4  h-14 rounded text-xl text-white font-bold bg-orange-400"
+              >
+                좌석선택
+              </div>
             </div>
           </div>
         </div>
       ) : (
-        <></>
-      )}
-
-      {/* 좌석선택 */}
-      <div className="flex">
-        <div className=" bg-white shadow opacity-100 w-1/4 rounded mt-10 pb-6 mb-10 px-6 min-w-[1000px] min-h-[700px]">
-          <div className="flex justify-between text-xl font-semibold text-stone-700 my-5">
-            <div>예매 - 좌석선택</div>
-          </div>
+        <>
+          {/* 좌석선택 */}
           <div className="flex">
-            <div className="bg-zinc-700 w-2/3 p-10 space-y-6">
-              {/*Screen*/}
-              <div className="flex justify-center text-2xl pt-4 pb-4 text-stone-700 text-center">
-                <div className="flex justify-center items-center mb-4 min-w-[560px] h-24 bg-white shadow-md shadow-white"></div>
+            <div className=" bg-white shadow opacity-100 w-1/4 rounded mt-10 pb-6 mb-10 px-6 min-w-[1000px] min-h-[700px]">
+              <div className="flex justify-between text-xl font-semibold text-stone-700 my-5">
+                <div>예매 - 좌석선택</div>
               </div>
-              {/* Seat */}
-              <div className="grid grid-cols-10 gap-2 mx-auto mb-4">
-                {seats.flat().map((seat, index) => {
-                  const colSpan =
-                    index % 8 === 1 || index % 8 === 5 ? "col-span-2" : "";
+              <div className="flex">
+                <div className="bg-zinc-700 w-2/3 p-10 space-y-6">
+                  {/*Screen*/}
+                  <div className="flex justify-center text-2xl pt-4 pb-4 text-stone-700 text-center">
+                    <div className="flex justify-center items-center mb-4 min-w-[560px] h-24 bg-white shadow-md shadow-white"></div>
+                  </div>
+                  {/* Seat */}
+                  <div className="grid grid-cols-10 gap-2 mx-auto mb-4">
+                    {seats.flat().map((seat, index) => {
+                      const colSpan =
+                        index % 8 === 1 || index % 8 === 5 ? "col-span-2" : "";
 
-                  let seatClass = "";
-                  if (index <= 7) {
-                    seatClass = "VIP";
-                  } else if (index >= 8 && index <= 15) {
-                    seatClass = "R";
-                  } else if (index >= 16 && index <= 23) {
-                    seatClass = "S";
-                  } else if (index >= 24 && index <= 31) {
-                    seatClass = "S";
-                  } else if (index >= 32 && index <= 39) {
-                    seatClass = "A";
-                  } else if (index >= 40 && index <= 47) {
-                    seatClass = "A";
-                  }
+                      let seatClass = "";
+                      if (index <= 7) {
+                        seatClass = "VIP";
+                      } else if (index >= 8 && index <= 15) {
+                        seatClass = "R";
+                      } else if (index >= 16 && index <= 23) {
+                        seatClass = "S";
+                      } else if (index >= 24 && index <= 31) {
+                        seatClass = "S";
+                      } else if (index >= 32 && index <= 39) {
+                        seatClass = "A";
+                      } else if (index >= 40 && index <= 47) {
+                        seatClass = "A";
+                      }
 
-                  return (
-                    <button
-                      key={seat.id}
-                      className={`w-12 h-12 rounded-t-2xl ${colSpan} ${
-                        selectedSeat && selectedSeat.id === seat.id
-                          ? "bg-orange-400 text-white"
-                          : "bg-zinc-400"
-                      }`}
-                      onClick={() => handleSeatClick(seat, index, seatClass)}
-                    >
-                      <div className="flex flex-col justify-center items-center">
-                        <div>{index + 1}</div>
-                        <div className="text-xs font-semibold">{seatClass}</div>
+                      return (
+                        <button
+                          key={seat.id}
+                          className={`w-12 h-12 rounded-t-2xl ${colSpan} ${
+                            selectedSeat && selectedSeat.id === seat.id
+                              ? "bg-orange-400 text-white"
+                              : "bg-zinc-400"
+                          }`}
+                          onClick={() =>
+                            handleSeatClick(seat, index, seatClass)
+                          }
+                        >
+                          <div className="flex flex-col justify-center items-center">
+                            <div>{index + 1}</div>
+                            <div className="text-xs font-semibold">
+                              {seatClass}
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="text-orange-100 text-sm mt-">
+                    *가격 안내 <br /> VIP석 150,000원/ R석 130,000원/ S석
+                    100,000원 / A석 80,000원
+                  </div>
+                </div>
+                <div className="flex flex-col w-1/3 pl-8 justify-between ">
+                  <div>
+                    <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
+                      <div>{goods.title}</div>
+                      <AgeComponent age={goods.age} />
+                    </div>
+
+                    <div className="w-44 h-64 overflow-hidden mt-3">
+                      <img
+                        src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
+                        className="w-full h-full object-cover"
+                        alt="image"
+                      />
+                    </div>
+
+                    <div className="space-y-3 mt-4">
+                      <div className=" ">{goods.place} </div>
+                      <div className="">공연일자 {date ? date : startDate}</div>
+                      <div className=" ">
+                        공연시작시간 {goods.times[selectedTime - 1]} (
+                        {selectedTime}
+                        회차){" "}
                       </div>
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="text-orange-100 text-sm mt-">
-                *가격 안내 <br /> VIP석 150,000원/ R석 130,000원/ S석 100,000원
-                / A석 80,000원
-              </div>
-            </div>
-            <div className="flex flex-col w-1/3 pl-8 justify-between ">
-              <div>
-                <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
-                  <div>{goods.title}</div>
-
-                  {goods.age === 0 ? (
-                    <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-green-600 text-xs text-white">
-                      전체
+                      <div className=" ">총 {goods.runningTime}분</div>
+                      <div>
+                        선택한 좌석 :
+                        <span className="font-semibold text-blue-500">
+                          {selectedSeat.seatClass
+                            ? `<${selectedSeat.seatClass}> ${selectedSeat.seatNumber}번`
+                            : " 선택되지 않음"}
+                        </span>
+                      </div>
                     </div>
-                  ) : (
-                    ""
-                  )}
-                  {goods.age === 12 ? (
-                    <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-blue-500 text-xs text-white">
-                      12
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {goods.age === 15 ? (
-                    <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-yellow-500 text-xs text-white">
-                      15
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {goods.age === 18 ? (
-                    <div className="flex justify-center items-center min-w-7 min-h-7 rounded-full bg-red-500 text-xs text-white">
-                      18
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-
-                <div className="w-44 h-64 overflow-hidden mt-3">
-                  <img
-                    src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
-                    className="w-full h-full object-cover"
-                    alt="image"
-                  />
-                </div>
-
-                <div className="space-y-3 mt-4">
-                  <div className=" ">{goods.place} </div>
-                  <div className="">공연일자 {date ? date : startDate}</div>
-                  <div className=" ">
-                    공연시작시간 {goods.times[selectedTime - 1]} ({selectedTime}
-                    회차){" "}
                   </div>
-                  <div className=" ">총 {goods.runningTime}분</div>
-                  <div>
-                    선택한 좌석 :
-                    <span className="font-semibold text-blue-500">
-                      {selectedSeat.seatClass
-                        ? `<${selectedSeat.seatClass}> ${selectedSeat.seatNumber}번`
-                        : " 선택되지 않음"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-5">
-                <div className="flex justify-between text-lg font-semibold ">
-                  <div>최종결제금액</div>
-                  <div>
-                    <span className="text-orange-400 text-xl">
-                      {new Intl.NumberFormat("ko-KR").format(
-                        selectedSeat.price
-                      )}
-                    </span>
-                    원
+                  <div className="space-y-5">
+                    <div className="flex justify-between text-lg font-semibold ">
+                      <div>최종결제금액</div>
+                      <div>
+                        <span className="text-orange-400 text-xl">
+                          {new Intl.NumberFormat("ko-KR").format(
+                            selectedSeat.price
+                          )}
+                        </span>
+                        원
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }
