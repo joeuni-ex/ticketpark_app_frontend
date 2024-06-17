@@ -20,9 +20,8 @@ function SideMenu() {
   // 애니메이션 지속 시간 및 이징 함수 정의
   const transition = { duration: 0.5, ease: "easeInOut" };
 
-  console.log(loginState.roleNames);
   return (
-    <div className="bg-blue-40 p-4">
+    <div className="hidden md:block  bg-blue-40 p-4">
       <div className="p-2">홈</div>
       <div className="flex justify-between">
         {loginState.roleNames[0] === "USER" ? (

@@ -112,10 +112,14 @@ function ModifyPage() {
 
   //결과 모달창 닫기
   const closeModal = () => {
-    setReservationConfirmModal(false);
     setResult(null);
 
     navigate("/member/user/reservation/list");
+  };
+
+  // 모달창 닫기
+  const closeConfirmModal = () => {
+    setReservationConfirmModal(false);
   };
 
   // =====좌석 변경=======
@@ -212,10 +216,8 @@ function ModifyPage() {
   const startDate = moment(goods.startDate).format("YYYY-MM-DD");
   const endDate = moment(goods.endDate).format("YYYY-MM-DD");
 
-  console.log(reservation);
-
   return (
-    <div className="flex flex-col   justify-center ">
+    <div className="flex flex-col justify-center ">
       {fetching ? <FetchingModal /> : <></>}
 
       {result ? (
@@ -242,7 +244,7 @@ function ModifyPage() {
       {/* 좌석 선택 버튼 클릭 여부에 따라 다르게 표시  */}
       {!selectSeatBtn ? (
         // 날짜 선택
-        <div className="flex text-stone-800 ">
+        <div className="flex flex-col  md:flex-row text-stone-800 md:pb-0 pb-10">
           <div className="flex flex-col w-full md:w-7/12  mt-5 mb-5 p-3 ">
             <div className="flex flex-col my-5 space-y-2">
               <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
@@ -251,8 +253,8 @@ function ModifyPage() {
               </div>
             </div>
 
-            <div className="flex space-x-11">
-              <div className="w-56  h-80">
+            <div className="flex space-x-5 md:space-x-11">
+              <div className="w-44 h-64 md:w-56  md:h-80">
                 <img
                   src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
                   className="w-full h-full object-cover"
@@ -295,7 +297,7 @@ function ModifyPage() {
                 </div>
               </div>
             </div>
-            <div className="border my-5 b "></div>
+            <div className="border my-5 "></div>
             <div className="flex text-stone-800 flex-col">
               <div className="font-semibold text-lg">
                 나의 예약 내역{" "}
@@ -328,8 +330,12 @@ function ModifyPage() {
               </div>
             </div>
           </div>
+          <div className="border  b md:hidden "></div>
           {/* cal */}
           <div className="flex  w-full md:w-4/12   flex-col pt-10 ">
+            <div className="font-semibold text-lg p-3 text-stone-700 ">
+              날짜 선택{" "}
+            </div>
             <div className="flex   flex-col items-center rounded justify-center sticky top-0 text-stone-600">
               {/* cal */}
               <div className="flex mt-5 flex-col border rounded-xl p-3 ">
@@ -391,16 +397,16 @@ function ModifyPage() {
       ) : (
         <>
           {/* 좌석선택 */}
-          <div className="flex w-full">
-            <div className=" bg-white shadow opacity-100  w-full rounded mt-5  p-5 mb-10 mr-5 min-w-[1000px] min-h-[700px]">
+          <div className="flex  w-full">
+            <div className=" bg-white shadow opacity-100  w-full rounded mt-5  p-5 mb-10 mr-5 md:min-w-[1000px] md:min-h-[700px] ">
               <div className="flex justify-between text-xl font-semibold text-stone-700 mb-5">
                 <div>좌석선택</div>
               </div>
-              <div className="flex space-x-14">
-                <div className="bg-zinc-700 w-3/5 max-w-[760px] p-10 space-y-6">
+              <div className="flex space-y-5 md:space-y-0 md:space-x-14 md:flex-row flex-col">
+                <div className="bg-zinc-700 md:w-3/5 md:max-w-[760px] p-2 md:p-10 space-y-6">
                   {/*Screen*/}
                   <div className="flex justify-center text-2xl pt-4 pb-4 text-stone-700 text-center">
-                    <div className="flex justify-center items-center mb-4  min-w-[700px]  h-24 bg-white shadow-md shadow-white"></div>
+                    <div className="flex justify-center items-center mb-4 w-11/12  2xl:min-w-[700px]  h-24 bg-white shadow-md shadow-white"></div>
                   </div>
                   {/* Seat */}
                   <div className="grid grid-cols-10 gap-2 mx-auto mb-4">
@@ -426,7 +432,7 @@ function ModifyPage() {
                       const isReserved =
                         selectedSeat && selectedSeat.id === seat.id;
 
-                      const buttonClass = `w-12 h-12 rounded-t-2xl ${colSpan} ${
+                      const buttonClass = ` w-7 h-8 md:w-12 md:h-12 rounded-t-2xl ${colSpan} ${
                         isReserved ? "bg-orange-400 text-white" : "bg-zinc-400"
                       }`;
                       return (
@@ -438,7 +444,9 @@ function ModifyPage() {
                           }
                         >
                           <div className="flex flex-col justify-center items-center">
-                            <div>{index + 1}</div>
+                            <div className="md:text-base text-xs">
+                              {index + 1}
+                            </div>
                             <div className="text-xs font-semibold">
                               {seatClass}
                             </div>
@@ -447,12 +455,12 @@ function ModifyPage() {
                       );
                     })}
                   </div>
-                  <div className="text-orange-100 text-sm mt-">
+                  <div className="text-orange-100 text-xs md:text-sm ">
                     *가격 안내 <br /> VIP석 150,000원/ R석 130,000원/ S석
                     100,000원 / A석 80,000원
                   </div>
                 </div>
-                <div className="flex flex-col w-1/3  justify-between ">
+                <div className="flex flex-col md:w-1/3  justify-between ">
                   <div>
                     <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
                       <div>{goods.title}</div>
@@ -488,7 +496,7 @@ function ModifyPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-5">
+                  <div className="space-y-3 mt-3">
                     <div className="flex justify-between text-lg font-semibold ">
                       <div>최종결제금액</div>
                       <div>
@@ -502,22 +510,22 @@ function ModifyPage() {
                         원
                       </div>
                     </div>
-                  </div>
-                  <div className="text-sm text-red-600 font-semibold ">
-                    *차액 발생 시 추가 결제 또는 환불이 발생합니다
-                  </div>
-                  <div className="flex space-x-2">
-                    <div
-                      onClick={() => setSelectSeatBtn(false)}
-                      className="flex justify-center cursor-pointer items-center  w-1/2   h-14 rounded text-xl text-white font-bold bg-gray-400 hover:bg-gray-300"
-                    >
-                      뒤로
-                    </div>{" "}
-                    <div
-                      onClick={handleClickModify}
-                      className="flex justify-center cursor-pointer items-center  w-1/2   h-14 rounded text-xl text-white font-bold bg-orange-400 hover:bg-orange-300"
-                    >
-                      예약변경
+                    <div className="text-sm text-red-600 font-semibold ">
+                      *차액 발생 시 추가 결제 또는 환불이 발생합니다
+                    </div>
+                    <div className="flex space-x-2">
+                      <div
+                        onClick={() => setSelectSeatBtn(false)}
+                        className="flex justify-center cursor-pointer items-center  w-1/2   h-14 rounded text-xl text-white font-bold bg-gray-400 hover:bg-gray-300"
+                      >
+                        뒤로
+                      </div>{" "}
+                      <div
+                        onClick={handleClickModify}
+                        className="flex justify-center cursor-pointer items-center  w-1/2   h-14 rounded text-xl text-white font-bold bg-orange-400 hover:bg-orange-300"
+                      >
+                        예약변경
+                      </div>
                     </div>
                   </div>
                 </div>
