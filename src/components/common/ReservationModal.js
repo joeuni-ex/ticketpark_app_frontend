@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { API_SERVER_HOST, PostReserved } from "../../api/goodsApi";
+import { API_SERVER_HOST } from "../../api/goodsApi";
 import AgeComponent from "./AgeComponent";
+import { PostReserved } from "../../api/ReservationApi";
 
 const host = API_SERVER_HOST;
 

@@ -7,7 +7,11 @@ import moment from "moment";
 import styled from "styled-components";
 import { useEffect } from "react";
 import FetchingModal from "../../../../components/common/FetchingModal";
-import { getOneReservation, modifyOne } from "../../../../api/ReservationApi";
+import {
+  PostReserved,
+  getOneReservation,
+  modifyOne,
+} from "../../../../api/ReservationApi";
 import ResultModal from "../../../../components/common/ResultModal";
 import AgeComponent from "../../../../components/common/AgeComponent";
 import ConfirmModal from "../../../../components/common/ConfirmModal";
@@ -96,6 +100,8 @@ function ModifyPage() {
 
   const [selectSeatBtn, setSelectSeatBtn] = useState(false); //좌석선택 버튼 클릭여부
   const [selectedTime, setSelectedTime] = useState(1); //예매
+  const [selectedSeat, setSelectedSeat] = useState(initState);
+  const [reservedSeat, setReservedSeat] = useState([]); //이미 예약된 좌석
 
   const navigate = useNavigate();
 
@@ -123,7 +129,6 @@ function ModifyPage() {
   };
 
   // =====좌석 변경=======
-  const [selectedSeat, setSelectedSeat] = useState(initState);
 
   const seats = Array.from({ length: 6 }, (_, row) =>
     Array.from({ length: 8 }, (_, col) => ({
@@ -151,6 +156,12 @@ function ModifyPage() {
       seatNumber: index,
       price: price,
     });
+  };
+
+  //이미 예약된 좌석 클릭 시
+  const handleClickReservedSeat = () => {
+    alert("이미 예약된 좌석입니다.");
+    return;
   };
 
   //===== 예매 변경 =======
@@ -212,9 +223,26 @@ function ModifyPage() {
     });
   }, [rno]);
 
+  useEffect(() => {
+    //requestDTO (예약좌석확인)
+    const select = {
+      gno: goods.gno,
+      time: goods.times[selectedTime - 1],
+      date: date,
+    };
+
+    PostReserved(select).then((result) => {
+      setReservedSeat(result.reservedSeats); //이미 예약된 좌석
+    });
+  }, [date, selectedTime]);
+
   //날짜 변환
   const startDate = moment(goods.startDate).format("YYYY-MM-DD");
   const endDate = moment(goods.endDate).format("YYYY-MM-DD");
+
+  console.log(selectedSeat);
+  console.log(reservedSeat);
+  console.log(date);
 
   return (
     <div className="flex flex-col justify-center ">
@@ -354,20 +382,28 @@ function ModifyPage() {
                 <div className="flex flex-col m-4 space-y-2 ">
                   <div className=" font-semibold ">회차</div>
                   <div className="flex ">
-                    {goods.times?.map((time, index) => (
-                      <div
-                        key={index}
-                        className={`flex space-x-2 mt-2 w-1/2 p-4 border rounded-l-md cursor-pointer text-sm ${
-                          selectedTime === index + 1
-                            ? "border-orange-400 text-orange-500 font-semibold "
-                            : "border-gray-300"
-                        }`}
-                        onClick={() => handleTimeChange(index + 1)}
-                      >
-                        <div>{index + 1}회차</div>
-                        <div>{time}</div>
-                      </div>
-                    ))}
+                    <div
+                      className={`flex space-x-2 mt-2 w-1/2 p-4 border rounded-l-md cursor-pointer text-sm ${
+                        selectedTime === 1
+                          ? "border-orange-400 text-orange-500 font-semibold "
+                          : "border-gray-300"
+                      }`}
+                      onClick={() => handleTimeChange(1)}
+                    >
+                      <div>1회차</div>
+                      <div>{goods.times[0]}</div>
+                    </div>
+                    <div
+                      className={`flex space-x-2 mt-2 w-1/2 p-4 border rounded-r-md cursor-pointer text-sm ${
+                        selectedTime === 2
+                          ? "border-orange-400 text-orange-500 font-semibold "
+                          : "border-gray-300"
+                      }`}
+                      onClick={() => handleTimeChange(2)}
+                    >
+                      <div>2회차</div>
+                      <div>{goods.times[1]}</div>
+                    </div>
                   </div>
                   <div className="text-sm ml-2">
                     <p>
@@ -429,19 +465,28 @@ function ModifyPage() {
                         seatClass = "A";
                       }
 
-                      const isReserved =
-                        selectedSeat && selectedSeat.id === seat.id;
+                      const isReserved = reservedSeat.includes(`${index + 1}`);
+                      const isSelected = selectedSeat.id === index + 1;
+                      const isMyReserved =
+                        reservedSeat.includes(`${index + 1}`) &&
+                        selectedSeat.id === index + 1;
 
                       const buttonClass = ` w-7 h-8 md:w-12 md:h-12 rounded-t-2xl ${colSpan} ${
-                        isReserved ? "bg-orange-400 text-white" : "bg-zinc-400"
+                        isReserved && !isMyReserved
+                          ? "bg-zinc-600  cursor-not-allowed"
+                          : isSelected
+                          ? "bg-orange-400 text-white"
+                          : "bg-zinc-400"
                       }`;
                       return (
                         <button
                           key={seat.id}
                           className={buttonClass}
-                          onClick={() =>
-                            handleSeatClick(seat, index + 1, seatClass)
-                          }
+                          onClick={() => {
+                            !isReserved
+                              ? handleSeatClick(seat, index + 1, seatClass)
+                              : handleClickReservedSeat();
+                          }}
                         >
                           <div className="flex flex-col justify-center items-center">
                             <div className="md:text-base text-xs">
