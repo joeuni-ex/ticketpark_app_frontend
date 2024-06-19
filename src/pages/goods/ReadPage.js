@@ -168,6 +168,8 @@ function ReadPage() {
     setFetching(false);
   };
 
+  console.log(goods);
+
   //날짜 변환
   const startDate = new Date(goods.startDate);
   const endDate = new Date(goods.endDate);
@@ -330,20 +332,28 @@ function ReadPage() {
             <div className="flex flex-col m-4 space-y-2 ">
               <div className=" font-semibold ">회차</div>
               <div className="flex ">
-                {goods.times?.map((time, index) => (
-                  <div
-                    key={index}
-                    className={`flex space-x-2 mt-2 w-1/2 p-4 border rounded-l-md cursor-pointer text-sm ${
-                      selectedTime === index + 1
-                        ? "border-orange-400 text-orange-500 font-semibold "
-                        : "border-gray-300"
-                    }`}
-                    onClick={() => handleTimeChange(index + 1)}
-                  >
-                    <div>{index + 1}회차</div>
-                    <div>{time}</div>
-                  </div>
-                ))}
+                <div
+                  className={`flex space-x-2 mt-2 w-1/2 p-4 border rounded-l-md cursor-pointer text-sm ${
+                    selectedTime === 1
+                      ? "border-orange-400 text-orange-500 font-semibold "
+                      : "border-gray-300"
+                  }`}
+                  onClick={() => handleTimeChange(1)}
+                >
+                  <div>1회차</div>
+                  <div>{goods.times[0]}</div>
+                </div>
+                <div
+                  className={`flex space-x-2 mt-2 w-1/2 p-4 border rounded-r-md cursor-pointer text-sm ${
+                    selectedTime === 2
+                      ? "border-orange-400 text-orange-500 font-semibold "
+                      : "border-gray-300"
+                  }`}
+                  onClick={() => handleTimeChange(2)}
+                >
+                  <div>2회차</div>
+                  <div>{goods.times[1]}</div>
+                </div>
               </div>
               <div className="text-sm ml-2">
                 <p>

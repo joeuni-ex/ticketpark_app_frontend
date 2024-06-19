@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { API_SERVER_HOST } from "../../api/goodsApi";
+import React, { useEffect, useState } from "react";
+import { API_SERVER_HOST, PostReserved } from "../../api/goodsApi";
 import AgeComponent from "./AgeComponent";
 
 const host = API_SERVER_HOST;
@@ -20,6 +20,7 @@ function ReservationModal({
   onCancel,
 }) {
   const [selectedSeat, setSelectedSeat] = useState(initState);
+  const [reservedSeat, setReservedSeat] = useState([]);
 
   const seats = Array.from({ length: 6 }, (_, row) =>
     Array.from({ length: 8 }, (_, col) => ({
@@ -29,6 +30,7 @@ function ReservationModal({
     }))
   );
 
+  // 좌석 선택
   const handleSeatClick = (seat, index, seatClass) => {
     let price = 0;
 
@@ -49,6 +51,25 @@ function ReservationModal({
     });
   };
 
+  //이미 예약된 좌석 클릭 시
+  const handleClickReservedSeat = () => {
+    alert("이미 예약된 좌석입니다.");
+    return;
+  };
+
+  useEffect(() => {
+    //requestDTO (예약좌석확인)
+    const select = {
+      gno: goods.gno,
+      time: goods.times[selectedTime - 1],
+      date: selectedDate,
+    };
+
+    PostReserved(select).then((result) => {
+      setReservedSeat(result.reservedSeats); //이미 예약된 좌석
+    });
+  }, [selectedDate]);
+
   return (
     <div
       className={`fixed top-0 left-0 z-[1055] flex h-full w-full justify-center items-center bg-black bg-opacity-20`}
@@ -63,7 +84,7 @@ function ReservationModal({
             <div className="flex justify-center text-2xl pt-4 pb-4 text-stone-700 text-center">
               <div className="flex justify-center items-center mb-4 min-w-[560px] h-24 bg-white shadow-md shadow-white"></div>
             </div>
-            {/* Seat */}
+
             {/* Seat */}
             <div className="grid grid-cols-10 gap-2 mx-auto mb-4">
               {seats.flat().map((seat, index) => {
@@ -85,19 +106,28 @@ function ReservationModal({
                   seatClass = "A";
                 }
 
-                const isReserved = selectedSeat && selectedSeat.id === seat.id;
+                const isReserved = reservedSeat.includes(`${index + 1}`);
+                const isSelected = selectedSeat.id === index + 1;
 
-                const buttonClass = `w-12 h-12 rounded-t-2xl ${colSpan} ${
-                  isReserved ? "bg-orange-400 text-white" : "bg-zinc-400"
+                const buttonClass = ` w-7 h-8 md:w-12 md:h-12 rounded-t-2xl ${colSpan} ${
+                  isReserved
+                    ? "bg-zinc-600  cursor-not-allowed"
+                    : isSelected
+                    ? "bg-orange-400 text-white"
+                    : "bg-zinc-400"
                 }`;
                 return (
                   <button
                     key={seat.id}
                     className={buttonClass}
-                    onClick={() => handleSeatClick(seat, index + 1, seatClass)}
+                    onClick={() => {
+                      !isReserved
+                        ? handleSeatClick(seat, index + 1, seatClass)
+                        : handleClickReservedSeat();
+                    }}
                   >
                     <div className="flex flex-col justify-center items-center">
-                      <div>{index + 1}</div>
+                      <div className="md:text-base text-xs">{index + 1}</div>
                       <div className="text-xs font-semibold">{seatClass}</div>
                     </div>
                   </button>

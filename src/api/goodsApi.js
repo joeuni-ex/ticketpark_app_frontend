@@ -15,6 +15,19 @@ export const postAdd = async (goods) => {
   return res.data;
 };
 
+//이미 예약중인 좌석 조회
+export const PostReserved = async (reservedSeat) => {
+  const header = { headers: { "Content-Type": "multipart/form-data" } };
+
+  const res = await jwtAxios.post(
+    `${prefix}/reserved-seats`,
+    reservedSeat,
+    header
+  );
+
+  return res.data;
+};
+
 //조회
 export const getOne = async (gno) => {
   const res = await axios.get(`${prefix}/${gno}`);
