@@ -12,6 +12,13 @@ export const postAdd = async (review) => {
   return res.data;
 };
 
+//조회
+export const getOneReview = async (reno) => {
+  const res = await jwtAxios.get(`${host}/${reno}`);
+
+  return res.data;
+};
+
 //좋아요 추가
 export const postIncreaseLikes = async (reno) => {
   const res = await jwtAxios.post(`${host}/increase-likes/${reno}`);
