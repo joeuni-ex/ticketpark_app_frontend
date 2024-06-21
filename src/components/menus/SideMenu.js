@@ -86,7 +86,9 @@ function SideMenu() {
           transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
           className=" w-full bg-white z-50"
         >
-          <div className="p-2 pl-5">리뷰 조회</div>
+          <Link to={"/member/user/review/list"} className="p-2 pl-5">
+            내가 작성한 리뷰
+          </Link>
         </motion.div>
       ) : (
         <></>
