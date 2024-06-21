@@ -12,6 +12,7 @@ import ReservationModal from "../../components/common/ReservationModal";
 import moment from "moment";
 import { postAdd } from "../../api/ReservationApi";
 import ResultModal from "../../components/common/ResultModal";
+import { getGoodsList, postIncreaseLikes } from "../../api/reviewApi";
 
 //초기값
 const initState = {
@@ -41,7 +42,20 @@ const reservationInitState = {
   price: 0,
   cancelFlag: false,
 };
-
+//리뷰 초기값
+const reviewInitState = {
+  reno: 0,
+  content: "",
+  nickname: "",
+  likes: 0,
+  grade: 0,
+  reservationDate: "",
+  imageFile: "",
+  gno: 0,
+  goods_title: "",
+  createDate: "",
+  deleteFlag: false,
+};
 const host = API_SERVER_HOST;
 
 //티켓 가격
@@ -79,15 +93,6 @@ const selectMenu = [
   },
 ];
 
-const reviewSample = {
-  id: 1,
-  nickname: "hong1234",
-  date: 2022 - 11,
-  heart: 7,
-  title: "댓글",
-  des: "댓글내용",
-};
-
 function ReadPage() {
   const { gno } = useParams();
 
@@ -105,6 +110,9 @@ function ReadPage() {
 
   const [selectedTime, setSelectedTime] = useState(1); //예매
   const [selectedMenu, setSelectedMenu] = useState("공연정보");
+
+  const [reviews, setReviews] = useState(reviewInitState); //리뷰
+  const [likesResult, setLikesResult] = useState(false);
 
   //캘린더에서 날짜 선택 시
   const handleDateChange = (newDate) => {
@@ -168,7 +176,12 @@ function ReadPage() {
     setFetching(false);
   };
 
-  console.log(goods);
+  //좋아요 클릭 시
+  const handleClickLike = (reno) => {
+    postIncreaseLikes(reno).then((data) => {
+      setLikesResult(!likesResult);
+    });
+  };
 
   //날짜 변환
   const startDate = new Date(goods.startDate);
@@ -184,10 +197,15 @@ function ReadPage() {
         reservationDate: moment(new Date()).format("YYYY-MM-DD"), // 초기값을 goods.startDate로 설정
       }));
       setDate(moment(new Date()).format("YYYY-MM-DD")); // 캘린더 날짜도 초기값
+
+      getGoodsList(gno).then((review) => {
+        setReviews(review);
+      });
       setFetching(false);
     });
-  }, [gno]);
+  }, [gno, likesResult]);
 
+  console.log(reviews);
   return (
     <div className="flex flex-col md:flex-row   justify-center ">
       {reservationModal ? (
@@ -296,15 +314,16 @@ function ReadPage() {
                 </div>
               </div>
               <div className="font-bold ">
-                총 <span className="text-orange-400">1973</span>개의 관람후기가
-                등록되었습니다.
+                총 <span className="text-orange-400">{reviews.length}</span>개의
+                관람후기가 등록되었습니다.
               </div>
-
-              <Review review={reviewSample} />
-              <Review review={reviewSample} />
-              <Review review={reviewSample} />
-              <Review review={reviewSample} />
-              <Review review={reviewSample} />
+              {reviews?.map((reviewData) => (
+                <Review
+                  review={reviewData}
+                  key={reviewData.reno}
+                  handleClickLike={() => handleClickLike(reviewData.reno)}
+                />
+              ))}
             </div>
           ) : (
             <></>
