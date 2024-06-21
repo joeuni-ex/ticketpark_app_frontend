@@ -112,11 +112,11 @@ function ListPage() {
         />
       )}
 
-      <div className="font-bold text-stone-800 text-xl py-10 px-5 border-b">
+      <div className="font-bold text-stone-800 text-xl py-7 px-5 border-b-2 border-stone-600">
         예약 목록
       </div>
-      <div className="flex w-full flex-wrap mx-auto justify-center p-6">
-        <div className="w-full flex px-8 font-bold text-lg">
+      <div className="flex w-full flex-wrap mx-auto justify-center ">
+        <div className="w-full flex px-10 h-20 font-bold text-lg bg-stone-100 items-center ">
           <div className="w-1/4">공연명</div>
           <div className="w-1/4">공연장소</div>
           <div className="w-1/4">공연일자</div>
@@ -155,7 +155,7 @@ function ListPage() {
               </div>
               <div className="flex justify-center items-center text-1xl w-48 font-medium">
                 <span
-                  className="cursor-pointer text-blue-500 hover:underline font-semibold"
+                  className="cursor-pointer hover:underline font-semibold"
                   onClick={() =>
                     setViewDetailsToggle(
                       viewDetailsToggle === reservation.rno
