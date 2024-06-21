@@ -91,7 +91,6 @@ function ListPage() {
     });
   }, [page, size, refresh, result]);
 
-  console.log(serverData);
   return (
     <div className="flex flex-col p-5">
       {fetching && <FetchingModal />}
