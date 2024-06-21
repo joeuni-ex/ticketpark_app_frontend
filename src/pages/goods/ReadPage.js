@@ -12,7 +12,11 @@ import ReservationModal from "../../components/common/ReservationModal";
 import moment from "moment";
 import { postAdd } from "../../api/ReservationApi";
 import ResultModal from "../../components/common/ResultModal";
-import { getGoodsList, postIncreaseLikes } from "../../api/reviewApi";
+import {
+  getGoodsList,
+  postChangeLikes,
+  postIncreaseLikes,
+} from "../../api/reviewApi";
 
 //초기값
 const initState = {
@@ -178,7 +182,7 @@ function ReadPage() {
 
   //좋아요 클릭 시
   const handleClickLike = (reno) => {
-    postIncreaseLikes(reno).then((data) => {
+    postChangeLikes(reno).then((data) => {
       setLikesResult(!likesResult);
     });
   };
@@ -297,7 +301,8 @@ function ReadPage() {
 
         <div className="flex flex-col pt-10">
           {/* 공연정보 */}
-          <div>{goods.gdesc}</div>
+          {selectedMenu === "공연정보" ? <div>{goods.gdesc}</div> : <></>}
+
           {/* 공연후기 */}
           {selectedMenu == "공연후기" ? (
             <div className="flex flex-col text-stone-700 space-y-10 ">
