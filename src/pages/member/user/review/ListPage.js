@@ -3,8 +3,9 @@ import { API_SERVER_HOST } from "../../../../api/goodsApi";
 import FetchingModal from "../../../../components/common/FetchingModal";
 import ResultModal from "../../../../components/common/ResultModal";
 import useCustomLogin from "../../../../hooks/useCustomLogin";
-import { getMyList } from "../../../../api/reviewApi";
+import { getMyList, modifyOne } from "../../../../api/reviewApi";
 import { FaStar } from "react-icons/fa";
+import ConfirmModal from "../../../../components/common/ConfirmModal";
 
 const initState = [
   {
@@ -29,13 +30,43 @@ function ListPage() {
   const [fetching, setFetching] = useState(false); // 로딩 모달
   const [result, setResult] = useState(false); // 결과가 나오면 모달창으로 결과 데이터가 보이게끔
 
+  const [reviewDeleteModal, setReviewDeleteModal] = useState(false); //리뷰 삭제 모달
+  const [deleteReno, setDeleteReno] = useState(""); //리뷰 삭제할 번호
+
   const { loginState } = useCustomLogin();
 
   //결과 모달창 닫기
   const closeModal = () => {
     setResult(null);
-    // setReservationCancelModal(false);
-    // setCancelRno(null);
+    setReviewDeleteModal(false);
+    setDeleteReno(null);
+  };
+
+  //예약 취소 모달
+  const handleClickDelete = async (reno) => {
+    setDeleteReno(reno);
+    setReviewDeleteModal(true);
+  };
+
+  //삭제 모달 -> 확인 클릭 시
+  const handleConfirmDelete = async () => {
+    setReviewDeleteModal(false);
+    try {
+      const formData = new FormData();
+
+      formData.append("email", loginState.email);
+      formData.append("deleteFlag", true);
+
+      modifyOne(deleteReno, formData).then((result) => {
+        setResult("Delete");
+        setFetching(false);
+      });
+    } catch (error) {
+      console.error("Error cancel item:", error);
+      setResult("Error cancel item");
+    } finally {
+      setFetching(false);
+    }
   };
 
   useEffect(() => {
@@ -44,7 +75,7 @@ function ListPage() {
       setServerData(data);
       setFetching(false);
     });
-  }, []);
+  }, [loginState]);
 
   return (
     <div className="flex flex-col p-5">
@@ -52,19 +83,19 @@ function ListPage() {
       {result ? (
         <ResultModal
           callbackFn={closeModal}
-          title={"Reservation Cancel"}
+          title={"Review deleted"}
           content={`정상적으로 리뷰가 삭제 처리 되었습니다.`}
         />
       ) : (
         <></>
       )}
-      {/* {reservationCancelModal && (
+      {reviewDeleteModal && (
         <ConfirmModal
           message="해당 리뷰를 삭제하시겠습니까?"
-          onConfirm={handleConfirmCancel}
+          onConfirm={handleConfirmDelete}
           onCancel={closeModal}
         />
-      )} */}
+      )}
 
       <div className="font-bold text-stone-800 text-xl py-7 px-5 border-b-2 border-stone-600">
         내가 작성한 리뷰{" "}
@@ -137,7 +168,10 @@ function ListPage() {
                 {review.createDate}
               </div>
               <div className="flex space-x-2 w-2/5 justify-center ml-5">
-                <button className="px-4 py-2 border h-10  text-stone-600 border-stone-300 hover:bg-stone-50">
+                <button
+                  onClick={() => handleClickDelete(review.reno)}
+                  className="px-4 py-2 border h-10  text-stone-600 border-stone-300 hover:bg-stone-50"
+                >
                   삭제
                 </button>
                 <button className="px-4 py-2 bg-stone-500  h-10  text-white hover:bg-stone-400">
