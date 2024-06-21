@@ -22,12 +22,12 @@ function SideMenu() {
 
   return (
     <div className="hidden md:block  bg-blue-40 p-4">
-      <div className="p-2">홈</div>
+      <div className="p-2 font-semibold text-lg">홈</div>
       <div className="flex justify-between">
         {loginState.roleNames[0] === "USER" ? (
-          <div className="p-2">예약 관리</div>
+          <div className="p-2 font-semibold text-lg">예약 관리</div>
         ) : (
-          <div className="p-2">상품 관리</div>
+          <div className="p-2 font-semibold text-lg">상품 관리</div>
         )}
 
         <div
@@ -68,7 +68,7 @@ function SideMenu() {
       )}
 
       <div className="flex justify-between">
-        <div className="p-2">리뷰 관리</div>
+        <div className="p-2 font-semibold text-lg">리뷰 관리</div>
         <div
           className="cursor-pointer"
           onClick={() => setReviewToggle(!reviewToggle)}
@@ -86,7 +86,7 @@ function SideMenu() {
           transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
           className=" w-full bg-white z-50"
         >
-          <Link to={"/member/user/review/list"} className="p-2 pl-5">
+          <Link to={"/member/user/review/list"} className="p-2 pl-5 ">
             내가 작성한 리뷰
           </Link>
         </motion.div>
