@@ -84,7 +84,7 @@ function SideMenu() {
           animate="animate" // 애니메이션 진행 중 상태 설정
           exit="exit" // 애니메이션 종료 상태 설정
           transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
-          className=" w-full bg-white z-50"
+          className=" w-full flex flex-col bg-white z-50"
         >
           <Link to={"/member/user/review/list"} className="p-2 pl-5 ">
             내가 작성한 리뷰

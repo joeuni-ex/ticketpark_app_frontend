@@ -39,6 +39,7 @@ function ListPage() {
 
   const navigate = useNavigate();
 
+  // ==================== 삭제 ==========================
   //삭제 모달
   const handleClickDelete = async (gno) => {
     setDeleteGno(gno);
