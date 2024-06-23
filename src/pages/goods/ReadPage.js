@@ -47,20 +47,22 @@ const reservationInitState = {
   cancelFlag: false,
 };
 //리뷰 초기값
-const reviewInitState = {
-  reno: 0,
-  content: "",
-  nickname: "",
-  likes: 0,
-  grade: 0,
-  reservationDate: "",
-  imageFile: "",
-  gno: 0,
-  goods_title: "",
-  createDate: "",
-  deleteFlag: false,
-  liked: false,
-};
+const reviewInitState = [
+  {
+    reno: 0,
+    content: "",
+    nickname: "",
+    likes: 0,
+    grade: 0,
+    reservationDate: "",
+    imageFile: "",
+    gno: 0,
+    goods_title: "",
+    createDate: "",
+    deleteFlag: false,
+    liked: false,
+  },
+];
 const host = API_SERVER_HOST;
 
 //티켓 가격
@@ -97,6 +99,14 @@ const selectMenu = [
     name: "공연후기",
   },
 ];
+
+//별점 평균 계산
+const calculateAverageGrade = (reviews) => {
+  if (reviews.length === 0) return 0;
+
+  const totalGrade = reviews.reduce((sum, review) => sum + review.grade, 0);
+  return (totalGrade / reviews.length).toFixed(0);
+};
 
 function ReadPage() {
   const { gno } = useParams();
@@ -213,6 +223,8 @@ function ReadPage() {
     });
   }, [gno, likesResult]);
 
+  const averageGrade = calculateAverageGrade(reviews);
+
   return (
     <div className="flex flex-col md:flex-row   justify-center ">
       {reservationModal ? (
@@ -241,7 +253,19 @@ function ReadPage() {
       <div className="flex flex-col w-full md:w-6/12  mt-5 p-3 ">
         <div className="flex flex-col my-5 space-y-2">
           <div className="text-2xl font-bold">{goods.title}</div>
-          <div className="text-sm">⭐⭐⭐⭐⭐(9/10)</div>
+          <div className="text-sm">
+            {[...Array(5)].map((_, i) => (
+              <span
+                key={i}
+                className={
+                  i < averageGrade ? "text-orange-400" : "text-stone-300"
+                }
+              >
+                ⭐
+              </span>
+            ))}
+            ({averageGrade}/5)
+          </div>
         </div>
 
         <div className="flex space-x-11">
