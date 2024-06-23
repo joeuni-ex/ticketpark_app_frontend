@@ -11,7 +11,7 @@ import useCustomLogin from "../../../../hooks/useCustomLogin";
 
 import ConfirmModal from "../../../../components/common/ConfirmModal";
 import ReviewModal from "../../../../components/common/ReviewModal";
-import { postAdd } from "../../../../api/reviewApi";
+import { getCheckWrittenReview, postAdd } from "../../../../api/reviewApi";
 
 const initState = {
   dtoList: [],
@@ -76,8 +76,19 @@ function ListPage() {
   // ==================== 리뷰 작성==========================
   //리뷰 작성 모달 출력
   const handleClickWriteReview = (rno) => {
-    setWriteReviewModal(true);
     setReviewRno(rno);
+
+    let writtenReview = false;
+
+    getCheckWrittenReview(rno, writtenReview).then((result) => {
+      console.log(result);
+      if (result.writtenReview === true) {
+        alert("이미 리뷰한 리뷰가 있습니다.");
+        return;
+      } else if (result.writtenReview === false) {
+        setWriteReviewModal(true);
+      }
+    });
   };
 
   const handleClickAddReview = (reviewModalData) => {

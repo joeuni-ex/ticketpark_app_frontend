@@ -45,6 +45,15 @@ export const getGoodsList = async (gno, email) => {
   return res.data;
 };
 
+//예약번호로 리뷰 작성여부 체크
+export const getCheckWrittenReview = async (rno, writtenReview) => {
+  const res = await jwtAxios.get(`${host}/check-review`, {
+    params: { rno, writtenReview },
+  });
+
+  return res.data;
+};
+
 //수정
 export const modifyOne = async (reno, review) => {
   const header = { headers: { "Content-Type": "multipart/form-data" } };
