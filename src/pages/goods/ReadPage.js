@@ -59,6 +59,7 @@ const reviewInitState = {
   goods_title: "",
   createDate: "",
   deleteFlag: false,
+  liked: false,
 };
 const host = API_SERVER_HOST;
 
@@ -193,6 +194,9 @@ function ReadPage() {
 
   useEffect(() => {
     setFetching(true);
+
+    let email = loginState.email ? loginState.email : "";
+
     getOne(gno).then((data) => {
       setGoods(data);
       setReservation((prev) => ({
@@ -202,14 +206,13 @@ function ReadPage() {
       }));
       setDate(moment(new Date()).format("YYYY-MM-DD")); // 캘린더 날짜도 초기값
 
-      getGoodsList(gno).then((review) => {
+      getGoodsList(gno, email).then((review) => {
         setReviews(review);
       });
       setFetching(false);
     });
   }, [gno, likesResult]);
 
-  console.log(reviews);
   return (
     <div className="flex flex-col md:flex-row   justify-center ">
       {reservationModal ? (

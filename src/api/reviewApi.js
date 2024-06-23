@@ -1,3 +1,4 @@
+import axios from "axios";
 import jwtAxios from "../util/jwtUtil";
 import { API_SERVER_HOST } from "./goodsApi";
 
@@ -34,8 +35,10 @@ export const getMyList = async () => {
 };
 
 //굿즈 별 리뷰 조회
-export const getGoodsList = async (gno) => {
-  const res = await jwtAxios.get(`${host}/list/${gno}`);
+export const getGoodsList = async (gno, email) => {
+  const res = await axios.get(`${host}/list/${gno}`, {
+    params: { email },
+  });
 
   return res.data;
 };
