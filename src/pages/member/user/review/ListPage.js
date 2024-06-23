@@ -6,6 +6,7 @@ import useCustomLogin from "../../../../hooks/useCustomLogin";
 import { getMyList, modifyOne } from "../../../../api/reviewApi";
 import { FaStar } from "react-icons/fa";
 import ConfirmModal from "../../../../components/common/ConfirmModal";
+import ModifyReviewModal from "../../../../components/common/ModifyReviewModal";
 
 const initState = [
   {
@@ -33,6 +34,9 @@ function ListPage() {
   const [reviewDeleteModal, setReviewDeleteModal] = useState(false); //리뷰 삭제 모달
   const [deleteReno, setDeleteReno] = useState(""); //리뷰 삭제할 번호
 
+  const [reviewModifyModal, setReviewModifyModal] = useState(false); //리뷰 수정 모달
+  const [selectedReview, setSelectedReview] = useState({}); //리뷰 수정할 번호
+
   const { loginState } = useCustomLogin();
 
   //결과 모달창 닫기
@@ -40,9 +44,10 @@ function ListPage() {
     setResult(null);
     setReviewDeleteModal(false);
     setDeleteReno(null);
+    setReviewModifyModal(false);
   };
 
-  //예약 취소 모달
+  //리뷰 삭제 모달
   const handleClickDelete = async (reno) => {
     setDeleteReno(reno);
     setReviewDeleteModal(true);
@@ -69,22 +74,56 @@ function ListPage() {
     }
   };
 
+  //리뷰 수정 모달
+  const handleClickModify = async (review) => {
+    setSelectedReview(review);
+    setReviewModifyModal(true);
+  };
+
+  //리뷰 수정 모달 -> 수정 클릭 시
+  const handleConfirmModify = async (modifyReview) => {
+    setReviewModifyModal(false);
+    try {
+      const formData = new FormData();
+
+      formData.append("email", loginState.email);
+      formData.append("content", modifyReview.content);
+      formData.append("grade", modifyReview.grade);
+
+      modifyOne(selectedReview.reno, formData).then((result) => {
+        setResult("Modify");
+        setFetching(false);
+      });
+    } catch (error) {
+      console.error("Error Modify item:", error);
+      setResult("Error Modify item");
+    } finally {
+      setFetching(false);
+    }
+  };
+
   useEffect(() => {
     setFetching(true);
-    getMyList().then((data) => {
+    getMyList(loginState.email).then((data) => {
       setServerData(data);
       setFetching(false);
     });
-  }, [loginState]);
+  }, [loginState, result]);
 
   return (
     <div className="flex flex-col p-5">
       {fetching && <FetchingModal />}
-      {result ? (
+      {result === "Delete" ? (
         <ResultModal
           callbackFn={closeModal}
           title={"Review deleted"}
           content={`정상적으로 리뷰가 삭제 처리 되었습니다.`}
+        />
+      ) : result === "Modify" ? (
+        <ResultModal
+          callbackFn={closeModal}
+          title={"Review Modified"}
+          content={`정상적으로 리뷰가 수정 처리 되었습니다.`}
         />
       ) : (
         <></>
@@ -94,6 +133,13 @@ function ListPage() {
           message="해당 리뷰를 삭제하시겠습니까?"
           onConfirm={handleConfirmDelete}
           onCancel={closeModal}
+        />
+      )}
+      {reviewModifyModal && (
+        <ModifyReviewModal
+          selectedReview={selectedReview}
+          onCancel={closeModal}
+          modifyReview={handleConfirmModify}
         />
       )}
 
@@ -174,7 +220,10 @@ function ListPage() {
                 >
                   삭제
                 </button>
-                <button className="px-4 py-2 bg-stone-500  h-10  text-white hover:bg-stone-400">
+                <button
+                  onClick={() => handleClickModify(review)}
+                  className="px-4 py-2 bg-stone-500  h-10  text-white hover:bg-stone-400"
+                >
                   수정
                 </button>
               </div>
