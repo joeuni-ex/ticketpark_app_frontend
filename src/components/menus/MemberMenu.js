@@ -54,7 +54,7 @@ function MemberMenu() {
           </div>
           <div className="flex space-x-7">
             {/* searchbar */}
-            <div className="flex space-x-1">
+            <div className="space-x-1 md:flex hidden">
               <input
                 type="text"
                 value={searchWord}
@@ -108,7 +108,7 @@ function MemberMenu() {
           transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
           className="lg:hidden w-full bg-white z-50"
         >
-          <aside className="flex justify-center p-4">
+          <aside className="flex flex-col items-center space-y-4 justify-center p-4">
             <ul className="text-lg space-y-4">
               <li>
                 <Link to={"/contents/genre/concert"}>콘서트</Link>
@@ -122,7 +122,40 @@ function MemberMenu() {
               <li>
                 <Link to={"/genre/genre/classic"}>클래식</Link>
               </li>
+              {!loginState.email && (
+                <li>
+                  <Link to={"/member/login"}>로그인</Link>
+                </li>
+              )}
+              {loginState.email && (
+                <>
+                  {loginState.roleNames[0] === "USER" ? (
+                    <li>
+                      <Link to={"/member/user/reservation/"}>마이페이지</Link>
+                    </li>
+                  ) : (
+                    <li>
+                      <Link to={"/member/admin/goods/"}>관리자페이지</Link>
+                    </li>
+                  )}
+                  <li className="cursor-pointer" onClick={handleClickLogout}>
+                    로그아웃
+                  </li>
+                </>
+              )}
             </ul>
+            <div className="space-x-1 flex w-full">
+              <input
+                type="text"
+                value={searchWord}
+                onChange={(e) => handleChangeSearch(e)}
+                name="searchWord"
+                className="border-b-2 border-black w-full outline-none"
+              />
+              <Link to={`/contents/search/${searchWord}/`}>
+                <RiSearchLine className="text-xl" />
+              </Link>
+            </div>
           </aside>
         </motion.main>
       )}

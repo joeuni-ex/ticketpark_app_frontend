@@ -4,7 +4,7 @@ function BasicFooter() {
   return (
     <div className="flex flex-col justify-center items-center w-full h-56  border-t border-stone-200 ">
       {/* 상단 */}
-      <div className="flex border-b border-stone-200 py-5 md:w-3/5  text-stone-700  ">
+      <div className="md:flex border-b border-stone-200 py-5 md:w-3/5  text-stone-700 hidden  ">
         <div className="border-r px-4 text-sm md:text-base">회사소개</div>
         <div className="border-r px-4 text-sm md:text-base">이용약관</div>
         <div className="border-r px-4  text-sm md:text-base">
