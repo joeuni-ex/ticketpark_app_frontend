@@ -38,6 +38,11 @@ const useCustomLogin = () => {
     return <Navigate replace to="/member/login" />;
   };
 
+  //이전페이지 이동
+  const moveToBack = () => {
+    navigate(-1);
+  };
+
   return {
     loginState,
     isLogin,
@@ -46,6 +51,7 @@ const useCustomLogin = () => {
     moveToPath,
     moveToLogin,
     moveToLoginReturn,
+    moveToBack,
   };
 };
 export default useCustomLogin;

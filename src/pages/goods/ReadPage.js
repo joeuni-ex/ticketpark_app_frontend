@@ -18,6 +18,7 @@ import {
   postIncreaseLikes,
 } from "../../api/reviewApi";
 import AgeComponent from "../../components/common/AgeComponent";
+import { IoIosArrowBack } from "react-icons/io";
 
 //초기값
 const initState = {
@@ -117,7 +118,7 @@ function ReadPage() {
   const [fetching, setFetching] = useState(false); //로딩
   const [result, setResult] = useState(false); // 결과가 나오면 모달창으로 결과 데이터가 보이게끔
 
-  const { loginState, moveToLogin } = useCustomLogin(); //로그인 커스텀 훅
+  const { loginState, moveToLogin, moveToBack } = useCustomLogin(); //로그인 커스텀 훅
 
   const [date, setDate] = useState(initState.startDate); //캘린더 날짜
 
@@ -252,13 +253,17 @@ function ReadPage() {
       )}
       {/* left */}
       <div className="flex flex-col w-full md:w-6/12  mt-5 p-3 ">
-        <div className="flex flex-col my-5 space-y-2">
+        <div className="flex flex-col md:my-5 space-y-2">
+          <IoIosArrowBack
+            className="text-lg  md:text-xl text-stone-700 my-5 cursor-pointer "
+            onClick={moveToBack}
+          />
           <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-1 ">
             <div className="text-2xl font-bold">{goods.title} </div>
             <AgeComponent age={goods.age} />
           </div>
 
-          <div className="text-sm">
+          <div className="text-sm ">
             {[...Array(5)].map((_, i) => (
               <span
                 key={i}
@@ -273,8 +278,8 @@ function ReadPage() {
           </div>
         </div>
 
-        <div className="flex space-x-11">
-          <div className="w-80 h-96">
+        <div className="flex space-x-11 mt-4 md:mt-0">
+          <div className="w-36 h-44 md:w-80 md:h-96 ">
             <img
               src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
               className="w-full h-full object-cover"
@@ -284,23 +289,23 @@ function ReadPage() {
 
           <div className="flex flex-col w-1/2 space-y-5">
             <div className="flex ">
-              <div className="w-1/4">장소</div>
+              <div className="w-16 mr-2 md:mr-0 md:w-1/4">장소</div>
               <div>{goods.place}</div>
             </div>
             <div className="flex ">
-              <div className="w-1/4">공연기간</div>
+              <div className="w-28 mr-2 md:w-1/4">공연기간</div>
               <div>{`${goods.startDate} ~ ${goods.endDate}`}</div>
             </div>
             <div className="flex ">
-              <div className="w-1/4">공연시간</div>
+              <div className="w-16 mr-2 md:mr-0 md:w-1/4">공연시간</div>
               <div>{goods.runningTime}분</div>
             </div>
             <div className="flex ">
-              <div className="w-1/4">관람연령</div>
+              <div className="w-16 mr-2 md:w-1/4">관람연령</div>
               <div>{goods.age == 0 ? "전체이용가" : `${goods.age}세 이상`}</div>
             </div>
             <div className="flex ">
-              <div className="w-1/4">가격</div>
+              <div className="w-16 mr-2 md:mr-0 md:w-1/4">가격</div>
               <div className="space-y-2">
                 {seatPrice.map((item) => (
                   <p key={item.id} className="text-stone-500 text-sm">
