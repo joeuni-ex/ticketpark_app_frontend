@@ -20,7 +20,7 @@ function PageComponent({ serverData, movePage }) {
         <div
           key={pageNum}
           className={`m-2 p-2 w-12 text-center rounded shadow-md text-white ${
-            serverData.current === pageNum ? `bg-gray-500` : `bg-blue-400`
+            serverData.current === pageNum ? `bg-stone-600` : `bg-amber-500`
           }`}
           onClick={() => movePage({ page: pageNum })}
         >
@@ -31,7 +31,7 @@ function PageComponent({ serverData, movePage }) {
       {/* 다음 데이터가 있으면 다음 페이지로 이동  */}
       {serverData.next ? (
         <div
-          className="m-2 p-2 w-16 text-center font-bold text-blue-300"
+          className="m-2 p-2 w-16 text-center font-bold text-amber-300"
           onClick={() => movePage({ page: serverData.nextPage })}
         >
           Next
