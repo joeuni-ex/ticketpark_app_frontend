@@ -111,16 +111,16 @@ function MemberMenu() {
           <aside className="flex justify-center p-4">
             <ul className="text-lg space-y-4">
               <li>
-                <Link to={"/genre/genrelist"}>콘서트</Link>
+                <Link to={"/contents/genre/concert"}>콘서트</Link>
               </li>
               <li>
-                <Link to={"/genre/genrelist"}>뮤지컬</Link>
+                <Link to={"/genre/genre/musical"}>뮤지컬</Link>
               </li>
               <li>
-                <Link to={"/genre/genrelist"}>연극</Link>
+                <Link to={"/genre/genre/play"}>연극</Link>
               </li>
               <li>
-                <Link to={"/genre/genrelist"}>클래식</Link>
+                <Link to={"/genre/genre/classic"}>클래식</Link>
               </li>
             </ul>
           </aside>

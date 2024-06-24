@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BasicLayout from "../layout/BasicLayout";
 import Slider from "react-slick";
 
@@ -13,8 +13,47 @@ import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
 import CardComponent from "../components/card/CardComponent";
+import useCustomMove from "../hooks/useCustomMove";
+import { API_SERVER_HOST, getList } from "../api/goodsApi";
+
+const host = API_SERVER_HOST;
+
+//초기값 설정-> 서버에서 출력되는 값
+const initState = {
+  dtoList: [],
+  pageNumList: [],
+  pageRequestDTO: null,
+  prev: false,
+  next: false,
+  totalCount: 0,
+  prevPage: 0,
+  nextPage: 0,
+  totalPage: 0,
+  current: 0,
+};
 
 function MainPage() {
+  const [serverData, setServerData] = useState(initState);
+  const { page, size, refresh } = useCustomMove();
+  const [newData, setNewData] = useState(initState);
+
+  const [fetching, setFetching] = useState(false); //로딩 모달
+
+  useEffect(() => {
+    let genre = "all";
+    setFetching(true);
+    try {
+      getList({ page, size, genre }).then((data) => {
+        setFetching(false);
+        setNewData(data);
+      });
+    } catch (e) {
+      console.log("error : ", e);
+    }
+  }, [page, size, refresh]);
+
+  console.log(newData);
+
   // Web Slider Settings
   const webSettings = {
     dots: true,
@@ -63,21 +102,27 @@ function MainPage() {
       <div className="flex flex-col w-full items-center  py-20 space-y-10">
         <div className=" w- text-4xl font-bold text-stone-900">WHAT'S NEW</div>
         {/* 최신순 정렬 */}
-        <div className="flex justify-center  items-center space-x-5 ">
-          {/* 큰 사이즈  */}
-
-          <div className="w-3/12 flex flex-col items-end">
-            <CardComponent src="./main/new_1.jpg" width="w-10/12" />
-            <div className="flex w-10/12 justify-center border-b font-bold ">
-              바스커빌 셜록홈즈 미스테리
-            </div>
+        <div className="flex justify-center">
+          <div className="flex justify-center flex-col items-center space-x-5 ">
+            {/* 큰 사이즈  */}
+            {newData.dtoList.length > 0 && (
+              <>
+                <CardComponent
+                  item={newData.dtoList[0]}
+                  src={newData.dtoList[0].uploadFileNames}
+                  width="w-10/12"
+                />
+                <div className="flex w-10/12 text-lg  justify-center my-2 font-bold ">
+                  {newData.dtoList[0].title}
+                </div>
+              </>
+            )}
           </div>
           {/* 작은 사이즈  */}
-          <div className="flex w-5/12 flex-wrap gap-5">
-            {newImages.map((item) => (
+          <div className="flex w-8/12 md:w-5/12 flex-wrap gap-5">
+            {newData.dtoList.slice(1, 7).map((item) => (
               <CardComponent item={item} width="w-3/12" key={item.id} />
             ))}
-            <CardComponent src="./main/new_7.jpg" width="w-3/12" />
           </div>
         </div>
       </div>
@@ -113,11 +158,20 @@ function MainPage() {
         <div className="  text-4xl  font-bold text-stone-900">
           CONCERT & CLASSIC
         </div>
-
-        <div className="flex space-x-5">
+        {/* web */}
+        <div className=" space-x-5 hidden md:flex w-full justify-center items-center">
           {newImages.map((item) => (
             <CardComponent key={item.id} item={item} width="w-64" />
           ))}
+        </div>
+        {/* mobile */}
+        <div className="gap-5 flex md:hidden w-full  justify-center items-center flex-wrap">
+          {newImages.map((item) => (
+            <CardComponent key={item.id} item={item} width="w-48" />
+          ))}
+          <button className="w-full flex justify-center mx-14 py-5 border-gray-500 border bg-gray-50 rounded-lg">
+            더보기
+          </button>
         </div>
       </div>
     </BasicLayout>
