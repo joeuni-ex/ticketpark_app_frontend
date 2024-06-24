@@ -34,6 +34,18 @@ export const getList = async (pageParams) => {
   return res.data;
 };
 
+//검색 리스트 조회
+export const getSearchList = async (pageParams, search) => {
+  const { page, size } = pageParams;
+
+  //쿼리 스트링은 option => params로 가져옴
+  const res = await axios.get(`${prefix}/list/search/${search}`, {
+    params: { page, size },
+  });
+
+  return res.data;
+};
+
 //수정
 export const modifyOne = async (gno, goods) => {
   const header = { headers: { "Content-Type": "multipart/form-data" } };

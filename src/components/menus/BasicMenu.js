@@ -12,10 +12,17 @@ function BasicMenu() {
   //로그인 상태 데이터
   const { doLogout, moveToPath, loginState } = useCustomLogin(); //로그인 커스텀 훅
 
+  const [searchWord, setSearchWord] = useState("");
+
   const [menuToggle, setMenuToggle] = useState(false);
 
   const handleClickMenuToggle = () => {
     setMenuToggle(!menuToggle);
+  };
+
+  //검색어 변경 시
+  const handleChangeSearch = (e) => {
+    setSearchWord(e.target.value);
   };
 
   //로그아웃
@@ -51,11 +58,14 @@ function BasicMenu() {
             <div className="flex space-x-1">
               <input
                 type="text"
-                name=""
-                id=""
+                value={searchWord}
+                onChange={(e) => handleChangeSearch(e)}
+                name="searchWord"
                 className="border-b-2 border-black w-60 outline-none"
               />
-              <RiSearchLine className="text-xl" />
+              <Link to={`/contents/search/${searchWord}`}>
+                <RiSearchLine className="text-xl" />
+              </Link>
             </div>
             {/* web */}
             <div className="justify-end w-2/4 space-x-2  hidden lg:flex">
