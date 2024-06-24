@@ -407,16 +407,16 @@ function ModifyPage() {
                   </div>
                   <div className="text-sm ml-2">
                     <p>
-                      VIP석 <span className="font-bold">0</span>
+                      VIP석 <span className="font-bold">8</span>
                     </p>
                     <p>
-                      R석 <span className="font-bold">0</span>
+                      R석 <span className="font-bold">8</span>
                     </p>
                     <p>
-                      S석 <span className="font-bold">0</span>
+                      S석 <span className="font-bold">16</span>
                     </p>
                     <p>
-                      A석 <span className="font-bold">0</span>
+                      A석 <span className="font-bold">16</span>
                     </p>
                   </div>
                 </div>

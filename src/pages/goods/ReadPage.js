@@ -17,6 +17,7 @@ import {
   postChangeLikes,
   postIncreaseLikes,
 } from "../../api/reviewApi";
+import AgeComponent from "../../components/common/AgeComponent";
 
 //초기값
 const initState = {
@@ -252,7 +253,11 @@ function ReadPage() {
       {/* left */}
       <div className="flex flex-col w-full md:w-6/12  mt-5 p-3 ">
         <div className="flex flex-col my-5 space-y-2">
-          <div className="text-2xl font-bold">{goods.title}</div>
+          <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-1 ">
+            <div className="text-2xl font-bold">{goods.title} </div>
+            <AgeComponent age={goods.age} />
+          </div>
+
           <div className="text-sm">
             {[...Array(5)].map((_, i) => (
               <span
@@ -408,16 +413,16 @@ function ReadPage() {
               </div>
               <div className="text-sm ml-2">
                 <p>
-                  VIP석 <span className="font-bold">0</span>
+                  VIP석 <span className="font-bold">8</span>
                 </p>
                 <p>
-                  R석 <span className="font-bold">0</span>
+                  R석 <span className="font-bold">8</span>
                 </p>
                 <p>
-                  S석 <span className="font-bold">0</span>
+                  S석 <span className="font-bold">16</span>
                 </p>
                 <p>
-                  A석 <span className="font-bold">0</span>
+                  A석 <span className="font-bold">16</span>
                 </p>
               </div>
             </div>
