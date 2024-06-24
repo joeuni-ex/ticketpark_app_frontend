@@ -55,7 +55,7 @@ function BasicMenu() {
           </div>
           <div className="flex space-x-7">
             {/* searchbar */}
-            <div className="flex space-x-1">
+            <div className=" space-x-1 md:flex hidden">
               <input
                 type="text"
                 value={searchWord}

@@ -80,7 +80,9 @@ function MainPage() {
 
       {/* section 2*/}
       <div className="flex  w-full flex-col items-center justify-center py-20 space-y-10">
-        <div className="  text-4xl  font-bold text-stone-900">FOCUS ON</div>
+        <div className="text-2xl  md:text-4xl font-bold text-stone-900">
+          FOCUS ON
+        </div>
 
         <div className="flex">
           {focusImages.map((image) => (
@@ -100,28 +102,39 @@ function MainPage() {
 
       {/* section 3*/}
       <div className="flex flex-col w-full items-center  py-20 space-y-10">
-        <div className=" w- text-4xl font-bold text-stone-900">WHAT'S NEW</div>
+        <div className="text-2xl  md:text-4xl  font-bold text-stone-900">
+          WHAT'S NEW
+        </div>
         {/* 최신순 정렬 */}
         <div className="flex justify-center">
-          <div className="flex justify-center flex-col items-center space-x-5 ">
+          <div className="flex flex-col items-center ">
             {/* 큰 사이즈  */}
             {newData.dtoList.length > 0 && (
               <>
                 <CardComponent
                   item={newData.dtoList[0]}
                   src={newData.dtoList[0].uploadFileNames}
-                  width="w-10/12"
+                  width="min-w-[120px] max-w-[100px] sm:min-w-[250px] sm:max-w-[250px] md:min-w-[300px] md:max-w-[300px] lg:min-w-[380px] lg:max-w-[400px]"
                 />
-                <div className="flex w-10/12 text-lg  justify-center my-2 font-bold ">
+                <div className="flex text-xs md:text-lg justify-center my-2 font-bold m-0 p-0">
                   {newData.dtoList[0].title}
                 </div>
               </>
             )}
           </div>
           {/* 작은 사이즈  */}
-          <div className="flex w-8/12 md:w-5/12 flex-wrap gap-5">
+          <div
+            className="flex w-7/12 md:w-9/12 md:min-w-[480px] md:max-w-[480px] lg:min-w-[680px] lg:max-w-[800px]
+          
+          flex-wrap gap-1 md:gap-3 lg:gap-5 justify-center"
+          >
             {newData.dtoList.slice(1, 7).map((item) => (
-              <CardComponent item={item} width="w-3/12" key={item.id} />
+              <CardComponent
+                item={item}
+                width="min-w-[60px] max-w-[60px] md:min-w-[140px] md:max-w-[140px] lg:min-w-[200px] lg:max-w-[200px]"
+                hight="lg:h-[230px] min-h-[60px] max-h-[230px]"
+                key={item.id}
+              />
             ))}
           </div>
         </div>
@@ -129,7 +142,7 @@ function MainPage() {
 
       {/* section 4 */}
       <div className="flex flex-col w-full items-center py-20 space-y-10">
-        <div className="  text-4xl font-bold text-stone-900">
+        <div className="text-2xl  md:text-4xl font-bold text-stone-900">
           TICKET PARK PLAY
         </div>
         {/* 유튜브 영상 */}
@@ -155,7 +168,7 @@ function MainPage() {
 
       {/* section 5 */}
       <div className="flex  w-full flex-col items-center justify-center py-20 space-y-10">
-        <div className="  text-4xl  font-bold text-stone-900">
+        <div className="text-2xl  md:text-4xl  font-bold text-stone-900">
           CONCERT & CLASSIC
         </div>
         {/* web */}
@@ -166,8 +179,8 @@ function MainPage() {
         </div>
         {/* mobile */}
         <div className="gap-5 flex md:hidden w-full  justify-center items-center flex-wrap">
-          {newImages.map((item) => (
-            <CardComponent key={item.id} item={item} width="w-48" />
+          {newImages.slice(0, 4).map((item) => (
+            <CardComponent key={item.id} item={item} width="w-32" />
           ))}
           <button className="w-full flex justify-center mx-14 py-5 border-gray-500 border bg-gray-50 rounded-lg">
             더보기
