@@ -12,6 +12,8 @@ import {
 } from "../../images";
 import useCustomMove from "../../hooks/useCustomMove";
 import { API_SERVER_HOST, getList } from "../../api/goodsApi";
+import FetchingModal from "../../components/common/FetchingModal";
+import PageComponent from "../../components/common/PageComponent";
 
 const host = API_SERVER_HOST;
 
@@ -31,7 +33,7 @@ const initState = {
 
 function ListPage() {
   const [serverData, setServerData] = useState(initState);
-  const { page, size, refresh } = useCustomMove();
+  const { page, size, refresh, moveToList } = useCustomMove();
   const [genre, setGenre] = useState("all");
   const [genreTitle, setGenreTitle] = useState(null);
 
@@ -98,6 +100,7 @@ function ListPage() {
 
   return (
     <div className="flex flex-col">
+      {fetching ? <FetchingModal /> : <></>}
       {/* Web Slider  */}
       <div className="slider-container my-6 hidden md:block">
         <SlideContainer>
@@ -159,6 +162,7 @@ function ListPage() {
           ))}
         </div>
       </div>
+      <PageComponent serverData={serverData} movePage={moveToList} />
     </div>
   );
 }

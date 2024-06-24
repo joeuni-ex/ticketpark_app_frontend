@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   createSearchParams,
   useNavigate,
@@ -14,6 +15,8 @@ const getNum = (param, defaultValue) => {
 
 const useCustomMove = () => {
   const navigate = useNavigate();
+
+  const [refresh, setRefresh] = useState(false);
 
   //파라미터 값
   const [queryParams] = useSearchParams();
@@ -39,10 +42,10 @@ const useCustomMove = () => {
       //moveToList 함수에 파라미터 값이 있을 경우
       queryStr = queryDefault;
     }
-    navigate({ pathname: "member/admin/goods/list", search: queryStr });
+    navigate({ pathname: "", search: queryStr });
   };
 
-  return { moveToList };
+  return { moveToList, page, size, refresh };
 };
 
 export default useCustomMove;

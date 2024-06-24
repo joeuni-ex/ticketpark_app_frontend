@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { API_SERVER_HOST, getSearchList } from "../../api/goodsApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import { Link, useParams, useSearchParams } from "react-router-dom";
+import PageComponent from "../../components/common/PageComponent";
+import FetchingModal from "../../components/common/FetchingModal";
 const host = API_SERVER_HOST;
 
 //초기값 설정-> 서버에서 출력되는 값
@@ -20,7 +22,7 @@ const initState = {
 function SearchPage() {
   const [serverData, setServerData] = useState(initState);
 
-  const { page, size, refresh } = useCustomMove();
+  const { page, size, refresh, moveToList } = useCustomMove();
 
   const [fetching, setFetching] = useState(false); //로딩 모달
 
@@ -46,6 +48,7 @@ function SearchPage() {
 
   return (
     <div className="flex flex-col">
+      {fetching ? <FetchingModal /> : <></>}
       {/* contents List */}
       <div className="flex flex-col justify-center items-center space-y-10 py-20">
         <div className="text-3xl font-bold">
@@ -77,6 +80,7 @@ function SearchPage() {
           ))}
         </div>
       </div>
+      <PageComponent serverData={serverData} movePage={moveToList} />
     </div>
   );
 }
