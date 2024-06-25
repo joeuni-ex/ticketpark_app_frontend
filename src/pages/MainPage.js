@@ -14,7 +14,7 @@ import YouTube from "react-youtube";
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
 import CardComponent from "../components/card/CardComponent";
 import useCustomMove from "../hooks/useCustomMove";
-import { API_SERVER_HOST, getList } from "../api/goodsApi";
+import { API_SERVER_HOST, getBestList, getList } from "../api/goodsApi";
 
 const host = API_SERVER_HOST;
 
@@ -35,24 +35,31 @@ const initState = {
 function MainPage() {
   const [serverData, setServerData] = useState(initState);
   const { page, size, refresh } = useCustomMove();
-  const [newData, setNewData] = useState(initState);
+  const [section3Data, setSection3Data] = useState(initState);
+
+  const [section5Data, setSection5Data] = useState(initState);
+  const [section5DataMoreViewBtn, setSection5DataMoreViewBtn] = useState(false);
 
   const [fetching, setFetching] = useState(false); //로딩 모달
 
   useEffect(() => {
-    let genre = "all";
     setFetching(true);
     try {
-      getList({ page, size, genre }).then((data) => {
+      // What's new
+      getList({ page, size }).then((data) => {
+        setSection3Data(data);
+      });
+
+      getBestList({ page, size }).then((data) => {
         setFetching(false);
-        setNewData(data);
+        setSection5Data(data);
       });
     } catch (e) {
       console.log("error : ", e);
     }
   }, [page, size, refresh]);
 
-  console.log(newData);
+  console.log(section5Data);
 
   // Web Slider Settings
   const webSettings = {
@@ -109,15 +116,15 @@ function MainPage() {
         <div className="flex justify-center">
           <div className="flex flex-col items-center ">
             {/* 큰 사이즈  */}
-            {newData.dtoList.length > 0 && (
+            {section3Data.dtoList.length > 0 && (
               <>
                 <CardComponent
-                  item={newData.dtoList[0]}
-                  src={newData.dtoList[0].uploadFileNames}
+                  item={section3Data.dtoList[0]}
+                  src={section3Data.dtoList[0].uploadFileNames}
                   width="min-w-[120px] max-w-[100px] sm:min-w-[250px] sm:max-w-[250px] md:min-w-[300px] md:max-w-[300px] lg:min-w-[380px] lg:max-w-[400px]"
                 />
                 <div className="flex text-xs md:text-lg justify-center my-2 font-bold m-0 p-0">
-                  {newData.dtoList[0].title}
+                  {section3Data.dtoList[0].title}
                 </div>
               </>
             )}
@@ -128,9 +135,10 @@ function MainPage() {
           
           flex-wrap gap-1 md:gap-3 lg:gap-5 justify-center"
           >
-            {newData.dtoList.slice(1, 7).map((item) => (
+            {section3Data.dtoList.slice(1, 7).map((item) => (
               <CardComponent
                 item={item}
+                src={item.uploadFileNames[0]}
                 width="min-w-[60px] max-w-[60px] md:min-w-[140px] md:max-w-[140px] lg:min-w-[200px] lg:max-w-[200px]"
                 hight="lg:h-[230px] min-h-[60px] max-h-[230px]"
                 key={item.id}
@@ -169,20 +177,44 @@ function MainPage() {
       {/* section 5 */}
       <div className="flex  w-full flex-col items-center justify-center py-20 space-y-10">
         <div className="text-2xl  md:text-4xl  font-bold text-stone-900">
-          CONCERT & CLASSIC
+          WHAT'S BEST
         </div>
         {/* web */}
         <div className=" space-x-5 hidden md:flex w-full justify-center items-center">
-          {newImages.map((item) => (
-            <CardComponent key={item.id} item={item} width="w-64" />
+          {section5Data.dtoList.slice(0, 5).map((item) => (
+            <CardComponent
+              key={item.id}
+              item={item}
+              width="w-64"
+              src={item.uploadFileNames[0]}
+            />
           ))}
         </div>
         {/* mobile */}
         <div className="gap-5 flex md:hidden w-full  justify-center items-center flex-wrap">
-          {newImages.slice(0, 4).map((item) => (
-            <CardComponent key={item.id} item={item} width="w-32" />
+          {section5Data.dtoList.slice(0, 4).map((item) => (
+            <CardComponent
+              key={item.id}
+              item={item}
+              width="w-32"
+              src={item.uploadFileNames}
+            />
           ))}
-          <button className="w-full flex justify-center mx-14 py-5 border-gray-500 border bg-gray-50 rounded-lg">
+          {section5DataMoreViewBtn &&
+            section5Data.dtoList
+              .slice(5, 9)
+              .map((item) => (
+                <CardComponent
+                  key={item.id}
+                  item={item}
+                  width="w-32"
+                  src={item.uploadFileNames}
+                />
+              ))}
+          <button
+            onClick={() => setSection5DataMoreViewBtn(true)}
+            className="w-full flex justify-center mx-14 py-5 border-gray-500 border bg-gray-50 rounded-lg"
+          >
             더보기
           </button>
         </div>

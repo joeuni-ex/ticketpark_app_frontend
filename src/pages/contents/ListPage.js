@@ -34,7 +34,7 @@ const initState = {
 function ListPage() {
   const [serverData, setServerData] = useState(initState);
   const { page, size, refresh, moveToList } = useCustomMove();
-  const [genres, setGenres] = useState("all");
+  const [genre, setGenre] = useState("all");
   const [genreTitle, setGenreTitle] = useState(null);
 
   const [fetching, setFetching] = useState(false); //로딩 모달
@@ -44,7 +44,7 @@ function ListPage() {
   useEffect(() => {
     setFetching(true);
 
-    setGenres(genreParam.genre);
+    setGenre(genreParam.genre);
 
     if (genreParam.genre == "musical") {
       setGenreTitle("뮤지컬");
@@ -61,14 +61,14 @@ function ListPage() {
     }
 
     try {
-      getList({ page, size, genres }).then((data) => {
+      getList({ page, size, genre }).then((data) => {
         setFetching(false);
         setServerData(data);
       });
     } catch (e) {
       console.log("error : ", e);
     }
-  }, [page, size, refresh, genres, genreParam]);
+  }, [page, size, refresh, genre, genreParam]);
 
   // Web Slider Settings
   const webSettings = {
