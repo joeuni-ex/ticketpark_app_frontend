@@ -120,60 +120,70 @@ function ListPage() {
         </select>
       </div>
 
-      <div className="flex flex-wrap mx-auto justify-center p-6">
+      <div className="flex flex-wrap mx-auto justify-center p-6 w-full ">
         {serverData.dtoList?.map((goods) => (
           <div
             key={goods.gno}
-            className="flex justify-between w-full min-w-[400px] p-2 m-2 rounded shadow-md text-stone-700"
+            className="flex justify-between w-full  md:min-w-[400px] p-2 mx-2 my-4 rounded shadow-md text-stone-700"
           >
-            <div className="flex w-full">
-              <div className="flex ">
-                <div className="font-extrabold text-2xl p-2 w-1/12">
+            <div className="flex w-full flex-col text-sm md:text-base">
+              <div className="flex justify-between w-full  p-2 ">
+                <div className="font-extrabold text-base md:text-2xl">
+                  {" "}
                   {goods.gno}
                 </div>
+                <div className="flex space-x-2 justify-center md:ml-5">
+                  <button
+                    onClick={() => handleClickDelete(goods.gno)}
+                    className="px-2 py-1 md:px-4 md:py-2 border h-10  text-stone-600 text-xs md:text-base border-stone-300 hover:bg-stone-50"
+                  >
+                    삭제
+                  </button>
+
+                  <Link to={`/member/admin/goods/modify/${goods.gno}`}>
+                    <div className="flex items-center  px-2 py-1 md:px-4 md:py-2 bg-stone-500  h-10   text-xs md:text-base text-white hover:bg-stone-400">
+                      수정
+                    </div>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="flex  ">
                 <Link
                   to={`/goods/${goods.gno}`}
                   className="text-1xl m-1 p-2 w-2/10 font-medium"
                 >
                   <img
                     src={`${host}/api/goods/view/s_${goods.uploadFileNames[0]}`}
+                    className="w-36 md:w-64"
                     alt="image"
                   />
                 </Link>
                 <div className="flex w-96 flex-col">
                   <Link
                     to={`/goods/${goods.gno}`}
-                    className="text-1xl m-1 p-2  font-extrabold"
+                    className="text-1xl md:m-1 p-2  font-extrabold"
                   >
                     {goods.title}
                   </Link>
-                  <div className="text-1xl m-1 p-2  font-medium">
+                  <div className="text-1xl md:m-1 p-2  font-medium">
                     <span className="font-semibold">공연장소</span>{" "}
                     {goods.place}
                   </div>
-                  <div className="text-1xl m-1 p-2  font-medium">
+                  <div className="text-1xl md:m-1 p-2  font-medium">
                     <span className="font-semibold">공연기간</span>{" "}
                     {goods.startDate} ~ {goods.endDate}
                   </div>
-                  <div className="text-1xl m-1 p-2  font-medium">
+                  <div className="text-1xl md:m-1 p-2  font-medium">
                     <span className="font-semibold">연령제한</span>{" "}
                     {goods.age === 0 ? "전체이용가" : goods.age}세 이상
                   </div>
-                  <div className="text-1xl m-1 p-2  font-medium">
+                  <div className="text-1xl md:m-1 p-2  font-medium">
                     <span className="font-semibold">공연시간</span>{" "}
                     {goods.runningTime}분
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="text-1xl m-1 p-2 w-48 font-medium">
-              <Link to={`/member/admin/goods/modify/${goods.gno}`}>수정</Link> /{" "}
-              <span
-                className="cursor-pointer"
-                onClick={() => handleClickDelete(goods.gno)}
-              >
-                삭제
-              </span>
             </div>
           </div>
         ))}

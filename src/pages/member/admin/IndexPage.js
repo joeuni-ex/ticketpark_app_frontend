@@ -13,10 +13,10 @@ function IndexPage() {
   return (
     <MemberLayout>
       <div className="flex">
-        <div className="w-1/5">
+        <div className="hidden lg:block md:w-1/5">
           <SideMenu />
         </div>
-        <div className="w-4/5 ">
+        <div className="w-full lg:w-4/5 ">
           <Outlet />
         </div>
       </div>
