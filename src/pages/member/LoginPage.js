@@ -73,9 +73,11 @@ function LoginPage() {
           <div className="w-1/5 text-center">또는</div>
           <div className="border-b border-stone-400 w-2/5"></div>
         </div>
-        <Link to={link} className="w-full py-5 bg-amber-300">
-          카카오로그인
-        </Link>
+        <div className="flex justify-center w-full">
+          <Link to={link}>
+            <img src="../kakao_login_medium_wide.png" alt="" className="w-96" />
+          </Link>
+        </div>
       </div>
     </div>
   );

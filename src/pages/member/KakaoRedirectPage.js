@@ -21,7 +21,7 @@ function KakaoRedirectPage() {
         dispatch(login(memberInfo)); //loginSlice -> login()
 
         if (memberInfo && memberInfo.social) {
-          navigate("/member/modify"); //회원정보 수정
+          navigate("/");
         } else {
           navigate("/");
         }
@@ -31,7 +31,6 @@ function KakaoRedirectPage() {
   return (
     <div>
       <div>Kakao Login Redirect</div>
-      <div>{authCode}</div>
     </div>
   );
 }
