@@ -17,6 +17,9 @@ const ModifyGoodsPage = lazy(() =>
 const ListGoodsPage = lazy(() =>
   import("../pages/member/admin/goods/ListPage")
 );
+const AdminReviewListPage = lazy(() =>
+  import("../pages/member/admin/review/ListPage")
+);
 
 // user
 const ReservationListPage = lazy(() =>
@@ -26,7 +29,7 @@ const ReservationModifyPage = lazy(() =>
   import("../pages/member/user/reservation/ModifyPage")
 );
 
-const ReviewListPage = lazy(() =>
+const UserReviewListPage = lazy(() =>
   import("../pages/member/user/review/ListPage")
 );
 
@@ -90,6 +93,14 @@ const memberRouter = () => {
         </Suspense>
       ),
     },
+    {
+      path: "review/list",
+      element: (
+        <Suspense fallback={Loading}>
+          <AdminReviewListPage />
+        </Suspense>
+      ),
+    },
 
     {
       path: "admin",
@@ -125,7 +136,7 @@ const memberRouter = () => {
       path: "review/list",
       element: (
         <Suspense fallback={Loading}>
-          <ReviewListPage />
+          <UserReviewListPage />
         </Suspense>
       ),
     },

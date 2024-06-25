@@ -117,6 +117,7 @@ function MainPage() {
             {section3Data.dtoList.length > 0 && (
               <>
                 <CardComponent
+                  key={section3Data.dtoList[0].gno}
                   item={section3Data.dtoList[0]}
                   src={section3Data.dtoList[0].uploadFileNames}
                   width="min-w-[120px] max-w-[100px] sm:min-w-[250px] sm:max-w-[250px] md:min-w-[300px] md:max-w-[300px] lg:min-w-[380px] lg:max-w-[400px]"
@@ -139,7 +140,7 @@ function MainPage() {
                 src={item.uploadFileNames[0]}
                 width="min-w-[60px] max-w-[60px] md:min-w-[140px] md:max-w-[140px] lg:min-w-[200px] lg:max-w-[200px]"
                 hight="lg:h-[230px] min-h-[60px] max-h-[230px]"
-                key={item.id}
+                key={item.gno}
               />
             ))}
           </div>
@@ -181,7 +182,7 @@ function MainPage() {
         <div className=" space-x-5 hidden md:flex w-full justify-center items-center">
           {section5Data.dtoList.slice(0, 5).map((item) => (
             <CardComponent
-              key={item.id}
+              key={item.gno}
               item={item}
               width="w-64"
               src={item.uploadFileNames[0]}
@@ -192,7 +193,7 @@ function MainPage() {
         <div className="gap-5 flex md:hidden w-full  justify-center items-center flex-wrap">
           {section5Data.dtoList.slice(0, 4).map((item) => (
             <CardComponent
-              key={item.id}
+              key={item.gno}
               item={item}
               width="w-32"
               src={item.uploadFileNames}
@@ -203,7 +204,7 @@ function MainPage() {
               .slice(5, 9)
               .map((item) => (
                 <CardComponent
-                  key={item.id}
+                  key={item.gno}
                   item={item}
                   width="w-32"
                   src={item.uploadFileNames}

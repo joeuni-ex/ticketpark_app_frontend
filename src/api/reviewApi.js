@@ -28,7 +28,7 @@ export const postChangeLikes = async (reno) => {
 };
 
 //내가 작성한 리뷰 조회
-export const getMyList = async (email) => {
+export const getList = async (email) => {
   const res = await jwtAxios.get(`${host}/list`, {
     params: { email },
   });

@@ -101,11 +101,14 @@ function ListPage() {
           content={`${result}번 상품 삭제 완료`}
         />
       )}
-      <div className="font-bold text-stone-800 text-xl py-10 px-5 border-b">
+      <div className="font-bold text-stone-800 text-xl py-10 px-5 border-b-2 border-stone-600">
         상품 목록
       </div>
+      <div className="w-full flex px-10 h-20 font-bold text-lg bg-stone-100 items-center  border-b border-stone-200 ">
+        <div className="w-1/4"></div>
+      </div>
 
-      <div className="flex w-full justify-end px-10 py-5">
+      <div className="flex w-full justify-end px-10 py-3">
         <select
           name="genre"
           value={genre}

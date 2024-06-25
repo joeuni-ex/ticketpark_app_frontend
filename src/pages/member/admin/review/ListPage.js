@@ -3,7 +3,7 @@ import { API_SERVER_HOST } from "../../../../api/goodsApi";
 import FetchingModal from "../../../../components/common/FetchingModal";
 import ResultModal from "../../../../components/common/ResultModal";
 import useCustomLogin from "../../../../hooks/useCustomLogin";
-import { getList, getMyList, modifyOne } from "../../../../api/reviewApi";
+import { getList, modifyOne } from "../../../../api/reviewApi";
 import { FaStar } from "react-icons/fa";
 import ConfirmModal from "../../../../components/common/ConfirmModal";
 import ModifyReviewModal from "../../../../components/common/ModifyReviewModal";
@@ -34,9 +34,6 @@ function ListPage() {
   const [reviewDeleteModal, setReviewDeleteModal] = useState(false); //리뷰 삭제 모달
   const [deleteReno, setDeleteReno] = useState(""); //리뷰 삭제할 번호
 
-  const [reviewModifyModal, setReviewModifyModal] = useState(false); //리뷰 수정 모달
-  const [selectedReview, setSelectedReview] = useState({}); //리뷰 수정할 번호
-
   const { loginState } = useCustomLogin();
 
   //결과 모달창 닫기
@@ -44,7 +41,6 @@ function ListPage() {
     setResult(null);
     setReviewDeleteModal(false);
     setDeleteReno(null);
-    setReviewModifyModal(false);
   };
 
   //리뷰 삭제 모달
@@ -74,41 +70,16 @@ function ListPage() {
     }
   };
 
-  //리뷰 수정 모달
-  const handleClickModify = async (review) => {
-    setSelectedReview(review);
-    setReviewModifyModal(true);
-  };
-
-  //리뷰 수정 모달 -> 수정 클릭 시
-  const handleConfirmModify = async (modifyReview) => {
-    setReviewModifyModal(false);
-    try {
-      const formData = new FormData();
-
-      formData.append("email", loginState.email);
-      formData.append("content", modifyReview.content);
-      formData.append("grade", modifyReview.grade);
-
-      modifyOne(selectedReview.reno, formData).then((result) => {
-        setResult("Modify");
-        setFetching(false);
-      });
-    } catch (error) {
-      console.error("Error Modify item:", error);
-      setResult("Error Modify item");
-    } finally {
-      setFetching(false);
-    }
-  };
-
   useEffect(() => {
     setFetching(true);
-    getList(loginState.email).then((data) => {
+    let email = "";
+    getList(email).then((data) => {
       setServerData(data);
       setFetching(false);
     });
   }, [loginState, result]);
+
+  console.log(serverData);
 
   return (
     <div className="flex flex-col p-5">
@@ -135,16 +106,9 @@ function ListPage() {
           onCancel={closeModal}
         />
       )}
-      {reviewModifyModal && (
-        <ModifyReviewModal
-          selectedReview={selectedReview}
-          onCancel={closeModal}
-          modifyReview={handleConfirmModify}
-        />
-      )}
 
       <div className="font-bold text-stone-800 text-xl py-7 px-5 border-b-2 border-stone-600">
-        내가 작성한 리뷰{" "}
+        리뷰 목록{" "}
         <span className="text-base font-medium">
           총{" "}
           <span className="text-orange-400 font-semibold">
@@ -158,6 +122,7 @@ function ListPage() {
           <div className="w-1/5"></div>
           <div className="w-4/5">후기</div>
           <div className="w-2/5">작성일</div>
+          <div className="w-2/5">작성유저</div>
           <div className="w-1/5 ">관리</div>
         </div>
         {serverData?.map((review) => (
@@ -184,12 +149,16 @@ function ListPage() {
                     )}
                   </div>
                 </div>
-                <div className="w-4/5 space-y-2 ">
+                <div className="w-4/5 space-y-2 ml-4">
+                  <div className="font-semibold text-lg text-stone-600">
+                    gno: {review.gno}
+                  </div>
                   <div className="font-semibold text-lg">
                     {review.goods_title}
                   </div>
                   <div className="">예약일자: {review.reservationDate}</div>
                 </div>
+                <div className="w-2/5"></div>
                 <div className="w-2/5"></div>
                 <div className="w-1/5 "></div>
               </div>
@@ -210,21 +179,18 @@ function ListPage() {
               </div>
 
               <div className="w-4/5">{review.content}</div>
-              <div className="w-1/5 flex  text-stone-600">
+              <div className="w-2/5 flex  text-stone-600">
                 {review.createDate}
               </div>
-              <div className="flex space-x-2 w-2/5 justify-center ml-5">
+              <div className="w-2/5 flex  text-stone-600">
+                {review.nickname}
+              </div>
+              <div className="flex space-x-2 w-1/5  ">
                 <button
                   onClick={() => handleClickDelete(review.reno)}
                   className="px-4 py-2 border h-10  text-stone-600 border-stone-300 hover:bg-stone-50"
                 >
                   삭제
-                </button>
-                <button
-                  onClick={() => handleClickModify(review)}
-                  className="px-4 py-2 bg-stone-500  h-10  text-white hover:bg-stone-400"
-                >
-                  수정
                 </button>
               </div>
             </div>

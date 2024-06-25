@@ -32,6 +32,7 @@ function BasicMenu() {
     alert("로그아웃되었습니다.");
     moveToPath("/");
   };
+
   //사이드바 애니메이션 상태
   const boxVariants = {
     initial: { opacity: 0, y: -50 }, // 초기 상태
@@ -42,7 +43,6 @@ function BasicMenu() {
   const transition = { duration: 0.5, ease: "easeInOut" };
   useEffect(() => {}, [loginState]);
 
-  console.log(loginState.roleNames);
   return (
     <div>
       <nav
