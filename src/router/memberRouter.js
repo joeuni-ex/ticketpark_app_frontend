@@ -47,6 +47,14 @@ const memberRouter = () => {
         </Suspense>
       ),
     },
+    {
+      path: "kakao",
+      element: (
+        <Suspense fallback={Loading}>
+          <KakaoRedirect />
+        </Suspense>
+      ),
+    },
 
     //admin 권한
     {

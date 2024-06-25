@@ -3,11 +3,14 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { login, loginPostAsync } from "../../slice/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import { getKakaoLoginLink } from "../../api/kakaoApi";
 
 const initState = {
   email: "",
   pw: "",
 };
+
+const link = getKakaoLoginLink();
 
 function LoginPage() {
   const { doLogin, moveToPath } = useCustomLogin(); //로그인 커스텀 훅
@@ -70,7 +73,9 @@ function LoginPage() {
           <div className="w-1/5 text-center">또는</div>
           <div className="border-b border-stone-400 w-2/5"></div>
         </div>
-        <button className="w-full py-5 bg-amber-300">카카오로그인</button>
+        <Link to={link} className="w-full py-5 bg-amber-300">
+          카카오로그인
+        </Link>
       </div>
     </div>
   );
