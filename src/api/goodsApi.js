@@ -24,11 +24,11 @@ export const getOne = async (gno) => {
 
 //리스트 조회
 export const getList = async (pageParams) => {
-  const { page, size, genre } = pageParams;
+  const { page, size, genres } = pageParams;
 
   //쿼리 스트링은 option => params로 가져옴
   const res = await axios.get(`${prefix}/list`, {
-    params: { page, size, genre },
+    params: { page, size, genres },
   });
 
   return res.data;
