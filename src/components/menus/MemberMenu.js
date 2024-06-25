@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RiSearchLine } from "react-icons/ri";
@@ -39,7 +39,8 @@ function MemberMenu() {
   // 애니메이션 지속 시간 및 이징 함수 정의
   const transition = { duration: 0.5, ease: "easeInOut" };
 
-  console.log(loginState);
+  useEffect(() => {}, [loginState]);
+
   return (
     <div>
       <nav

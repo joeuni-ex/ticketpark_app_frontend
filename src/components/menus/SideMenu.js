@@ -91,7 +91,9 @@ function SideMenu() {
               내가 작성한 리뷰
             </Link>
           ) : (
-            <></>
+            <Link to={"/member/admin/review/list"} className="p-2 pl-5 ">
+              리뷰 목록
+            </Link>
           )}
         </motion.div>
       ) : (

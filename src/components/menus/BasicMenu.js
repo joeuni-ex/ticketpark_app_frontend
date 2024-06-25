@@ -7,6 +7,7 @@ import { RiSearchLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../slice/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import { useEffect } from "react";
 
 function BasicMenu() {
   //로그인 상태 데이터
@@ -39,7 +40,9 @@ function BasicMenu() {
   };
   // 애니메이션 지속 시간 및 이징 함수 정의
   const transition = { duration: 0.5, ease: "easeInOut" };
+  useEffect(() => {}, [loginState]);
 
+  console.log(loginState.roleNames);
   return (
     <div>
       <nav
@@ -76,7 +79,7 @@ function BasicMenu() {
               )}
               {loginState.email && (
                 <>
-                  {loginState.roleNames[0] === "USER" ? (
+                  {loginState.roleNames[0] == "USER" ? (
                     <Link to={"/member/user/reservation/"}>마이페이지</Link>
                   ) : (
                     <Link to={"/member/admin/goods/"}>관리자페이지</Link>

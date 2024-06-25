@@ -59,8 +59,6 @@ function MainPage() {
     }
   }, [page, size, refresh]);
 
-  console.log(section5Data);
-
   // Web Slider Settings
   const webSettings = {
     dots: true,

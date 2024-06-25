@@ -4,8 +4,6 @@ import { API_SERVER_HOST } from "../../api/goodsApi";
 
 const host = API_SERVER_HOST;
 function CardComponent({ item, width, hight, src }) {
-  console.log(item);
-  console.log(src);
   return (
     <div className={`relative overflow-hidden ${width} ${hight}`}>
       <Link to={`/goods/${item.gno}`}>
