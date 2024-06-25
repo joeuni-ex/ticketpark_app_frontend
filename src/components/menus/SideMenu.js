@@ -21,7 +21,7 @@ function SideMenu() {
   const transition = { duration: 0.5, ease: "easeInOut" };
 
   return (
-    <div className="hidden md:block  bg-blue-40 p-4">
+    <div className=" hidden md:block  bg-blue-40 p-4">
       <div className="p-2 font-semibold text-lg">홈</div>
       <div className="flex justify-between">
         {loginState.roleNames[0] === "USER" ? (

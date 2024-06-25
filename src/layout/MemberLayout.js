@@ -1,11 +1,11 @@
 import React from "react";
 import BasicFooter from "../components/footer/BasicFooter";
-import MemberMenu from "../components/menus/MemberMenu";
+import BasicMenu from "../components/menus/BasicMenu";
 
 function MemberLayout({ children }) {
   return (
     <>
-      <MemberMenu />
+      <BasicMenu />
       <div>
         <main>{children}</main>
       </div>

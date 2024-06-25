@@ -35,9 +35,9 @@ function BasicMenu() {
 
   //사이드바 애니메이션 상태
   const boxVariants = {
-    initial: { opacity: 0, y: -50 }, // 초기 상태
-    animate: { opacity: 1, y: 0 }, // 애니메이션 진행 중 상태
-    exit: { opacity: 0, y: -100 }, // 애니메이션 종료 상태
+    initial: { opacity: 0, x: 100 }, // 초기 상태
+    animate: { opacity: 1, x: 0 }, // 애니메이션 진행 중 상태
+    exit: { opacity: 0, x: 100 }, // 애니메이션 종료 상태
   };
   // 애니메이션 지속 시간 및 이징 함수 정의
   const transition = { duration: 0.5, ease: "easeInOut" };
@@ -47,7 +47,7 @@ function BasicMenu() {
     <div>
       <nav
         id="navbar"
-        className="flex lg:justify-normal flex-col items-center px-5 lg:px-10 pb-8 border-b border-stone-200 "
+        className="flex lg:justify-normal flex-col items-center px-5 lg:px-10 "
       >
         <div className="flex w-full justify-between items-center h-20">
           <div className="flex items-center space-x-1 lg:w-1/4 font-extrabold text-2xl ">
@@ -58,7 +58,7 @@ function BasicMenu() {
           </div>
           <div className="flex space-x-7">
             {/* searchbar */}
-            <div className=" space-x-1 md:flex hidden">
+            <div className="space-x-1 md:flex hidden">
               <input
                 type="text"
                 value={searchWord}
@@ -66,7 +66,7 @@ function BasicMenu() {
                 name="searchWord"
                 className="border-b-2 border-black w-60 outline-none"
               />
-              <Link to={`/contents/search/${searchWord}`}>
+              <Link to={`/contents/search/${searchWord}/`}>
                 <RiSearchLine className="text-xl" />
               </Link>
             </div>
@@ -77,9 +77,9 @@ function BasicMenu() {
                   <Link to={"/member/login"}>로그인</Link>
                 </>
               )}
-              {loginState.email && (
+              {loginState?.email && (
                 <>
-                  {loginState.roleNames[0] == "USER" ? (
+                  {loginState?.roleNames[0] === "USER" ? (
                     <Link to={"/member/user/reservation/"}>마이페이지</Link>
                   ) : (
                     <Link to={"/member/admin/goods/"}>관리자페이지</Link>
@@ -99,43 +99,6 @@ function BasicMenu() {
             </div>
           </div>
         </div>
-        {/* header menu */}
-        <div className="w-full hidden lg:block">
-          <ul className="flex justify-center space-x-10 text-lg">
-            <li>
-              <Link
-                to={"/contents/genre/concert"}
-                className="hover:border-b-4 border-yellow-300 hover:font-semibold"
-              >
-                콘서트
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/contents/genre/musical"}
-                className="hover:border-b-4 border-yellow-300 hover:font-semibold"
-              >
-                뮤지컬
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/contents/genre/play"}
-                className="hover:border-b-4 border-yellow-300 hover:font-semibold"
-              >
-                연극
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/contents/genre/classic"}
-                className="hover:border-b-4 border-yellow-300 hover:font-semibold"
-              >
-                클래식
-              </Link>
-            </li>
-          </ul>
-        </div>
       </nav>
 
       {/* 사이드 바 - 모바일  */}
@@ -147,10 +110,10 @@ function BasicMenu() {
           animate="animate" // 애니메이션 진행 중 상태 설정
           exit="exit" // 애니메이션 종료 상태 설정
           transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
-          className="lg:hidden w-full bg-white z-50"
+          className="lg:hidden w-1/2 right-0 h-screen absolute  bg-white z-50 text-sm"
         >
-          <aside className="flex flex-col items-center space-y-4 justify-center p-4">
-            <ul className="text-lg space-y-4">
+          <aside className="flex flex-col  space-y-4 justify-center px-10 py-4">
+            <ul className="md:text-lg space-y-4">
               <li>
                 <Link to={"/contents/genre/concert"}>콘서트</Link>
               </li>
@@ -163,7 +126,6 @@ function BasicMenu() {
               <li>
                 <Link to={"/genre/genre/classic"}>클래식</Link>
               </li>
-
               {!loginState.email && (
                 <li>
                   <Link to={"/member/login"}>로그인</Link>
@@ -172,9 +134,19 @@ function BasicMenu() {
               {loginState.email && (
                 <>
                   {loginState.roleNames[0] === "USER" ? (
-                    <li>
-                      <Link to={"/member/user/reservation/"}>마이페이지</Link>
-                    </li>
+                    <>
+                      <li>
+                        <Link to={"/member/user/reservation/"}>마이페이지</Link>
+                      </li>
+                      <li>
+                        <Link to={"/member/user/reservation/"}>예약목록</Link>
+                      </li>
+                      <li>
+                        <Link to={"/member/user/reservation/"}>
+                          내가 작성한 리뷰
+                        </Link>
+                      </li>
+                    </>
                   ) : (
                     <li>
                       <Link to={"/member/admin/goods/"}>관리자페이지</Link>
@@ -186,7 +158,6 @@ function BasicMenu() {
                 </>
               )}
             </ul>
-
             <div className="space-x-1 flex w-full">
               <input
                 type="text"
