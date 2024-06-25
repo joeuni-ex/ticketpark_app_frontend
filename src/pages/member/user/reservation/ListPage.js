@@ -173,7 +173,7 @@ function ListPage() {
         예약 목록
       </div>
       <div className="flex w-full flex-wrap mx-auto justify-center ">
-        <div className="w-full flex px-10 h-20 font-bold text-lg bg-stone-100 items-center  border-b border-stone-200 ">
+        <div className="w-full flex px-5 md:px-10 h-20 font-bold   md:text-lg bg-stone-100 items-center  border-b border-stone-200 ">
           <div className="w-1/4">공연명</div>
           <div className="w-1/4">공연장소</div>
           <div className="w-1/4">공연일자</div>
@@ -187,12 +187,12 @@ function ListPage() {
           return (
             <div
               key={reservation.rno}
-              className="flex flex-col items-center justify-center w-full min-w-[400px] p-8 m-2 rounded shadow-md text-stone-700"
+              className="flex flex-col items-center justify-center w-full min-w-[400px] p-2 md:p-8 md:m-2 rounded shadow-md text-stone-700"
             >
-              <div className="flex justify-between w-full">
+              <div className="flex justify-between w-full md:text-base text-sm">
                 <div className="w-full flex items-center">
-                  <div className="flex flex-col w-72 space-y-3">
-                    <div className="w-28 ">
+                  <div className="flex flex-col w-1/4 md:space-y-3">
+                    <div className=" md:w-28 ">
                       {reservation.imageFile ? (
                         <img
                           src={`${host}/api/goods/view/s_${reservation.imageFile}`}
@@ -207,27 +207,31 @@ function ListPage() {
                         />
                       )}
                     </div>
-                    <div className="w-96 font-extrabold">
+                    <div className=" md:w-1/4 font-extrabold">
                       {reservation.gtitle}
                     </div>
                   </div>
-                  <div className="w-72 px-2">{reservation.place}</div>
-                  <div className="w-80 px-6">{reservation.reservationDate}</div>
-                  <div className="w-10 px-2">{reservation.time}</div>
-                </div>
-                <div className="flex justify-center items-center text-1xl w-48 font-medium">
-                  <span
-                    className="cursor-pointer hover:underline font-semibold"
-                    onClick={() =>
-                      setViewDetailsToggle(
-                        viewDetailsToggle === reservation.rno
-                          ? null
-                          : reservation.rno
-                      )
-                    }
-                  >
-                    상세보기
-                  </span>
+                  <div className="w-1/4 md:pl-10 ">{reservation.place}</div>
+                  <div className="w-1/4 md:pl-16">
+                    {reservation.reservationDate}
+                  </div>
+                  <div className="w-1/4 md:pl-24 text-center md:text-balance">
+                    {reservation.time}
+                  </div>
+                  <div className="flex justify-center items-center text-1xl w-24 md:w-32 font-medium">
+                    <span
+                      className="cursor-pointer hover:underline font-semibold"
+                      onClick={() =>
+                        setViewDetailsToggle(
+                          viewDetailsToggle === reservation.rno
+                            ? null
+                            : reservation.rno
+                        )
+                      }
+                    >
+                      상세보기
+                    </span>
+                  </div>
                 </div>
               </div>
               {/* 상세보기 토글 */}
@@ -238,26 +242,26 @@ function ListPage() {
                   animate="animate"
                   exit="exit"
                   transition={transition}
-                  className="flex flex-col w-full p-4 bg-gray-100 rounded mt-4"
+                  className="flex flex-col w-full p-2 md:p-4 bg-gray-100 rounded mt-4 text-sm md:text-base"
                 >
                   <div className="flex flex-wrap">
                     <div className="w-1/3 p-2">
-                      <div className="text-lg font-semibold">좌석정보</div>
+                      <div className="md:text-lg font-semibold">좌석정보</div>
                       <div>
                         {`<${reservation.seatClass}>`} {reservation.seatNumber}
                         번 좌석
                       </div>
                     </div>
                     <div className="w-1/3 p-2">
-                      <div className="text-lg font-semibold">가격정보</div>
+                      <div className="md:text-lg font-semibold">가격정보</div>
                       <div>{reservation.price.toLocaleString()}원</div>
                     </div>
                     <div className="w-1/3 p-2">
-                      <div className="text-lg font-semibold">결제일자</div>
+                      <div className="md:text-lg font-semibold">결제일자</div>
                       <div>{reservation.dueDate}</div>
                     </div>
                   </div>
-                  <div className="flex justify-end mt-4">
+                  <div className="flex justify-end md:mt-4">
                     {isPast ? (
                       <button
                         onClick={() => handleClickWriteReview(reservation.rno)}
@@ -269,7 +273,7 @@ function ListPage() {
                       <>
                         <Link
                           to={`/member/user/reservation/modify/${reservation.rno}`}
-                          className="mr-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                          className="mr-2 md:mr-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                         >
                           예약변경
                         </Link>
