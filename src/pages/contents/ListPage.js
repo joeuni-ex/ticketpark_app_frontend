@@ -99,10 +99,10 @@ function ListPage() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {fetching ? <FetchingModal /> : <></>}
       {/* Web Slider  */}
-      <div className="slider-container my-6 hidden md:block">
+      <div className="slider-container my-6 hidden md:block ">
         <SlideContainer>
           <Slider {...webSettings}>
             {sliderImages?.map((item) => (

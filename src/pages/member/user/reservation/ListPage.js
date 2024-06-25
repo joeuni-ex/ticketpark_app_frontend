@@ -192,7 +192,10 @@ function ListPage() {
               <div className="flex justify-between w-full md:text-base text-sm">
                 <div className="w-full flex items-center">
                   <div className="flex flex-col w-1/4 md:space-y-3">
-                    <div className=" md:w-28 ">
+                    <Link
+                      to={`/goods/${reservation.gno}`}
+                      className=" md:w-28 "
+                    >
                       {reservation.imageFile ? (
                         <img
                           src={`${host}/api/goods/view/s_${reservation.imageFile}`}
@@ -206,7 +209,7 @@ function ListPage() {
                           className="h-full object-cover w-full"
                         />
                       )}
-                    </div>
+                    </Link>
                     <div className=" md:w-1/4 font-extrabold">
                       {reservation.gtitle}
                     </div>
@@ -215,7 +218,7 @@ function ListPage() {
                   <div className="w-1/4 md:pl-16">
                     {reservation.reservationDate}
                   </div>
-                  <div className="w-1/4 md:pl-24 text-center md:text-balance">
+                  <div className="w-1/4 md:pl-24 text-center md:text-left">
                     {reservation.time}
                   </div>
                   <div className="flex justify-center items-center text-1xl w-24 md:w-32 font-medium">

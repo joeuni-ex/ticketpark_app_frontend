@@ -77,7 +77,11 @@ function MainPage() {
         <Slider {...webSettings}>
           {mainSliderImages.map((item) => (
             <div key={item.id}>
-              <img src={item.src} alt={item.alt} className="h-80  md:h-auto" />
+              <img
+                src={item.src}
+                alt={item.alt}
+                className="h-80   w-full md:h-auto"
+              />
             </div>
           ))}
         </Slider>

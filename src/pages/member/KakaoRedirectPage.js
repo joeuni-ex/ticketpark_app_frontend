@@ -17,7 +17,6 @@ function KakaoRedirectPage() {
       const accessToken = data;
 
       getMemberWithAccessToken(accessToken).then((memberInfo) => {
-        console.log(memberInfo);
         dispatch(login(memberInfo)); //loginSlice -> login()
 
         if (memberInfo && memberInfo.social) {
