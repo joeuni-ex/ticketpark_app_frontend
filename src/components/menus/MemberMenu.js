@@ -39,6 +39,7 @@ function MemberMenu() {
   // 애니메이션 지속 시간 및 이징 함수 정의
   const transition = { duration: 0.5, ease: "easeInOut" };
 
+  console.log(loginState);
   return (
     <div>
       <nav
@@ -73,9 +74,9 @@ function MemberMenu() {
                   <Link to={"/member/login"}>로그인</Link>
                 </>
               )}
-              {loginState.email && (
+              {loginState?.email && (
                 <>
-                  {loginState.roleNames[0] === "USER" ? (
+                  {loginState?.roleNames[0] === "USER" ? (
                     <Link to={"/member/user/reservation/"}>마이페이지</Link>
                   ) : (
                     <Link to={"/member/admin/goods/"}>관리자페이지</Link>

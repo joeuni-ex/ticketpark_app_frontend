@@ -27,14 +27,14 @@ const loginSlice = createSlice({
       //action: 새로 바뀔 상태
       //console.log(action);
       //console.log("____________");
-      //console.log(action.payload);
+      console.log(action.payload);
 
       setCookie("member", JSON.stringify(action.payload), 1);
 
       //앞으로 유지될 새로운 상태
       return {
         email: action.payload.email,
-        role: action.payload.role,
+        roleNames: action.payload.roleNames[0],
       };
     },
     logout: () => {
