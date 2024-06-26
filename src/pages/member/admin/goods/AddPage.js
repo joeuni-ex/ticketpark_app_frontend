@@ -85,6 +85,7 @@ function AddGoodsPage() {
       goods.place.length === 0 ||
       goods.startDate.length === 0 ||
       goods.endDate.length === 0 ||
+      times.length === 0 ||
       goods.genre.length === 0 ||
       goods.age.length === 0 ||
       goods.runningTime === 0 ||
@@ -130,8 +131,6 @@ function AddGoodsPage() {
 
     navigate("/member/admin/goods/list");
   };
-
-  console.log(goods);
 
   return (
     <div className="flex flex-col p-5">

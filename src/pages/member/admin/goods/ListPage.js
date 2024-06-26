@@ -127,12 +127,11 @@ function ListPage() {
         {serverData.dtoList?.map((goods) => (
           <div
             key={goods.gno}
-            className="flex justify-between w-full  md:min-w-[400px] p-2 mx-2 my-4 rounded shadow-md text-stone-700"
+            className="flex justify-between w-full  md:min-w-[400px] p-2 mx-2 my-3 rounded shadow-md text-stone-700"
           >
             <div className="flex w-full flex-col text-sm md:text-base">
               <div className="flex justify-between w-full  p-2 ">
                 <div className="font-extrabold text-base md:text-2xl">
-                  {" "}
                   {goods.gno}
                 </div>
                 <div className="flex space-x-2 justify-center md:ml-5">
@@ -157,15 +156,15 @@ function ListPage() {
                   className="text-1xl m-1 p-2 w-2/10 font-medium"
                 >
                   <img
-                    src={`${host}/api/goods/view/s_${goods.uploadFileNames[0]}`}
-                    className="w-36 md:w-64"
+                    src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
+                    className="w-36 md:w-56"
                     alt="image"
                   />
                 </Link>
-                <div className="flex w-96 flex-col">
+                <div className="flex  flex-col">
                   <Link
                     to={`/goods/${goods.gno}`}
-                    className="text-1xl md:m-1 p-2  font-extrabold"
+                    className="text-xl md:m-1 p-2  font-extrabold"
                   >
                     {goods.title}
                   </Link>
@@ -184,6 +183,9 @@ function ListPage() {
                   <div className="text-1xl md:m-1 p-2  font-medium">
                     <span className="font-semibold">공연시간</span>{" "}
                     {goods.runningTime}분
+                  </div>
+                  <div className="text-1xl md:m-1 p-2  font-medium">
+                    <span className="font-semibold">출연</span> {goods.gdesc}
                   </div>
                 </div>
               </div>
