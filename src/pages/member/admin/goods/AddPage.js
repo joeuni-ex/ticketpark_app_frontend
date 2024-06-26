@@ -16,7 +16,7 @@ const initState = {
   gdesc: "",
   runningTime: 0,
   age: 0,
-  genre: "",
+  genre: "concert",
   exclusive: 0,
   files: [],
   times: [],
@@ -130,6 +130,8 @@ function AddGoodsPage() {
 
     navigate("/member/admin/goods/list");
   };
+
+  console.log(goods);
 
   return (
     <div className="flex flex-col p-5">
