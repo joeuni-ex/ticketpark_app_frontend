@@ -136,7 +136,7 @@ function ListPage() {
       {/* contents List */}
       <div className="flex flex-col justify-center items-center space-y-10 py-20">
         <div className="text-3xl font-bold">{`${genreTitle}`} 둘러보기</div>
-        <div className="flex flex-wrap w-9/12 gap-7 justify-center">
+        <div className="flex flex-wrap w-9/12 gap-7 justify-center max-w-[1300px] ">
           {/* 1 */}
           {serverData.dtoList.map((goods) => (
             <Link
