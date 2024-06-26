@@ -184,7 +184,7 @@ function ListPage() {
                     <span className="font-semibold">공연시간</span>{" "}
                     {goods.runningTime}분
                   </div>
-                  <div className="text-1xl md:m-1 p-2  font-medium">
+                  <div className="text-1xl md:m-1 p-2  font-medium w-4/5">
                     <span className="font-semibold">출연</span> {goods.gdesc}
                   </div>
                 </div>
