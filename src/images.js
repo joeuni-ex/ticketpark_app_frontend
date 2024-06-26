@@ -149,6 +149,11 @@ const mainSliderImages = [
     src: "/slider/main_slider_image_3.jpg",
     alt: "Image 3",
   },
+  {
+    id: 4,
+    src: "/slider/main_slider_image_4.jpg",
+    alt: "Image 4",
+  },
 ];
 
 // focus image
