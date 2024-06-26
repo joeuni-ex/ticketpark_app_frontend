@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../slice/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import { useEffect } from "react";
+import { TfiClose } from "react-icons/tfi";
 
 function BasicMenu() {
   //로그인 상태 데이터
@@ -104,74 +105,105 @@ function BasicMenu() {
       {/* 사이드 바 - 모바일  */}
 
       {menuToggle && (
-        <motion.main
-          variants={boxVariants} // 애니메이션 상태 객체 적용
-          initial="initial" // 초기 상태 설정
-          animate="animate" // 애니메이션 진행 중 상태 설정
-          exit="exit" // 애니메이션 종료 상태 설정
-          transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
-          className="lg:hidden w-1/2 right-0 h-screen absolute  bg-white z-50 text-sm"
+        <div
+          onClick={handleClickMenuToggle}
+          className={`fixed top-0 left-0 z-[1055] flex h-full w-full bg-black bg-opacity-20`}
         >
-          <aside className="flex flex-col  space-y-4 justify-center px-10 py-4">
-            <ul className="md:text-lg space-y-4">
-              <li>
-                <Link to={"/contents/genre/concert"}>콘서트</Link>
-              </li>
-              <li>
-                <Link to={"/genre/genre/musical"}>뮤지컬</Link>
-              </li>
-              <li>
-                <Link to={"/genre/genre/play"}>연극</Link>
-              </li>
-              <li>
-                <Link to={"/genre/genre/classic"}>클래식</Link>
-              </li>
-              {!loginState.email && (
+          <motion.main
+            variants={boxVariants} // 애니메이션 상태 객체 적용
+            initial="initial" // 초기 상태 설정
+            animate="animate" // 애니메이션 진행 중 상태 설정
+            exit="exit" // 애니메이션 종료 상태 설정
+            transition={transition} // 애니메이션 지속 시간 및 이징 함수 설정
+            className="lg:hidden w-1/2 right-0 h-full absolute  text-stone-700 bg-white z-50 text-sm"
+          >
+            <aside className=" flex flex-col  space-y-4 justify-center px-6 py-6">
+              {/* mobile menu toggle*/}
+              <div className=" w-full  flex justify-end t">
+                <TfiClose onClick={handleClickMenuToggle} className="text-lg" />
+              </div>
+              <ul className="md:text-lg space-y-4">
+                <li className="text-base font-semibold">카테고리</li>
                 <li>
-                  <Link to={"/member/login"}>로그인</Link>
+                  <Link to={"/contents/genre/concert"}>콘서트</Link>
                 </li>
-              )}
-              {loginState.email && (
-                <>
-                  {loginState.roleNames[0] === "USER" ? (
-                    <>
-                      <li>
-                        <Link to={"/member/user/reservation/"}>마이페이지</Link>
-                      </li>
-                      <li>
-                        <Link to={"/member/user/reservation/"}>예약목록</Link>
-                      </li>
-                      <li>
-                        <Link to={"/member/user/reservation/"}>
-                          내가 작성한 리뷰
-                        </Link>
-                      </li>
-                    </>
-                  ) : (
-                    <li>
-                      <Link to={"/member/admin/goods/"}>관리자페이지</Link>
-                    </li>
-                  )}
-                  <li className="cursor-pointer" onClick={handleClickLogout}>
-                    로그아웃
+                <li>
+                  <Link to={"/genre/genre/musical"}>뮤지컬</Link>
+                </li>
+                <li>
+                  <Link to={"/genre/genre/play"}>연극</Link>
+                </li>
+                <li>
+                  <Link to={"/genre/genre/classic"}>클래식</Link>
+                </li>
+                {!loginState.email && (
+                  <li>
+                    <Link to={"/member/login"}>로그인</Link>
                   </li>
-                </>
-              )}
-            </ul>
-            <div className="space-x-1 flex w-full">
-              <input
-                type="text"
-                value={searchWord}
-                onChange={(e) => handleChangeSearch(e)}
-                name="searchWord"
-                className="border-b-2 border-black w-full outline-none"
-              />
-              <Link to={`/contents/search/${searchWord}/`}>
-                <RiSearchLine className="text-xl" />
-              </Link>
-            </div>
-          </aside>
-        </motion.main>
+                )}
+                {loginState.email && (
+                  <>
+                    {loginState.roleNames[0] === "USER" ? (
+                      <>
+                        <li className="text-base font-semibold">마이페이지</li>
+                        <li>
+                          <Link to={"/member/user/reservation/"}>예약목록</Link>
+                        </li>
+                        <li>
+                          <Link to={"/member/user/reservation/"}>
+                            내가 작성한 리뷰
+                          </Link>
+                        </li>
+                        <li
+                          className="cursor-pointer"
+                          onClick={handleClickLogout}
+                        >
+                          로그아웃
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li className="text-base font-semibold">
+                          관리자페이지
+                        </li>
+                        <li>
+                          <Link to={"/member/admin/goods/list"}>상품목록</Link>
+                        </li>
+                        <li>
+                          <Link to={"/member/admin/goods/register"}>
+                            상품등록
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to={"/member/admin/review/list"}>리뷰관리</Link>
+                        </li>
+                        <li
+                          className="cursor-pointer"
+                          onClick={handleClickLogout}
+                        >
+                          로그아웃
+                        </li>
+                      </>
+                    )}
+                  </>
+                )}
+              </ul>
+              {/* 검색창 */}
+              <div className="space-x-1 flex w-full bg-amber-200 p-3">
+                <input
+                  type="text"
+                  value={searchWord}
+                  onChange={(e) => handleChangeSearch(e)}
+                  name="searchWord"
+                  className="border-b-2 border-black w-full outline-none  bg-amber-200"
+                />
+                <Link to={`/contents/search/${searchWord}/`}>
+                  <RiSearchLine className="text-xl" />
+                </Link>
+              </div>
+            </aside>
+          </motion.main>
+        </div>
       )}
     </div>
   );
