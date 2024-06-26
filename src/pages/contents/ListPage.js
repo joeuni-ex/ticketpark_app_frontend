@@ -151,7 +151,11 @@ function ListPage() {
               />
               <div className="space-y-2">
                 <p className="font-bold text-lg">{goods.title}</p>
-                <p>{goods.gdesc}</p>
+                <p>
+                  {goods.gdesc.length > 10
+                    ? goods.gdesc.substring(0, 21) + "..."
+                    : goods.gdesc}
+                </p>
               </div>
               {goods.exclusive && (
                 <div className="border rounded border-purple-500 w-20 text-sm p-1 flex items-center justify-center font-semibold text-purple-700">
