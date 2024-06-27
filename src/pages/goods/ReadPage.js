@@ -293,7 +293,7 @@ function ReadPage() {
               <div>{goods.place}</div>
             </div>
             <div className="flex ">
-              <div className="w-28 mr-2 md:w-1/4">공연기간</div>
+              <div className="w-16 mr-2 md:w-1/4">공연기간</div>
               <div>{`${goods.startDate} ~ ${goods.endDate}`}</div>
             </div>
             <div className="flex ">

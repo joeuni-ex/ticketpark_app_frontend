@@ -13,9 +13,6 @@ function Review({ review, handleClickLike }) {
 
     return;
   };
-
-  console.log(loginState.email);
-
   return (
     <div className="flex flex-col w-full border rounded p-5 space-y-5">
       <div className="flex w-full justify-between">
