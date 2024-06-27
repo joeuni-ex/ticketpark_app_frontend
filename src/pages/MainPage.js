@@ -115,7 +115,7 @@ function MainPage() {
           WHAT'S NEW
         </div>
         {/* 최신순 정렬 */}
-        <div className="flex justify-center">
+        <div className="flex justify-center lg:max-w-[1000px]">
           <div className="flex flex-col items-center ">
             {/* 큰 사이즈  */}
             {section3Data.dtoList.length > 0 && (
@@ -142,8 +142,8 @@ function MainPage() {
               <CardComponent
                 item={item}
                 src={item.uploadFileNames[0]}
-                width="min-w-[60px] max-w-[60px] md:min-w-[140px] md:max-w-[140px] lg:min-w-[200px] lg:max-w-[200px]"
-                hight="lg:h-[230px] min-h-[60px] max-h-[230px]"
+                width="min-w-[60px] max-w-[60px] sm:max-w-[120px] md:min-w-[140px] md:max-w-[140px] lg:min-w-[200px] lg:max-w-[200px]"
+                hight="min-h-[80px] max-h-[80px] sm:max-h-[160px]   md:min-h-[200px] md:max-h-[200px] lg:min-h-[160px] lg:max-h-[280px]"
                 key={item.gno}
               />
             ))}
