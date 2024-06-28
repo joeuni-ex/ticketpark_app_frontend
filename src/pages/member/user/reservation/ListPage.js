@@ -210,7 +210,7 @@ function ListPage() {
                         />
                       )}
                     </Link>
-                    <div className=" md:w-1/4 font-extrabold">
+                    <div className=" md:w-4/4  font-extrabold">
                       {reservation.gtitle}
                     </div>
                   </div>
