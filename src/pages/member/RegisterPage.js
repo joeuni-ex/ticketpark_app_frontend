@@ -4,6 +4,8 @@ import { checkEmail, registerPost } from "../../api/memberApi";
 import FetchingModal from "../../components/common/FetchingModal";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import ResultModal from "../../components/common/ResultModal";
+import { Link } from "react-router-dom";
+import { getKakaoLoginLink } from "../../api/kakaoApi";
 
 const initState = {
   email: "",
@@ -12,6 +14,7 @@ const initState = {
   social: false,
   roleNames: "USER",
 };
+const link = getKakaoLoginLink();
 
 function RegisterPage() {
   const { moveToLogin } = useCustomLogin(); //로그인 커스텀 훅
@@ -150,7 +153,11 @@ function RegisterPage() {
           <div className="w-1/5 text-center">또는</div>
           <div className="border-b border-stone-400 w-2/5"></div>
         </div>
-        <button className="w-full py-5 bg-amber-300">카카오로그인</button>
+        <div className="flex justify-center w-full">
+          <Link to={link}>
+            <img src="../kakao_login_medium_wide.png" alt="" className="w-96" />
+          </Link>
+        </div>
       </div>
     </div>
   );

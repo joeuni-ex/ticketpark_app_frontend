@@ -51,7 +51,7 @@ function SearchPage() {
       {fetching ? <FetchingModal /> : <></>}
       {/* contents List */}
       <div className="flex flex-col justify-center items-center space-y-10 py-20">
-        <div className="text-3xl font-bold">
+        <div className="text-2xl md:text-3xl font-bold">
           {`"${searchParam.search}"`} 검색결과
         </div>
         <div className="flex flex-wrap w-9/12 gap-7 justify-center">
@@ -59,7 +59,7 @@ function SearchPage() {
           {serverData.dtoList.map((goods) => (
             <Link
               to={`/goods/${goods.gno}`}
-              className="w-56 overflow-hidden space-y-2 "
+              className="w-36 md:w-56  overflow-hidden space-y-2 "
               key={goods.gno}
             >
               <img
@@ -72,7 +72,7 @@ function SearchPage() {
                 <p>{goods.gdesc}</p>
               </div>
               {goods.exclusive && (
-                <div className="border rounded border-purple-500 w-20 text-sm p-1 flex items-center justify-center font-semibold text-purple-700">
+                <div className="border rounded border-purple-500 w-16 md:w-20 text-xs md:text-sm p-1 flex items-center justify-center font-semibold text-purple-700">
                   단독판매
                 </div>
               )}

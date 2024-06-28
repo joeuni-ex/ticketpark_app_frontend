@@ -133,7 +133,7 @@ const memberRouter = () => {
       ),
     },
     {
-      path: "review/list",
+      path: "review/list/",
       element: (
         <Suspense fallback={Loading}>
           <UserReviewListPage />

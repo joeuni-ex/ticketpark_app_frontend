@@ -106,7 +106,6 @@ function BasicMenu() {
 
       {menuToggle && (
         <div
-          onClick={handleClickMenuToggle}
           className={`fixed top-0 left-0 z-[1055] flex h-full w-full bg-black bg-opacity-20`}
         >
           <motion.main
@@ -198,7 +197,10 @@ function BasicMenu() {
                   className="border-b-2 border-black w-full outline-none  bg-amber-200"
                 />
                 <Link to={`/contents/search/${searchWord}/`}>
-                  <RiSearchLine className="text-xl" />
+                  <RiSearchLine
+                    className="text-xl"
+                    onClick={handleClickMenuToggle}
+                  />
                 </Link>
               </div>
             </aside>
