@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { API_SERVER_HOST } from "../../api/goodsApi";
 import AgeComponent from "./AgeComponent";
 import { PostReserved } from "../../api/ReservationApi";
+import { GoX } from "react-icons/go";
 
 const host = API_SERVER_HOST;
 
@@ -75,15 +76,24 @@ function ReservationModal({
     <div
       className={`fixed top-0 left-0 z-[1055] flex h-full w-full justify-center items-center bg-black bg-opacity-20`}
     >
-      <div className="absolute bg-white shadow opacity-100 w-1/4 rounded mt-10 pb-6 mb-10 px-6 min-w-[1000px] min-h-[700px]">
-        <div className="flex justify-between text-xl font-semibold text-stone-700 my-5">
+      <div className="absolute flex flex-col justify-center md:justify-normal bg-white shadow opacity-100 md:w-1/4 rounded md:mt-10 pb-6 mb-10 px-6 w-full md:min-w-[1000px] h-screen md:h-auto md:min-h-[700px]">
+        <div className="flex mb-7 md:flex-row justify-between text-xl font-semibold text-stone-700 md:my-5">
           <div>예매 - 좌석선택</div>
+          <div className="cursor-pointer">
+            <GoX
+              onClick={() => {
+                if (onCancel) {
+                  onCancel();
+                }
+              }}
+            />
+          </div>
         </div>
-        <div className="flex">
-          <div className="bg-zinc-700 w-2/3 p-10 space-y-6">
+        <div className="flex md:flex-row flex-col space-y-5 md:space-y-0">
+          <div className="bg-zinc-700 md:w-2/3 p-3 md:p-10 space-y-6">
             {/*Screen*/}
             <div className="flex justify-center text-2xl pt-4 pb-4 text-stone-700 text-center">
-              <div className="flex justify-center items-center mb-4 min-w-[560px] h-24 bg-white shadow-md shadow-white"></div>
+              <div className="flex justify-center items-center mb-4 w-full md:min-w-[560px] h-24 bg-white shadow-md shadow-white"></div>
             </div>
 
             {/* Seat */}
@@ -140,14 +150,14 @@ function ReservationModal({
               A석 80,000원
             </div>
           </div>
-          <div className="flex flex-col w-1/3 pl-8 justify-between ">
+          <div className="flex flex-col w-full md:w-1/3  md:pl-8 justify-between ">
             <div>
               <div className="flex items-center font-semibold space-x-3 text-stone-700 pb-3 border-b border-stone-400">
                 <div>{goods.title}</div>
                 <AgeComponent age={goods.age} />
               </div>
 
-              <div className="w-44 h-64 overflow-hidden mt-3">
+              <div className="hidden md:block w-44 h-64 overflow-hidden mt-3">
                 <img
                   src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
                   className="w-full h-full object-cover"
