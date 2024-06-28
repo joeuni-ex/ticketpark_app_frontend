@@ -135,13 +135,15 @@ function ListPage() {
 
       {/* contents List */}
       <div className="flex flex-col justify-center items-center space-y-10 py-20">
-        <div className="text-3xl font-bold">{`${genreTitle}`} 둘러보기</div>
-        <div className="flex flex-wrap w-9/12 gap-7 justify-center max-w-[1300px] ">
+        <div className="text-2xl md:text-3xl font-bold">
+          {`${genreTitle}`} 둘러보기
+        </div>
+        <div className="flex flex-wrap md:w-9/12 gap-7 justify-center max-w-[1300px] ">
           {/* 1 */}
           {serverData.dtoList.map((goods) => (
             <Link
               to={`/goods/${goods.gno}`}
-              className="w-56 overflow-hidden space-y-2 "
+              className="w-36 md:w-56 overflow-hidden space-y-2 "
               key={goods.gno}
             >
               <img
@@ -150,15 +152,15 @@ function ListPage() {
                 alt="list image"
               />
               <div className="space-y-2">
-                <p className="font-bold text-lg">{goods.title}</p>
-                <p>
+                <p className="font-bold md:text-lg">{goods.title}</p>
+                <p className="text-sm md:text-base">
                   {goods.gdesc.length > 10
                     ? goods.gdesc.substring(0, 21) + "..."
                     : goods.gdesc}
                 </p>
               </div>
               {goods.exclusive && (
-                <div className="border rounded border-purple-500 w-20 text-sm p-1 flex items-center justify-center font-semibold text-purple-700">
+                <div className="border rounded border-purple-500 w-16 md:w-20 text-xs md:text-sm p-1 flex items-center justify-center font-semibold text-purple-700">
                   단독판매
                 </div>
               )}
