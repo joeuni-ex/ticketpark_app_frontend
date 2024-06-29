@@ -104,7 +104,7 @@ function ListPage() {
       formData.append("rno", reviewRno);
 
       postAdd(formData).then((result) => {
-        setResult("Success");
+        setResult("Review");
         setFetching(false);
       });
     } catch (error) {
@@ -148,14 +148,18 @@ function ListPage() {
   return (
     <div className="flex flex-col p-5">
       {fetching && <FetchingModal />}
-      {result ? (
+      {result === "Cancel" ? (
         <ResultModal
           callbackFn={closeModal}
-          title={"Reservation Cancel"}
+          title={"Cancel reservation Result"}
           content={`정상적으로 예약취소 처리 되었습니다.`}
         />
       ) : (
-        <></>
+        <ResultModal
+          callbackFn={closeModal}
+          title={"Add Review Result"}
+          content={`정상적으로 리뷰 작성이 완료 되었습니다..`}
+        />
       )}
       {reservationCancelModal && (
         <ConfirmModal
