@@ -154,12 +154,14 @@ function ListPage() {
           title={"Cancel reservation Result"}
           content={`정상적으로 예약취소 처리 되었습니다.`}
         />
-      ) : (
+      ) : result === "Review" ? (
         <ResultModal
           callbackFn={closeModal}
           title={"Add Review Result"}
           content={`정상적으로 리뷰 작성이 완료 되었습니다..`}
         />
+      ) : (
+        <></>
       )}
       {reservationCancelModal && (
         <ConfirmModal
