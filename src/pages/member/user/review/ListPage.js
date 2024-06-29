@@ -143,7 +143,7 @@ function ListPage() {
         />
       )}
 
-      <div className="font-bold text-stone-800 text-xl py-7 px-5 border-b-2 border-stone-600">
+      <div className="font-bold text-stone-800 text-base md:text-xl py-7 px-5 border-b-2 border-stone-600">
         내가 작성한 리뷰{" "}
         <span className="text-base font-medium">
           총{" "}
@@ -154,7 +154,7 @@ function ListPage() {
         </span>
       </div>
       <div className="flex w-full flex-wrap mx-auto justify-center ">
-        <div className="w-full flex px-10 h-20 font-bold text-lg   bg-stone-100 items-center border-b border-stone-200 ">
+        <div className="w-full flex px-10 h-20 font-bold text-sm md:text-lg   bg-stone-100 items-center border-b border-stone-200 ">
           <div className="w-1/5"></div>
           <div className="w-4/5">후기</div>
           <div className="w-2/5">작성일</div>
@@ -163,12 +163,12 @@ function ListPage() {
         {serverData?.map((review) => (
           <div
             key={review.reno}
-            className="flex flex-col items-center justify-center w-full min-w-[400px] p-8 m-2 space-y-5 rounded shadow-md text-stone-700"
+            className="flex flex-col items-center justify-center w-full min-w-[400px] p-2 md:p-8 m-2 space-y-5 rounded shadow-md text-stone-700"
           >
             <div className="flex justify-between w-full">
               <div className="w-full flex items-center">
                 <div className="w-1/5 flex flex-col  space-y-3">
-                  <div className="w-28 ">
+                  <div className="w-20 md:w-28 ">
                     {review.imageFile ? (
                       <img
                         src={`${host}/api/goods/view/s_${review.imageFile}`}
@@ -184,19 +184,21 @@ function ListPage() {
                     )}
                   </div>
                 </div>
-                <div className="w-4/5 space-y-2 ">
-                  <div className="font-semibold text-lg">
+                <div className="w-4/5 space-y-2 ml-5 md:ml-0 ">
+                  <div className="font-semibold text-sm md:text-lg">
                     {review.goods_title}
                   </div>
-                  <div className="">예약일자: {review.reservationDate}</div>
+                  <div className="md:text-base text-xs">
+                    예약일자: {review.reservationDate}
+                  </div>
                 </div>
-                <div className="w-2/5"></div>
-                <div className="w-1/5 "></div>
+                <div className="md:w-2/5"></div>
+                <div className="md:w-1/5 "></div>
               </div>
             </div>
-            <div className="flex items-center bg-stone-100 w-full h-36">
+            <div className="flex items-center bg-stone-100 w-full h-36 px-2 ">
               {/* 평점 */}
-              <div className="flex w-1/5 m-2">
+              <div className="flex w-1/5">
                 {[...Array(5)].map((_, i) => (
                   <FaStar
                     key={i}
@@ -209,20 +211,20 @@ function ListPage() {
                 ))}
               </div>
 
-              <div className="w-4/5">{review.content}</div>
-              <div className="w-1/5 flex  text-stone-600">
+              <div className="w-4/5 md:text-base text-xs">{review.content}</div>
+              <div className="w-1/5 flex  text-stone-600  md:text-base text-xs">
                 {review.createDate}
               </div>
-              <div className="flex space-x-2 w-2/5 justify-center ml-5">
+              <div className="flex space-x-2 w-2/5 justify-center ml-5  md:text-base text-xs">
                 <button
                   onClick={() => handleClickDelete(review.reno)}
-                  className="px-4 py-2 border h-10  text-stone-600 border-stone-300 hover:bg-stone-50"
+                  className="  md:px-4 md:py-2 border md:h-10  h-7  w-10 md:w-auto text-stone-600 border-stone-300 hover:bg-stone-50"
                 >
                   삭제
                 </button>
                 <button
                   onClick={() => handleClickModify(review)}
-                  className="px-4 py-2 bg-stone-500  h-10  text-white hover:bg-stone-400"
+                  className="md:px-4 md:py-2 border md:h-10  h-7  w-10 md:w-auto  text-white bg-stone-500  hover:bg-stone-400"
                 >
                   수정
                 </button>

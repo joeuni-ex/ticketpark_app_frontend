@@ -180,10 +180,10 @@ function ListPage() {
       </div>
       <div className="flex w-full flex-wrap mx-auto justify-center ">
         <div className="w-full flex px-5 md:px-10 h-20 font-bold   md:text-lg bg-stone-100 items-center  border-b border-stone-200 ">
-          <div className="w-1/4">공연명</div>
-          <div className="w-1/4">공연장소</div>
-          <div className="w-1/4">공연일자</div>
-          <div className="w-1/4">공연시간</div>
+          <div className="text-sm md:text-base w-1/4">공연명</div>
+          <div className="text-sm md:text-base  w-1/4">공연장소</div>
+          <div className="text-sm md:text-base w-1/4">공연일자</div>
+          <div className="text-sm md:text-base w-1/4">공연시간</div>
         </div>
         {serverData.dtoList?.map((reservation) => {
           // 공연일자가 현재 날짜를 지났는지 확인
@@ -200,7 +200,7 @@ function ListPage() {
                   <div className="flex flex-col w-1/4 md:space-y-3">
                     <Link
                       to={`/goods/${reservation.gno}`}
-                      className=" md:w-28 "
+                      className="w-16 md:w-28 "
                     >
                       {reservation.imageFile ? (
                         <img
@@ -216,18 +216,20 @@ function ListPage() {
                         />
                       )}
                     </Link>
-                    <div className=" md:w-4/4  font-extrabold">
+                    <div className="text-xs  md:text-base  md:w-4/4  font-extrabold">
                       {reservation.gtitle}
                     </div>
                   </div>
-                  <div className="w-1/4 md:pl-10 ">{reservation.place}</div>
-                  <div className="w-1/4 md:pl-16">
+                  <div className="text-xs  md:text-base w-1/4 md:pl-10 ">
+                    {reservation.place}
+                  </div>
+                  <div className="text-xs  md:text-base w-1/4 md:pl-16">
                     {reservation.reservationDate}
                   </div>
-                  <div className="w-1/4 md:pl-24 text-center md:text-left">
+                  <div className="text-xs md:text-base w-1/4 md:pl-24 text-center md:text-left">
                     {reservation.time}
                   </div>
-                  <div className="flex justify-center items-center text-1xl w-24 md:w-32 font-medium">
+                  <div className=" flex justify-center items-center text-1xl w-24 md:w-32 font-medium">
                     <span
                       className="cursor-pointer hover:underline font-semibold"
                       onClick={() =>
