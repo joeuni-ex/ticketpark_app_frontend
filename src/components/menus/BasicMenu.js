@@ -149,7 +149,7 @@ function BasicMenu() {
                           <Link to={"/member/user/reservation/"}>예약목록</Link>
                         </li>
                         <li>
-                          <Link to={"/member/user/reservation/"}>
+                          <Link to={"/member/user/review/list"}>
                             내가 작성한 리뷰
                           </Link>
                         </li>
