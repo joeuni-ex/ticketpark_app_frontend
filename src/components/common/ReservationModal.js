@@ -76,8 +76,8 @@ function ReservationModal({
     <div
       className={`fixed top-0 left-0 z-[1055] flex h-full w-full justify-center items-center bg-black bg-opacity-20`}
     >
-      <div className="absolute flex flex-col justify-center md:justify-normal bg-white shadow opacity-100 md:w-1/4 rounded md:mt-10 pb-6 mb-10 px-6 w-full md:min-w-[1000px] h-screen md:h-auto md:min-h-[700px]">
-        <div className="flex mb-7 md:flex-row justify-between text-xl font-semibold text-stone-700 md:my-5">
+      <div className="absolute flex flex-col justify-center md:justify-normal bg-white shadow opacity-100 md:w-1/4 rounded mt-10 pb-6 mb-10 px-6 w-full md:min-w-[1000px] h-screen md:h-auto md:min-h-[700px]">
+        <div className="flex   md:flex-row justify-between text-xl font-semibold text-stone-700 my-5">
           <div>예매 - 좌석선택</div>
           <div className="cursor-pointer">
             <GoX
@@ -89,6 +89,7 @@ function ReservationModal({
             />
           </div>
         </div>
+
         <div className="flex md:flex-row flex-col space-y-5 md:space-y-0">
           <div className="bg-zinc-700 md:w-2/3 p-3 md:p-10 space-y-6">
             {/*Screen*/}

@@ -27,7 +27,7 @@ function ReviewModal({ onCancel, addReview }) {
     <div
       className={`fixed top-0 left-0 z-[1055] flex h-full w-full justify-center items-center bg-black bg-opacity-20`}
     >
-      <div className="absolute bg-white shadow opacity-100 w-1/4 rounded mt-10 mb-10 px-6 min-w-[750px] text-stone-700">
+      <div className="absolute bg-white shadow opacity-100 w-full md:w-1/4 rounded mt-10 mb-10 px-6  md:min-w-[750px] text-stone-700">
         <div className="items-center flex bg-stone-50 mt-6 mb-6 text-xl border-b-2 border-b-orange-400 border-t-orange-400 font-semibold h-16">
           리뷰 작성
         </div>
