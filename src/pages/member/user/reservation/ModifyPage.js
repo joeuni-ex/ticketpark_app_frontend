@@ -251,7 +251,7 @@ function ModifyPage() {
       {result ? (
         <ResultModal
           callbackFn={closeModal}
-          title={"Reservation Add Result"}
+          title={"Modify Reservation Result"}
           content={`정상적으로 예약 변경이 완료되었습니다.`}
         />
       ) : (
