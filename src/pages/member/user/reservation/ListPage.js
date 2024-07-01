@@ -205,13 +205,13 @@ function ListPage() {
                       {reservation.imageFile ? (
                         <img
                           src={`${host}/api/goods/view/s_${reservation.imageFile}`}
-                          alt="image"
+                          alt="goods"
                           className="h-full object-cover w-full"
                         />
                       ) : (
                         <img
                           src={`${host}/api/goods/view/default_image.png`}
-                          alt="image"
+                          alt="goods"
                           className="h-full object-cover w-full"
                         />
                       )}

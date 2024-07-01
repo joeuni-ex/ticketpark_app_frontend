@@ -286,7 +286,7 @@ function ModifyPage() {
                 <img
                   src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
                   className="w-full h-full object-cover"
-                  alt="image"
+                  alt="goods"
                 />
               </div>
 
@@ -516,7 +516,7 @@ function ModifyPage() {
                       <img
                         src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
                         className="w-full h-full object-cover"
-                        alt="image"
+                        alt="goods"
                       />
                     </div>
 

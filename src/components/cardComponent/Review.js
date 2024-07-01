@@ -37,7 +37,7 @@ function Review({ review, handleClickLike }) {
         <div>{review.content}</div>
         <div className="flex items-center space-x-1">
           {review.likes}{" "}
-          {!loginState.email == "" ? (
+          {!loginState.email === "" ? (
             review.liked == false ? (
               <IoIosHeartEmpty
                 onClick={handleClickLike}

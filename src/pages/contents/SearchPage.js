@@ -65,7 +65,7 @@ function SearchPage() {
               <img
                 src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
                 className="w-full "
-                alt="list image"
+                alt="list"
               />
               <div className="space-y-2">
                 <p className="font-bold text-lg">{goods.title}</p>

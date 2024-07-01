@@ -200,7 +200,7 @@ function ModifyGoodsPage() {
                   <TiDeleteOutline />
                 </div>
                 <img
-                  alt="img"
+                  alt="goods"
                   src={`${host}/api/goods/view/${imgFile}`}
                   className="w-full h-full object-cover"
                 />
@@ -215,7 +215,7 @@ function ModifyGoodsPage() {
                   <TiDeleteOutline />
                 </div>
                 <img
-                  alt="img"
+                  alt="goods"
                   src={img}
                   className="w-full h-full object-cover"
                 />

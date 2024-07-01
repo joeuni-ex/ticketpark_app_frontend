@@ -283,7 +283,7 @@ function ReadPage() {
             <img
               src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
               className="w-full h-full object-cover"
-              alt="image"
+              alt="goods"
             />
           </div>
 
@@ -302,7 +302,9 @@ function ReadPage() {
             </div>
             <div className="flex ">
               <div className="w-16 mr-2 md:w-1/4">관람연령</div>
-              <div>{goods.age == 0 ? "전체이용가" : `${goods.age}세 이상`}</div>
+              <div>
+                {goods.age === 0 ? "전체이용가" : `${goods.age}세 이상`}
+              </div>
             </div>
             <div className="flex ">
               <div className="w-16 mr-2 md:mr-0 md:w-1/4">가격</div>
@@ -326,7 +328,7 @@ function ReadPage() {
             <div
               key={menu.id}
               className={`${
-                selectedMenu == menu.name ? "border-b-8 border-orange-400" : ""
+                selectedMenu === menu.name ? "border-b-8 border-orange-400" : ""
               }  p-4 cursor-pointer`}
               onClick={() => handleMenuChange(menu.name)}
             >
@@ -341,7 +343,7 @@ function ReadPage() {
           {selectedMenu === "공연정보" ? <div>{goods.gdesc}</div> : <></>}
 
           {/* 공연후기 */}
-          {selectedMenu == "공연후기" ? (
+          {selectedMenu === "공연후기" ? (
             <div className="flex flex-col text-stone-700 space-y-10 ">
               <div className="space-y-2">
                 <div className="font-bold"> 꼭 읽어주세요</div>

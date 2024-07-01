@@ -158,7 +158,7 @@ function ListPage() {
                   <img
                     src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
                     className="w-36 md:w-56"
-                    alt="image"
+                    alt="goods"
                   />
                 </Link>
                 <div className="flex  flex-col">

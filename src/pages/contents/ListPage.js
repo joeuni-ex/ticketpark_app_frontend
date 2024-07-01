@@ -46,16 +46,16 @@ function ListPage() {
 
     setGenre(genreParam.genre);
 
-    if (genreParam.genre == "musical") {
+    if (genreParam.genre === "musical") {
       setGenreTitle("뮤지컬");
       setSliderImages(musicalSliderImages);
-    } else if (genreParam.genre == "concert") {
+    } else if (genreParam.genre === "concert") {
       setGenreTitle("콘서트");
       setSliderImages(concertSliderImages);
-    } else if (genreParam.genre == "play") {
+    } else if (genreParam.genre === "play") {
       setGenreTitle("연극");
       setSliderImages(playSliderImages);
-    } else if (genreParam.genre == "classic") {
+    } else if (genreParam.genre === "classic") {
       setGenreTitle("클래식");
       setSliderImages(classicSliderImages);
     }
@@ -149,7 +149,7 @@ function ListPage() {
               <img
                 src={`${host}/api/goods/view/${goods.uploadFileNames[0]}`}
                 className="w-full "
-                alt="list image"
+                alt="goods"
               />
               <div className="space-y-2">
                 <p className="font-bold md:text-lg">{goods.title}</p>

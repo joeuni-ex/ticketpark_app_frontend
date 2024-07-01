@@ -9,7 +9,7 @@ function CardComponent({ item, width, hight, src }) {
       <Link to={`/goods/${item.gno}`}>
         <img
           src={`${host}/api/goods/view/${src}`}
-          alt={item?.alt || "image"}
+          alt={item?.alt || "goods"}
           className="transition-opacity duration-500 ease-in-out hover:opacity-60"
         />
         <div className="absolute p-3 space-y-3 flex-col top-0 left-0 w-full h-full flex justify-center items-center bg-black opacity-0 hover:opacity-70 transition-opacity duration-500 ease-in-out ">

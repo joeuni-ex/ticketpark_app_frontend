@@ -172,13 +172,13 @@ function ListPage() {
                     {review.imageFile ? (
                       <img
                         src={`${host}/api/goods/view/s_${review.imageFile}`}
-                        alt="image"
+                        alt="goods"
                         className="h-full object-cover w-full"
                       />
                     ) : (
                       <img
                         src={`${host}/api/goods/view/default_image.png`}
-                        alt="image"
+                        alt="goods"
                         className="h-full object-cover w-full"
                       />
                     )}
