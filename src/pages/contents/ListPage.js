@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useCallback } from "react";
-import { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";

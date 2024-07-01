@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API_SERVER_HOST, getSearchList } from "../../api/goodsApi";
 import useCustomMove from "../../hooks/useCustomMove";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PageComponent from "../../components/common/PageComponent";
 import FetchingModal from "../../components/common/FetchingModal";
 const host = API_SERVER_HOST;

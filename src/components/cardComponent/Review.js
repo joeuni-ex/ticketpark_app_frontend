@@ -1,8 +1,6 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
-import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
-import { postIncreaseLikes } from "../../api/reviewApi";
 import useCustomLogin from "../../hooks/useCustomLogin";
 
 function Review({ review, handleClickLike }) {
@@ -38,7 +36,7 @@ function Review({ review, handleClickLike }) {
         <div className="flex items-center space-x-1">
           {review.likes}{" "}
           {!loginState.email === "" ? (
-            review.liked == false ? (
+            review.liked === false ? (
               <IoIosHeartEmpty
                 onClick={handleClickLike}
                 className="cursor-pointer hover:text-red-400"

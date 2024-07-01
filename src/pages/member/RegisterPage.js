@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { checkEmail, registerPost } from "../../api/memberApi";
 import FetchingModal from "../../components/common/FetchingModal";
 import useCustomLogin from "../../hooks/useCustomLogin";

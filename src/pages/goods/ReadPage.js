@@ -223,7 +223,7 @@ function ReadPage() {
       });
       setFetching(false);
     });
-  }, [gno, likesResult]);
+  }, [gno, likesResult, loginState.email]);
 
   const averageGrade = calculateAverageGrade(reviews);
 

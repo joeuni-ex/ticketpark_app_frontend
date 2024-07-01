@@ -70,7 +70,7 @@ function ReservationModal({
     PostReserved(select).then((result) => {
       setReservedSeat(result.reservedSeats); //이미 예약된 좌석
     });
-  }, [selectedDate]);
+  }, [selectedDate, goods.gno, goods.times, selectedTime]);
 
   return (
     <div

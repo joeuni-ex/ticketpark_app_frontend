@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaUserAlt } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { motion } from "framer-motion";
 import { RiSearchLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../slice/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import { useEffect } from "react";
 import { TfiClose } from "react-icons/tfi";

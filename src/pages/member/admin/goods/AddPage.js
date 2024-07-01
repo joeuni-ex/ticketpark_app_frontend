@@ -3,7 +3,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import FetchingModal from "../../../../components/common/FetchingModal";
 import { postAdd } from "../../../../api/goodsApi";
 import ResultModal from "../../../../components/common/ResultModal";
-import useCustomMove from "../../../../hooks/useCustomMove";
+
 import { useNavigate } from "react-router-dom";
 
 //초기값

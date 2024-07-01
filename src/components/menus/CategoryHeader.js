@@ -8,7 +8,7 @@ function CategoryHeader() {
 
   useEffect(() => {
     setSelectedMenu(param.genre);
-  }, [selectedMenu]);
+  }, [selectedMenu, param.genre]);
 
   return (
     <div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { login, loginPostAsync } from "../../slice/loginSlice";
+
 import useCustomLogin from "../../hooks/useCustomLogin";
 import { getKakaoLoginLink } from "../../api/kakaoApi";
 

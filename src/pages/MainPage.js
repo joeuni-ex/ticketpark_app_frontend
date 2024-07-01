@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import BasicLayout from "../layout/BasicLayout";
 import Slider from "react-slick";
 
-import {
-  concertSliderImages,
-  focusImages,
-  mainSliderImages,
-  newImages,
-} from "../images";
+import { focusImages, mainSliderImages } from "../images";
 
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
 import CardComponent from "../components/cardComponent/CardComponent";
 import useCustomMove from "../hooks/useCustomMove";
 import { API_SERVER_HOST, getBestList, getList } from "../api/goodsApi";
+import FetchingModal from "../components/common/FetchingModal";
 
 const host = API_SERVER_HOST;
 
@@ -31,7 +27,6 @@ const initState = {
 };
 
 function MainPage() {
-  const [serverData, setServerData] = useState(initState);
   const { page, size, refresh } = useCustomMove();
   const [section3Data, setSection3Data] = useState(initState);
 
@@ -70,6 +65,7 @@ function MainPage() {
 
   return (
     <BasicLayout>
+      {fetching && <FetchingModal />}
       {/* Web Slider  */}
       <div className="slider-container  ">
         <Slider {...webSettings}>

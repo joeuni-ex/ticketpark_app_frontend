@@ -29,7 +29,7 @@ const deleteState = {
 
 function ListPage() {
   const [serverData, setServerData] = useState(initState);
-  const { page, size, refresh, moveToList, moveToRead } = useCustomMove();
+  const { page, size, refresh, moveToList } = useCustomMove();
   const [genre, setGenre] = useState("all");
 
   const [fetching, setFetching] = useState(false); //로딩 모달

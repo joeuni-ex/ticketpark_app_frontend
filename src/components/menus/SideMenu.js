@@ -3,10 +3,9 @@ import { FaAngleDown } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import useCustomLogin from "../../hooks/useCustomLogin";
-import { useSelector } from "react-redux";
 
 function SideMenu() {
-  const { doLogout, moveToPath, loginState } = useCustomLogin(); //로그인 커스텀 훅
+  const { loginState } = useCustomLogin(); //로그인 커스텀 훅
 
   const [contentsToggle, setContentsToggle] = useState(true);
   const [reviewToggle, setReviewToggle] = useState(true);

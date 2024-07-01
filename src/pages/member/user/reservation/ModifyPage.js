@@ -234,15 +234,11 @@ function ModifyPage() {
     PostReserved(select).then((result) => {
       setReservedSeat(result.reservedSeats); //이미 예약된 좌석
     });
-  }, [date, selectedTime]);
+  }, [date, selectedTime, goods.gno, goods.times]);
 
   //날짜 변환
   const startDate = moment(goods.startDate).format("YYYY-MM-DD");
   const endDate = moment(goods.endDate).format("YYYY-MM-DD");
-
-  console.log(selectedSeat);
-  console.log(reservedSeat);
-  console.log(date);
 
   return (
     <div className="flex flex-col justify-center ">
@@ -262,7 +258,7 @@ function ModifyPage() {
         <ConfirmModal
           message="해당 예약을 변경하시겠습니까?"
           onConfirm={handleConfirmModify}
-          onCancel={closeModal}
+          onCancel={closeConfirmModal}
         />
       )}
 
