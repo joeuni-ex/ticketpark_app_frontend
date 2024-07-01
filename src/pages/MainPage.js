@@ -7,7 +7,7 @@ import { focusImages, mainSliderImages } from "../images";
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
 import CardComponent from "../components/cardComponent/CardComponent";
 import useCustomMove from "../hooks/useCustomMove";
-import { API_SERVER_HOST, getBestList, getList } from "../api/goodsApi";
+import { getBestList, getList } from "../api/goodsApi";
 import FetchingModal from "../components/common/FetchingModal";
 
 //초기값 설정-> 서버에서 출력되는 값

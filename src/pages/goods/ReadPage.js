@@ -118,7 +118,6 @@ function ReadPage() {
 
   const [date, setDate] = useState(initState.startDate); //캘린더 날짜
 
-  const [reservation, setReservation] = useState(reservationInitState); //예약 초기값
   const [reservationModal, setReservationModal] = useState(false); //예약모달
 
   const [selectedTime, setSelectedTime] = useState(1); //예매
@@ -207,11 +206,7 @@ function ReadPage() {
 
     getOne(gno).then((data) => {
       setGoods(data);
-      setReservation((prev) => ({
-        ...prev,
-        gno,
-        reservationDate: moment(new Date()).format("YYYY-MM-DD"), // 초기값을 goods.startDate로 설정
-      }));
+
       setDate(moment(new Date()).format("YYYY-MM-DD")); // 캘린더 날짜도 초기값
 
       getGoodsList(gno, email).then((review) => {

@@ -6,7 +6,6 @@ import useCustomLogin from "../../../../hooks/useCustomLogin";
 import { getList, modifyOne } from "../../../../api/reviewApi";
 import { FaStar } from "react-icons/fa";
 import ConfirmModal from "../../../../components/common/ConfirmModal";
-import ModifyReviewModal from "../../../../components/common/ModifyReviewModal";
 
 const initState = [
   {

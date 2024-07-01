@@ -88,8 +88,6 @@ function ModifyPage() {
 
   const [date, setDate] = useState(); //캘린더 날짜
 
-  const [gno, setGno] = useState(0);
-
   const [fetching, setFetching] = useState(false); //로딩 모달
   const [result, setResult] = useState(false); // 결과가 나오면 모달창으로 결과 데이터가 보이게끔
   const [reservationConfirmModal, setReservationConfirmModal] = useState(false); //예약 변경 확인 모달
@@ -207,8 +205,6 @@ function ModifyPage() {
     getOneReservation(rno).then((reData) => {
       setReservation(reData);
 
-      setGno(reData.gno);
-
       setDate(moment(reData.reservationDate).format("YYYY-MM-DD")); // 캘린더 날짜도 초기 값
       setSelectedSeat({
         id: reData.seatNumber,
@@ -237,7 +233,6 @@ function ModifyPage() {
   }, [date, selectedTime, goods.gno, goods.times]);
 
   //날짜 변환
-  const startDate = moment(goods.startDate).format("YYYY-MM-DD");
   const endDate = moment(goods.endDate).format("YYYY-MM-DD");
 
   return (
