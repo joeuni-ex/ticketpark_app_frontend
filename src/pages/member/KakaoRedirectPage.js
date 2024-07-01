@@ -26,7 +26,7 @@ function KakaoRedirectPage() {
         }
       });
     });
-  }, [authCode, dispatch]);
+  }, [authCode, dispatch, navigate]);
   return (
     <div>
       <div>Kakao Login Redirect</div>

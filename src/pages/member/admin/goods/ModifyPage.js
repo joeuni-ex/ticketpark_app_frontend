@@ -39,7 +39,7 @@ function ModifyGoodsPage() {
   // 이미지 추가
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
-    const readers = files.map((file) => {
+    files.map((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         setImages((prevImages) => [...prevImages, reader.result]);

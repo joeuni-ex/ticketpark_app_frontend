@@ -51,7 +51,7 @@ function ListPage() {
     setDeleteModal(false);
     setFetching(true);
     try {
-      const result = await modifyOne(deleteGno, deleteState).then((result) => {
+      modifyOne(deleteGno, deleteState).then((result) => {
         setResult(deleteGno);
       });
     } catch (error) {

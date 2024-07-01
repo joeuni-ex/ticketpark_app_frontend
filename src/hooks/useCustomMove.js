@@ -42,6 +42,9 @@ const useCustomMove = () => {
       //moveToList 함수에 파라미터 값이 있을 경우
       queryStr = queryDefault;
     }
+
+    setRefresh(!refresh);
+
     navigate({ pathname: "", search: queryStr });
   };
 

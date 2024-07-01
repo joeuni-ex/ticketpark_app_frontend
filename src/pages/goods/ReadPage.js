@@ -12,11 +12,7 @@ import ReservationModal from "../../components/common/ReservationModal";
 import moment from "moment";
 import { postAdd } from "../../api/ReservationApi";
 import ResultModal from "../../components/common/ResultModal";
-import {
-  getGoodsList,
-  postChangeLikes,
-  postIncreaseLikes,
-} from "../../api/reviewApi";
+import { getGoodsList, postChangeLikes } from "../../api/reviewApi";
 import AgeComponent from "../../components/common/AgeComponent";
 import { IoIosArrowBack } from "react-icons/io";
 
