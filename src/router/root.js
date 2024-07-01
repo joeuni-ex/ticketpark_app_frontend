@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import goodsRouter from "./goodsRouter";
 import contentsRouter from "./contentsRouter";
 import memberRouter from "./memberRouter";

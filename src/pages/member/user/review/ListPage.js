@@ -3,7 +3,7 @@ import { API_SERVER_HOST } from "../../../../api/goodsApi";
 import FetchingModal from "../../../../components/common/FetchingModal";
 import ResultModal from "../../../../components/common/ResultModal";
 import useCustomLogin from "../../../../hooks/useCustomLogin";
-import { getList, getMyList, modifyOne } from "../../../../api/reviewApi";
+import { getList, modifyOne } from "../../../../api/reviewApi";
 import { FaStar } from "react-icons/fa";
 import ConfirmModal from "../../../../components/common/ConfirmModal";
 import ModifyReviewModal from "../../../../components/common/ModifyReviewModal";
