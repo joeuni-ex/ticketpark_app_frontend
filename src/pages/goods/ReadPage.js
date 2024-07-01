@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
-import Review from "../../components/card/Review";
+import Review from "../../components/cardComponent/Review";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { API_SERVER_HOST, getOne } from "../../api/goodsApi";

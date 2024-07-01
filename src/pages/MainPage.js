@@ -10,7 +10,7 @@ import {
 } from "../images";
 
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
-import CardComponent from "../components/card/CardComponent";
+import CardComponent from "../components/cardComponent/CardComponent";
 import useCustomMove from "../hooks/useCustomMove";
 import { API_SERVER_HOST, getBestList, getList } from "../api/goodsApi";
 
