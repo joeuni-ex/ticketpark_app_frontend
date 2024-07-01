@@ -33,17 +33,6 @@ const initState = {
   times: [],
 };
 
-//예약 초기값
-const reservationInitState = {
-  email: 0,
-  gno: "",
-  reservationDate: "",
-  seatClass: "",
-  seatNumber: "",
-  time: "",
-  price: 0,
-  cancelFlag: false,
-};
 //리뷰 초기값
 const reviewInitState = [
   {
