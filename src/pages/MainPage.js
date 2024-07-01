@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import BasicLayout from "../layout/BasicLayout";
 import Slider from "react-slick";
 
-import styled from "styled-components";
 import {
   concertSliderImages,
   focusImages,
   mainSliderImages,
   newImages,
 } from "../images";
-import { Link } from "react-router-dom";
-import YouTube from "react-youtube";
+
 import YoutubeComponent from "../components/youtube/YoutubeComponent";
 import CardComponent from "../components/card/CardComponent";
 import useCustomMove from "../hooks/useCustomMove";
