@@ -306,7 +306,7 @@ function ModifyPage() {
                 <div className="flex ">
                   <div className="w-1/4">관람연령</div>
                   <div>
-                    {goods.age == 0 ? "전체이용가" : `${goods.age}세 이상`}
+                    {goods.age === 0 ? "전체이용가" : `${goods.age}세 이상`}
                   </div>
                 </div>
                 <div className="flex ">
